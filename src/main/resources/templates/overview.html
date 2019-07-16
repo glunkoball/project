@@ -1,10 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>查询房源界面</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 先引入 Vue -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 </head>
 <body>
-查询房源
+<div>
+<div id="demand">
+    <el-form>
+            <el-form-item>
+                <div style="margin:auto;width: 500px;height:40px">
+            <el-input v-model="input" placeholder="请输入内容"></el-input>
+                </div>
+                <div style="float: right">
+                    <el-button type="success" round>成功按钮</el-button>
+                </div>
+        </el-form-item>
+
+    </el-form>
+</div>
+</div>
+<!--<div id="cond">-->
+    <!--<el-form ref="form">-->
+    <!--<template>-->
+        <!--<div>-->
+            <!--<el-checkbox-group v-model="checkboxGroup1">-->
+                <!--<el-checkbox-button v-for="city in cities" :label="city" :key="city">{{city}}</el-checkbox-button>-->
+            <!--</el-checkbox-group>-->
+        <!--</div>-->
+        <!--<div style="margin-top: 20px">-->
+            <!--<el-checkbox-group v-model="checkboxGroup2" size="medium">-->
+                <!--<el-checkbox-button v-for="city in cities" :label="city" :key="city">{{city}}</el-checkbox-button>-->
+            <!--</el-checkbox-group>-->
+        <!--</div>-->
+        <!--<div style="margin-top: 20px">-->
+            <!--<el-checkbox-group v-model="checkboxGroup3" size="small">-->
+                <!--<el-checkbox-button v-for="city in cities" :label="city" :disabled="city" :key="city">{{city}}</el-checkbox-button>-->
+            <!--</el-checkbox-group>-->
+        <!--</div>-->
+        <!--</template>-->
+    <!--</el-form>-->
+<!--</div>-->
+<div id="content">
+
+</div>
 </body>
+
+<script>
+
+   new Vue({
+       el:'#demand',
+           data() {
+               return {
+                   input: ''
+               }
+           }
+   })
+   // const cityOptions = ['上海', '北京', '广州', '深圳'];
+   // new Vue({
+   //     el:'#cond',
+   //     data (){
+   //         return {
+   //             checkboxGroup1: ['上海'],
+   //             checkboxGroup2: ['上海'],
+   //             checkboxGroup3: ['上海'],
+   //             cities: cityOptions
+   //         };
+   //     }
+   // })
+</script>
 </html>
