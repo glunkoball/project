@@ -17,27 +17,29 @@
 <div id="app"  >
     <el-container style="height:700px;" >
 
-        <el-header>Header</el-header>
+        <el-header style="height: 40px">
+            sssss
+        </el-header>
         <el-container>
 
             <el-main>
-                <div style="border: 1px solid black;margin-top: -20px;margin-left:-20px;margin-right:-20px;height: 70px">
+                <div style="border: 1px solid #EBEEF5;margin-top: -20px;margin-left:-29px;margin-right:-20px;height: 70px;padding-top: 8px">
                     <span style="font-family: PingFang SC;font-size: 20px;margin-left: 20px">自如友家·龙湖蔚澜香醍·4居室-01卧</span>
                     <br>
-                    <span style="color: #cf9236;margin-left: 20px;margin-top: 5px">￥2200/月</span>
-                    <el-button type="primary" icon="el-icon-share" style="height: 30px;background-color: #8c939d;width: 40px;margin-left: 760px;border: 1px solid  #8c939d" ></el-button>
-                    <el-button type="primary" icon="el-icon-star-off" style="height: 30px;background-color: #8c939d;width: 40px"></el-button>
+                    <span style="color: #ebb563;margin-left: 20px;margin-top: 5px">￥2200/月</span>
+                    <el-button type="primary" icon="el-icon-share" style="height: 30px;background-color:#ebb563;width: 40px;margin-left: 760px;border: 1px solid  #ebb563" ></el-button>
+                    <el-button type="primary" icon="el-icon-star-off" style="height: 30px;background-color: #ebb563;width: 40px;border: 1px solid  #ebb563"></el-button>
 
                 </div>
                 <div>
                     <el-carousel height="350px">
-                        <el-carousel-item v-for="item in 4" :key="item">
-                            <h3>{{ item }}</h3>
+                        <el-carousel-item v-for="item in imagesbox" :key="item.value">
+                            <img :src="item.src" class="image" style="width: 100%;height: 100%">
                         </el-carousel-item>
                     </el-carousel>
                 </div>
                 <el-tabs type="border-card">
-                    <el-tab-pane label="详细信息">
+                    <el-tab-pane label="房源信息">
                         带独卫带阳台，朝南，面积大，只有可遇不可求。小区为高端小区，由上海有名物业公司龙湖物业有限公司管理，小区内有别墅群，环境安静舒适
                         。距离地铁直线距离约150米，交通方便
                     </el-tab-pane>
@@ -45,9 +47,44 @@
                     <el-tab-pane label="角色管理">角色管理</el-tab-pane>
                     <el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane>
                 </el-tabs>
+
+
             </el-main>
-            <el-aside width="250px">
-                <el-card class="box-card" header="经纪人信息" style="height: 250px">
+            <el-aside width="280px">
+                <el-card class="box-card"  style="height: 250px;">
+                    <el-button type="text" @click="dialogVisible = true" style="color:black;font-size: 13px">大学生计划</el-button>
+                    <el-dialog
+                            title="计划内容"
+                            :visible.sync="dialogVisible"
+                             width="30%"
+                            :before-close="handleClose"
+                            style="height: 500px"
+                    >
+                        <span>具体计划内容</span>
+                       <!-- <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+  </span>-->
+                    </el-dialog>
+
+                    <span style="color: red;font-size: 12px">毕业生租房月付/0押金/送搬家券</span>
+                    <br>
+                    <span class="gray">使用面积</span><span class="bla">14.4m²</span>
+                    <br>
+                    <span class="gray">户型</span><span class="bla">3室1厅</span>
+                    <br>
+                    <span class="gray">朝向</span><span class="bla">朝南</span>
+                    <br>
+                    <span class="gray">位置</span><span class="bla">距4号线枣园站步行约127米</span>
+                    <br>
+                    <span class="gray">楼层</span><span class="bla">12</span>
+                    <br>
+                    <span class="gray">电梯</span><span class="bla">有</span>
+                    <br>
+                </el-card>
+
+
+                <el-card class="box-card" header="经纪人信息" style="height: 250px;background-color: #ebb563;margin-top: 20px">
                       yanglin
                       <br>
                       158693966
@@ -66,7 +103,7 @@
         height:100%;
     }
     .el-header, .el-footer {
-        background-color: #B3C0D1;
+        background-color: white;
         color: #333;
     }
 
@@ -77,7 +114,7 @@
     }
 
     .el-main {
-        background-color:#909399;
+        background-color:white;
         color: #333;
     }
 
@@ -100,6 +137,29 @@
         background-color: #d3dce6;
     }
 
+/*详细信息的卡片*/
+    .text {
+        font-size: 14px;
+    }
+
+    .item {
+        padding: 18px 0;
+    }
+
+    .box-card {
+        width: 480px;
+    }
+    .gray{
+        color: #c8c9cc;
+        margin-top:20px;
+        font-size: 14px;
+    }
+    .bla{
+        color: black;
+        margin-top: 20px;
+        margin-left: 10px;
+        font-size: 14px;
+    }
 </style>
 </body>
 <script>
@@ -107,8 +167,15 @@
     new Vue({
         el:'#app',
         data:{
-
+            imagesbox:[
+                {src:"image/f1.jpg"},
+                {src:"image/f2.jpg"},
+                {src:"image/f3.jpg"}],
+            dialogVisible: false
         }
+
+
+
 
     });
 
