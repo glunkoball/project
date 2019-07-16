@@ -3,56 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <!-- 引入样式 -->
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="static/plugin/element-ui/index.js">
     <!-- 先引入 Vue -->
-    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="static/plugin/element-ui/vue.js"></script>
     <!-- 引入组件库 -->
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="static/plugin/element-ui/index.css"></script>
+
 </head>
 <body>
-<div>
 <div id="demand">
     <el-form>
             <el-form-item>
-                <div style="margin:auto;width: 500px;height:40px">
-            <el-input v-model="input" placeholder="请输入内容"></el-input>
+                <div id="app">
+            <el-input  v-model="input" placeholder="请输入内容"></el-input>
                 </div>
-                <div style="float: right">
-                    <el-button type="success" round>成功按钮</el-button>
+                <div id="a">
+                    <el-button type="success" round>查询</el-button>
                 </div>
         </el-form-item>
-
     </el-form>
 </div>
+<div>
+    <form>
+    <div id="cond">
+        <el-breadcrumb separator="">
+            <el-breadcrumb-item>租房方式&nbsp;&nbsp;:</el-breadcrumb-item>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-breadcrumb-item>不限</el-breadcrumb-item>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-breadcrumb-item>合租</el-breadcrumb-item>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-breadcrumb-item>整租</el-breadcrumb-item>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-breadcrumb-item>豪宅</el-breadcrumb-item>
+            <el-breadcrumb-item  border-bottom></el-breadcrumb-item>
+        </el-breadcrumb>
+    </div>
+    <div id="cond1">
+        <el-breadcrumb separator="">
+            <el-breadcrumb-item>租房方式&nbsp;&nbsp;:</el-breadcrumb-item>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-breadcrumb-item>不限</el-breadcrumb-item>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-breadcrumb-item>合租</el-breadcrumb-item>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-breadcrumb-item>整租</el-breadcrumb-item>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-breadcrumb-item>豪宅</el-breadcrumb-item>
+        </el-breadcrumb>
+    </div>
+        <div id="cond2">
+        <el-breadcrumb separator="">
+            <el-breadcrumb-item><a>租房方式&nbsp;&nbsp;:</a></el-breadcrumb-item>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-breadcrumb-item><a>不限</a></el-breadcrumb-item>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-breadcrumb-item>合租</el-breadcrumb-item>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-breadcrumb-item>整租</el-breadcrumb-item>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-breadcrumb-item>豪宅</el-breadcrumb-item>
+        </el-breadcrumb>
+        </div>
+        <div id="cond3">
+        <el-breadcrumb separator="">
+            <el-breadcrumb-item>租房方式&nbsp;&nbsp;:</el-breadcrumb-item>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-breadcrumb-item>不限</el-breadcrumb-item>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-breadcrumb-item>合租</el-breadcrumb-item>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-breadcrumb-item>整租</el-breadcrumb-item>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-breadcrumb-item>豪宅</el-breadcrumb-item>
+        </el-breadcrumb>
+    </div>
+    </form>
+<div id="content" style="margin: auto;color: #3a8ee6">
+    <el-row>
+        <el-col :span="8" v-for="(o, index) in 2" :key="o" :offset="index > 0 ? 2 : 0">
+            <el-card :body-style="{ padding: '0px' }">
+                <img src="plugin/element-ui/imags/default.gif"/>
+                <div class="bottom clearfix" >
+                    <el-button type="text" class="button">房子主题</el-button>
+                    <div style="padding: 14px;">
+                        <span>突出点</span>
+                    </div>
+                </div>
+            </el-card>
+        </el-col>
+    </el-row>
 </div>
-<!--<div id="cond">-->
-    <!--<el-form ref="form">-->
-    <!--<template>-->
-        <!--<div>-->
-            <!--<el-checkbox-group v-model="checkboxGroup1">-->
-                <!--<el-checkbox-button v-for="city in cities" :label="city" :key="city">{{city}}</el-checkbox-button>-->
-            <!--</el-checkbox-group>-->
-        <!--</div>-->
-        <!--<div style="margin-top: 20px">-->
-            <!--<el-checkbox-group v-model="checkboxGroup2" size="medium">-->
-                <!--<el-checkbox-button v-for="city in cities" :label="city" :key="city">{{city}}</el-checkbox-button>-->
-            <!--</el-checkbox-group>-->
-        <!--</div>-->
-        <!--<div style="margin-top: 20px">-->
-            <!--<el-checkbox-group v-model="checkboxGroup3" size="small">-->
-                <!--<el-checkbox-button v-for="city in cities" :label="city" :disabled="city" :key="city">{{city}}</el-checkbox-button>-->
-            <!--</el-checkbox-group>-->
-        <!--</div>-->
-        <!--</template>-->
-    <!--</el-form>-->
-<!--</div>-->
-<div id="content">
-
 </div>
+<style>
+    #demand,.el-a{
+        margin-top: 140px;
+    }
+    #app,.el-b{
+        margin: auto;
+        width: 600px;
+        height: 400px;
+    }
+    #a,.el-c{
+        margin-top: -400px;
+        margin-left: 1400px;
+        /*width: 300px;*/
+        /*height: 200px;*/
+    }
+    #cond,.el-d{
+        margin-left: 760px;
+    }
+    #cond1,.el-d1{
+        margin-left: 760px;
+    }
+    #cond2,.el-d2{
+        margin-left: 760px;
+    }
+    #cond3,.el-d3{
+        margin-left: 760px;
+    }
+    #content,.com{
+        width: 600px;
+    }
+</style>
 </body>
-
 <script>
-
    new Vue({
        el:'#demand',
            data() {
@@ -61,17 +120,5 @@
                }
            }
    })
-   // const cityOptions = ['上海', '北京', '广州', '深圳'];
-   // new Vue({
-   //     el:'#cond',
-   //     data (){
-   //         return {
-   //             checkboxGroup1: ['上海'],
-   //             checkboxGroup2: ['上海'],
-   //             checkboxGroup3: ['上海'],
-   //             cities: cityOptions
-   //         };
-   //     }
-   // })
 </script>
 </html>
