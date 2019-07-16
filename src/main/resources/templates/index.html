@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="plugin/element-ui/index.css">
+    <!--引入vue-->
+    <script src="plugin/element-ui/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script src="plugin/element-ui/index.js"></script>
+    <style>
+        .el-carousel__item h3 {
+            color: #475669;
+            font-size: 18px;
+            opacity: 0.75;
+            line-height: 300px;
+            margin: 0;
+        }
+
+        .el-carousel__item:nth-child(2n) {
+            background-color: #99a9bf;
+        }
+
+        .el-carousel__item:nth-child(2n+1) {
+            background-color: #d3dce6;
+        }
+    </style>
+</head>
+<body>
+<div id="navigation">
+
+    <div class="line"></div>
+    <el-menu
+            :default-active="activeIndex2"
+            class="el-menu-demo"
+            mode="horizontal"
+            @select="handleSelect"
+            background-color="#545c64"
+            text-color="#fff"
+            active-text-color="#ffd04b">
+        <el-menu-item index="1" style="float: right; margin-right: 20px">登陆/注册</el-menu-item>
+    </el-menu>
+</div>
+<div id="slides">
+    <el-carousel indicator-position="outside">
+        <el-carousel-item v-for="item in 4" :key="item">
+            <h3>{{ item }}</h3>
+        </el-carousel-item>
+    </el-carousel>
+</div>
+
+
+
+</body>
+
+<script>
+    new Vue({
+        el:'#navigation',
+        data:function() {
+            return {
+                activeIndex: '1',
+                activeIndex2: '1'
+            };
+        },
+        methods: {
+            handleSelect(key, keyPath) {
+                console.log(key, keyPath);
+            }
+        }
+    })
+
+    new Vue({
+        el:'#slides',
+        data:{
+
+        }
+    })
+</script>
+</html>

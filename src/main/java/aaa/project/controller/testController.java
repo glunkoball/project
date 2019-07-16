@@ -18,4 +18,9 @@ public class testController {
     public String toOverview(){
         return "overview";
     }
+
+    @RequestMapping("/index")
+    public String toIndex(){
+        return "index";
+    }
 }
