@@ -6,17 +6,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class JumpController {
 
+    /**
+     * 跳转至主界面
+     * @return
+     */
     @RequestMapping("/index")
     public String toIndex(){
         return "index";
     }
 
+    /**
+     * 跳转至查询房源界面
+     * @return
+     */
     @RequestMapping("/search")
     public String toSearch(){
-        return "overview";
+        return "searchApt/overview";
     }
 
-
+    /**
+     * 跳转至注册界面
+     * @return
+     */
     @RequestMapping("/signin")
     public String toSignin(){
         return "signin";
@@ -24,6 +35,12 @@ public class JumpController {
 
     @RequestMapping("/details")
     public String toDetails(){
-        return "details";
+        return "searchApt/details";
     }
+
+    @RequestMapping("/post")
+    public String toPost(){
+        return "postApt/postApt";
+    }
+
 }
