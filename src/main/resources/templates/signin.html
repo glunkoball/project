@@ -3,8 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <title>注册界面</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 </head>
+<style>
+    .el-card__header{
+        color:red;
+        font-size: 26px;
+        margin: 0px 188px;
+    }
+</style>
 <body>
-注册页面
+<div id="app" style="width:600px; height:480px; border:1px solid red;margin:auto;margin-top:60px;">
+    <el-card class="box-card" style="padding-right: 40px;padding: 10px 30px; height:100%; border:1px solid blue;" header="用户注册">
+        <el-form ref="form" :rules="rules" :model="form" label-width="90px">
+            <el-form-item label="邮箱账号:" prop="email">
+                <el-input v-model="form.email" ></el-input>
+            </el-form-item>
+            <el-form-item label="姓名:" prop="username">
+                <el-input v-model="form.username" type="text"></el-input>
+            </el-form-item>
+            <el-form-item label="密码:" prop="password">
+                <el-input v-model="form.password" type="password" show-password></el-input>
+            </el-form-item>
+            <el-form-item label="确认密码:" prop="repassword">
+                <el-input v-model="form.repassword" type="password"></el-input>
+            </el-form-item>
+            <el-form-item label="电话:" prop="tel">
+                <el-input v-model="form.tel" type="text"  maxlength="11" show-word-limit></el-input>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" round @click="onSubmit('form')" style="width:100px; margin:26px 36px">注册</el-button>
+                <el-button type="primary" round @click="resetForm('form')"   style="width:100px;">重置</el-button>
+            </el-form-item>
+        </el-form>
+
+
+    </el-card>
+</div>
+
 </body>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+
+                form:{
+                    email:'',
+                    username:'',
+                    password:'',
+                    repassword:'',
+                    tel:''
+                },
+                //声明校验规则
+                rules:{
+                    email:[
+                        { required: true, message: '请输入邮箱', trigger: 'blur' },
+                        { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+                    ],
+                    username:[
+                        { required: true, message: '请输入用户名', trigger: 'blur' },
+                        { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+                    ],
+                    password:[
+                        { required: true, message: '请输入密码', trigger: 'blur' }
+                    ],
+                    repassword:[
+                        { required: true, message: '请再次输入密码', trigger: 'blur' }
+                    ],
+                    tel:[
+                        { required: true, message: '请输入电话号吗', trigger: 'blur' },
+                        { pattern:/^[1][3,4,5,7,8][0-9]{9}$/, message: '手机格式错误', trigger: 'blur' }
+                    ]
+
+                }
+            },
+            //事件
+            methods:{
+                //登录的事件
+                onSubmit:function(formName){
+                    this.$refs[formName].validate((valid) => {
+                        if (!valid) {
+                            Vue.prototype.$message.error('请检查表单信息');
+                            return false;
+                        } else {
+                            //往后台发送ajax请求 ，校验用户名和密码
+                            Vue.prototype.$message.error('成功');
+                            return false;
+                        }
+                    });
+                },
+                //重置的事件
+                resetForm:function(formName){
+                    this.$refs[formName].resetFields();
+                }
+            }
+        })
+    </script>
+
 </html>
