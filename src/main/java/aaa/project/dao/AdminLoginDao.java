@@ -1,8 +1,12 @@
 package aaa.project.dao;
 
 import aaa.project.entity.Admin;
+import aaa.project.entity.Module;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Mapper
 @Repository
@@ -13,4 +17,16 @@ public interface AdminLoginDao {
      * @return
      */
     public Admin findUserAndPassword(Admin admin);
+    /**
+     * 查询用户能操作的一级菜单
+     * @param user
+     * @return
+     */
+    public List<Module> listOneModules(Admin user);
+    /**
+     * 查询用户能操作的一级菜单
+     * @param user
+     * @return
+     */
+    public List<Module> listTwoModules(@Param("user") Admin user, @Param("parent") Module parent);
 }

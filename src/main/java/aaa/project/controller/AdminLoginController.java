@@ -3,6 +3,7 @@ package aaa.project.controller;
 import aaa.project.common.Constants;
 import aaa.project.common.DefaultMsg;
 import aaa.project.entity.Admin;
+import aaa.project.entity.Module;
 import aaa.project.service.AdminLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -26,6 +28,10 @@ public class AdminLoginController {
         return "admin/login";
     }
 
+    @RequestMapping("/welcome")
+    public String welcome(){
+        return "admin/welcome";
+    }
     /**
      * 跳转后台的主界面
      * @return
@@ -62,8 +68,8 @@ public class AdminLoginController {
     @RequestMapping("/getUserMenus")
     @ResponseBody
     public List<Module> getUserMenus(HttpSession session){
-        Users  user = (Users)session.getAttribute(Constants.SESSION_USER);
-        List<Module> modules = userService.queryUserMenus(user);
+        Admin user = (Admin) session.getAttribute(Constants.SESSION_USER);
+        List<Module> modules = adminLoginService.queryUserMenus(user);
         return modules;
     }
 }

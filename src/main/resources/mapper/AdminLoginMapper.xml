@@ -1,7 +1,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="aaa.project.dao.AdminLoginDao">
+
     <select id="findUserAndPassword" resultType="aaa.project.entity.Admin">
         SELECT * from admin where username=#{username} and password=#{password}
     </select>
+    <select id="listOneModules"   resultType="aaa.project.entity.Module">
+           select  distinct  m.*   from  admin u  inner join  role_md rm on rm.rid=u.r_id INNER JOIN module m on m.id =rm.mid where u.id=#{id} and m.slevel=1
+    </select>
+    <select id="listTwoModules"   resultType="aaa.project.entity.Module">
+                select  distinct  m.*   from  admin u
+                inner join  role_md rm on rm.rid=u.r_id
+                INNER JOIN module m on m.id =rm.mid
+                 where u.id=#{user.id} and m.slevel=2 and
+                m.pid=#{parent.id}
+    </select>
+
+
 </mapper>
