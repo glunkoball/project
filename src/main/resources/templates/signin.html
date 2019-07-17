@@ -14,11 +14,11 @@
     <div id="singin" >
         <el-card class="box-card"  header="用户注册" >
             <el-form ref="form" :rules="rules" :model="form" label-width="90px">
-                <el-form-item label="邮箱账号:" prop="email">
-                    <el-input v-model="form.email" ></el-input>
+                <el-form-item label="邮箱账号:" prop="username">
+                    <el-input v-model="form.username" ></el-input>
                 </el-form-item>
-                <el-form-item label="姓名:" prop="username">
-                    <el-input v-model="form.username" type="text"></el-input>
+                <el-form-item label="姓名:" prop="name">
+                    <el-input v-model="form.name" type="text"></el-input>
                 </el-form-item>
                 <el-form-item label="密码:" prop="password">
                     <el-input v-model="form.password" type="password" show-password></el-input>
@@ -46,22 +46,19 @@
             //声明校验规则
             computed: {
                 rules () {
-                    <!--
-                    var validateSurnmae = (rule, value, callback) => {
-                        let reg = /^[A-Za-z]+$/
-                        if (!reg.test(value)) {
-                            callback(new Error(this.$t('joinUs.surnameErr3')))
+                    var validatePass2 = (rule, value, callback) => {
+                        if (value !== this.form.password) {
+                            callback(new Error('两次输入密码不一致!'));
                         } else {
-                            callback()
+                            callback();
                         }
                     };
-                    -->
                     return {
-                        email:[
+                        username:[
                             { required: true, message: '请输入邮箱', trigger: 'blur' },
                             { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
                         ],
-                        username:[
+                        name:[
                             { required: true, message: '请输入用户名', trigger: 'blur' },
                             { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
                         ],
@@ -70,7 +67,7 @@
                         ],
                         repassword:[
                             { required: true, message: '请再次输入密码', trigger: 'blur' }
-                            // { validator: validateSurnmae, trigger: "blur" }
+                            //{ validator: validatePass2, trigger: "blur" }
                         ],
                         tel:[
                             { required: true, message: '请输入电话号吗', trigger: 'blur' },
@@ -99,14 +96,16 @@
                             return false;
                         } else {
                             //往后台发送ajax请求 ，校验用户名和密码
-                            Vue.prototype.$message.error('成功');
                             axios.post('user/signinUser',this.form)
-                                .then(function (response) {
-                                    console.log(response);
+                                .then(function (res) {
+                                    console.log(res);
+                                    if(res.data.success){
+                                        Vue.prototype.$message.success("注册成功");
+                                        window.location.href="index";
+                                    }else {
+                                        Vue.prototype.$message.error(res.data.error);
+                                    }
                                 })
-                                .catch(function (error) {
-                                    console.log(error);
-                                });
                         }
                     });
                 },
