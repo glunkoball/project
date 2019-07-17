@@ -1,19 +1,22 @@
 package aaa.project.entity;
 
+/**
+ * 客户端用户实体类
+ */
 public class User {
     private Integer id ;
-    private String email;
     private String username;
+    private String name;
     private String password;
     private String tel;
 
     public User() {
     }
 
-    public User(Integer id, String email, String username, String password, String tel) {
+    public User(Integer id, String username, String name, String password, String tel) {
         this.id = id;
-        this.email = email;
         this.username = username;
+        this.name = name;
         this.password = password;
         this.tel = tel;
     }
@@ -26,20 +29,20 @@ public class User {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getUsername() {
         return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {
@@ -62,8 +65,8 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", email='" + email + '\'' +
                 ", username='" + username + '\'' +
+                ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", tel='" + tel + '\'' +
                 '}';
