@@ -37,12 +37,23 @@ public class CustomerLoginController {
         user = customerLoginService.checkUser(user);
         //账号或密码输入错误，认证失败
         if(user==null){
-            defaultMsg.setSuccess(1);
+            defaultMsg.setSuccess(0);
             defaultMsg.setError("用户名或密码输入错误");
         }else{
             session.setAttribute(Constants.SESSION_USER,user);
         }
         return defaultMsg;
+    }
+
+    /**
+     * 客户退出登陆，清楚session，重定向至主页
+     * @param session
+     * @return
+     */
+    @RequestMapping("/logout")
+    public String logout(HttpSession session){
+        session.removeAttribute(Constants.SESSION_USER);
+        return "redirect:index";
     }
 
 
