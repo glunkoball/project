@@ -35,12 +35,18 @@ public class JumpController {
 
     @RequestMapping("/details")
     public String toDetails(){
-        return "searchApt/details";
+        return "details";
+    }
+    @RequestMapping("/map")
+    public String tomap(){
+        return "map";
     }
 
     @RequestMapping("/post")
     public String toPost(){
         return "postApt/postApt";
     }
+
+
 
 }

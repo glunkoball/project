@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="../plugin/element-ui/index.css">
+    <!-- 先引入 Vue -->
+    <script src="../plugin/element-ui/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script src="../plugin/element-ui/index.js"></script>
+    <!--引入axios库-->
+    <script src="../plugin/element-ui/axios.js"></script>
+
+</head>
+<body>
+<div id="app" style="width:400px;border:0px solid red;margin:auto;margin-top:200px;">
+    <el-card class="box-card" style="padding-right: 40px;" header="用户登录">
+        <el-form ref="form" :rules="rules" :model="form" label-width="80px">
+            <el-form-item label="用户名:" prop="username">
+                <el-input v-model="form.username"  suffix-icon="el-icon-date"></el-input>
+            </el-form-item>
+            <el-form-item label="密码:" prop="password">
+                <el-input v-model="form.password" type="password"></el-input>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="onSubmit('form')" style="width:100px;">登录</el-button>
+                <el-button type="primary" @click="resetForm('form')"   style="width:100px;">重置</el-button>
+            </el-form-item>
+        </el-form>
+
+
+    </el-card>
+</div>
+</body>
+<script>
+
+    new Vue({
+        el: '#app',
+        data: {
+            form:{
+                username:'dguan',
+                password:'123'
+            },
+            //声明校验规则
+            rules:{
+                username:[
+                    { required: true, message: '请输入用户名', trigger: 'blur' },
+                    { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+                ],
+                password:[
+                    { required: true, message: '请输入密码', trigger: 'blur' }
+                ]
+            }
+        },
+        //事件
+        methods:{
+            //登录的事件
+            onSubmit:function(formName){
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        //往后台发送ajax请求 ，校验用户名和密码
+                        axios.post('checkUser',this.form)
+                            .then(function (res) {
+                                //如果登录成功
+                                if(res.data.success){
+                                    //跳转到主界面
+                                    window.location.href="index";
+                                }else{
+                                    Vue.prototype.$message.error(res.data.error);
+                                }
+                            })
+                            .catch(function (error) {
+                                Vue.prototype.$message.error("服务器产生异常，请联系管理员");
+                            });
+                    } else {
+                        console.log('error submit!!');
+                return false;
+            }
+            });
+            },
+            //重置的事件
+            resetForm:function(formName){
+                this.$refs[formName].resetFields();
+            }
+
+
+
+        }
+    })
+</script>
+
+</html>

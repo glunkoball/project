@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="../plugin/element-ui/index.css">
+    <!-- 先引入 Vue -->
+    <script src="../plugin/element-ui/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script src="../plugin/element-ui/index.js"></script>
+    <!--引入axios库-->
+    <script src="../plugin/element-ui/axios.js"></script>
+
+    <title>后台界面</title>
+</head>
+<body>
+<div id="app">
+<el-container style="height: 700px">
+    <el-header>Header</el-header>
+    <el-container>
+    <el-aside width="200px">
+         //树形控件
+        <el-tree :data="data" :props="defaultProps"  @node-click="treeClick" ></el-tree>
+
+    </el-aside>
+
+
+        <el-main>Main</el-main>
+    </el-container>
+</el-container>
+</div>
+<style>
+    #app,.el-container {
+        margin:0px;
+        padding:0px;
+        height:100%;
+    }
+    .el-header, .el-footer {
+        background-color: #B3C0D1;
+        color: #333;
+    }
+
+    .el-aside {
+        background-color: #D3DCE6;
+        color: #333;
+
+    }
+
+    .el-main {
+        background-color: #E9EEF3;
+        color: #333;
+        padding:0px;
+    }
+
+    body > .el-container {
+        margin-bottom: 0px;
+    }
+
+
+</style>
+</body>
+<script>
+    new Vue({
+        el:'#app',
+        data:{
+            //定义树形结构的数据
+            data:[],
+            //定义数据的属性节点的名称
+            defaultProps: {
+                children: 'children',
+                label: 'name'
+            }
+        },
+        //当vue组件加载完成之后会自动调用这个函数
+        mounted:function(){
+            //向后台发起异步请求，加载树的节点的数据
+            //往后台发送ajax请求 ，校验用户名和密码
+            var vue = this;
+            axios.post('getUserMenus')
+                .then(function (res) {
+                    //  console.info(res);
+                    console.info(this.data);
+                    vue.data=res.data;
+                })
+                .catch(function (error) {
+                    Vue.prototype.$message.error("服务器产生异常，请联系管理员");
+                });
+
+        },
+        methods:{
+            //声明树形结构单击的事件
+            treeClick:function(node){
+                if(node.level_==1){
+                    return ;
+                }
+            }
+        }
+
+});
+</script>
+</html>
