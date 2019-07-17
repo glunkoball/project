@@ -15,17 +15,26 @@
 </head>
 <body>
 <div id="app">
-<el-container style="height: 700px">
+<el-container style="height: 100%">
     <el-header>Header</el-header>
     <el-container>
     <el-aside width="200px">
-         //树形控件
+        <!-- 树形控件-->
         <el-tree :data="data" :props="defaultProps"  @node-click="treeClick" ></el-tree>
 
     </el-aside>
 
 
-        <el-main>Main</el-main>
+        <el-main>
+            <el-tabs v-model="activeName" type="border-card"  style="height:600px;"  @tab-remove="removeTab" >
+                <el-tab-pane v-for="(item,index) in tabsData " :label="item.name" :name="item.name" :key="item.name" :closable="item.closable" >
+
+                    <iframe :src="item.path" width="100%" height="550" frameborder=0></iframe>
+
+                </el-tab-pane>
+
+            </el-tabs>
+        </el-main>
     </el-container>
 </el-container>
 </div>
@@ -69,7 +78,16 @@
             defaultProps: {
                 children: 'children',
                 label: 'name'
-            }
+            },
+            tabsData:[
+                {
+                    name:'首页',
+                    path:'welcome',
+                    closable:false
+                }
+            ],
+            //激活某个选项卡
+            activeName:'首页'
         },
         //当vue组件加载完成之后会自动调用这个函数
         mounted:function(){
@@ -93,6 +111,40 @@
                 if(node.level_==1){
                     return ;
                 }
+                //声明变量  代表当前的节点在选项卡中存在不存在
+                var exists= false;
+                for(var index in this.tabsData){
+                    if(node.name==this.tabsData[index].name){
+                        exists=true;
+                        break;
+                    }
+                }
+                //如果原先选项卡中不存在 则加入
+                if(!exists){
+                    //往选项卡加入子选项卡
+                    node.closable=true;
+                    this.tabsData.push(node);
+                }
+                //激活选中的选项卡
+                this.activeName=node.name;
+            },
+            //声明删除选显卡的函数
+            removeTab:function(name){
+
+                //查找name对应的选显卡的数据的下标
+                for(var index in this.tabsData){
+                    if(name==this.tabsData[index].name){
+                        break;
+                    }
+                }
+
+                //删除name对应的标签
+                this.tabsData.splice(index,1);
+                //激活删除选项卡的上一项
+                if(index>=1){
+                    this.activeName=this.tabsData[index-1].name;
+                }
+
             }
         }
 
