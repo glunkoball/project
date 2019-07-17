@@ -12,53 +12,35 @@
 </head>
 <body>
 <div style="background: #303133">
-    <div style="background: white;width: 1000px;margin: auto">
-<div id="demand">
-    <el-form>
-            <el-form-item>
-                <div id="app">
-            <el-input  v-model="input" placeholder="请输入内容"></el-input>
-                </div>
-                <div id="a">
-                    <el-button type="success" round>查询</el-button>
-                </div>
-        </el-form-item>
-    </el-form>
-</div>
+    <!--<div style="background: white;width: 1000px;margin: auto">-->
+
 <div id="c1">
     <form>
     <div id="cond">
-        <a id="a1">租房方式&nbsp;：</a>&nbsp;&nbsp;&nbsp;&nbsp;
-        <el-button id="b" type="text">不限</el-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <el-button id="b" type="text">合租</el-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <el-button id="b" type="text">整租</el-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <el-button id="b" type="text">豪宅</el-button>
+            <tb id="a1">租房方式</tb>&nbsp;:&nbsp;&nbsp;&nbsp;
+            <a style="font-size: 20px;color: #303133;text-decoration:none;" href="#.html">不限</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a style="font-size: 20px;color: #303133;text-decoration:none;" href="#.html">合租</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a style="font-size: 20px;color: #303133;text-decoration:none;" href="#.html">整租</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a style="font-size: 20px;color: #303133;text-decoration:none;" href="#.html">豪宅</a>
     </div>
         <hr id="fgx">
     <div id="cond1">
-        <a id="a2">租房方式&nbsp;：</a>&nbsp;&nbsp;&nbsp;&nbsp;
-        <el-button id="b1" type="text">不限</el-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <el-button id="b1" type="text">合租</el-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <el-button id="b1" type="text">整租</el-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <el-button id="b1" type="text">豪宅</el-button>
+        <tb id="a2">租金</tb>&nbsp;:&nbsp;&nbsp;&nbsp;
+        <a style="font-size: 20px;color: #303133;text-decoration:none;" href="#.html">不限</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a style="font-size: 20px;color: #303133;text-decoration:none;" href="#.html">1500以下</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a style="font-size: 20px;color: #303133;text-decoration:none;" href="#.html">1500-2500</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a style="font-size: 20px;color: #303133;text-decoration:none;" href="#.html">2500-4000</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a style="font-size: 20px;color: #303133;text-decoration:none;" href="#.html">4000-6000</a>&nbsp;&nbsp;&nbsp;&nbsp;
     </div>
         <hr id="fgx1">
         <div id="cond2">
-            <a id="a3">租房方式&nbsp;：</a>&nbsp;&nbsp;&nbsp;&nbsp;
-            <el-button id="b" type="text">不限</el-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <el-button id="b" type="text">合租</el-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <el-button id="b" type="text">整租</el-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <el-button id="b" type="text">豪宅</el-button>
+            <tb id="a3">房源特色</tb>&nbsp;:&nbsp;&nbsp;&nbsp;
+            <a style="font-size: 20px;color: #303133;text-decoration:none;" href="#.html">独立卫生间</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a style="font-size: 20px;color: #303133;text-decoration:none;" href="#.html">有电梯</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a style="font-size: 20px;color: #303133;text-decoration:none;" href="#.html">首次出租</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a style="font-size: 20px;color: #303133;text-decoration:none;" href="#.html">独立阳台</a>
         </div>
         <hr id="fgx2">
-        <div id="cond3">
-            <a id="a4">租房方式&nbsp;：</a>&nbsp;&nbsp;&nbsp;&nbsp;
-            <el-button id="b" type="text">不限</el-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <el-button id="b" type="text">合租</el-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <el-button id="b" type="text">整租</el-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <el-button id="b" type="text">豪宅</el-button>
-    </div>
-        <hr id="fgx3">
     </form>
 </div>
     </div>
@@ -68,17 +50,18 @@
     <el-row>
         <el-col :span="8" v-for="(o, index) in 2" :key="o" :offset="index > 0 ? 2 : 0">
             <el-card :body-style="{ padding: '0px' }">
-                <img src="plugin/element-ui/imags/default.gif"/>
-                <div class="bottom clearfix" >
-                    <el-button type="text" class="button">房子主题</el-button>
-                    <div style="padding: 14px;">
-                        <h3>突出点</h3>
-                        <h3>突出点</h3>
-                        <h3>突出点</h3>
-                        <h3>突出点</h3>
-                        <h3>突出点</h3>
-                    </div>
-                </div>
+               <table>
+                   <td>
+                       <div>
+                           <img src="plugin/element-ui/imags/default.gif"/>
+                       </div>
+                   </td>
+                   <td>
+                       <div id="zt">
+                           <a style="font-size: 20px;color: #303133;text-decoration:none;" href="#.html">房子主题</a>
+                       </div>
+                   </td>
+               </table>
             </el-card>
         </el-col>
     </el-row>
@@ -87,22 +70,8 @@
     </div>
 </div>
 <style>
-    #demand,.el-a{
-        margin-top: 140px;
-    }
-    #app,.el-b{
-        margin: auto;
-        width: 600px;
-        height: 400px;
-    }
     #c1,.el-c1{
         margin-top:100px;
-    }
-    #a,.el-c{
-        margin-top: -400px;
-        margin-left: 810px;
-        /*width: 300px;*/
-        /*height: 200px;*/
     }
     #cond,.el-d{
         margin-left: 200px;
@@ -116,9 +85,6 @@
     #cond2,.a3{
         font-size: 20px;
     }
-    #cond3,.a4{
-        font-size: 20px;
-    }
     #cond,.b{
         font-size: 20px;
     }
@@ -130,10 +96,6 @@
         margin-left: 200px;
     }
     #cond2,.el-d2{
-        /*margin-top: 10px;*/
-        margin-left: 200px;
-    }
-    #cond3,.el-d3{
         /*margin-top: 10px;*/
         margin-left: 200px;
     }
@@ -155,25 +117,18 @@
         width:592px;
         color: #8c939d;
     }
-    #fgx3,.f4{
-        margin:auto;
-        margin-top: 7px;
-        width:592px;
-        color: #8c939d;
-    }
     #content1,.com{
         width: 600px;
+    }
+    #zt,.c{
+        margin-top:-90px;
+        margin-left: 30px;
     }
     </style>
 </body>
 <script>
    new Vue({
-       el:'#demand',
-           data() {
-               return {
-                   input: ''
-               }
-           }
+
    })
 </script>
 </html>
