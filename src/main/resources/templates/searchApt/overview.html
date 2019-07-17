@@ -15,6 +15,16 @@
     <!--<div style="background: white;width: 1000px;margin: auto">-->
 
 <div id="c1">
+    <!--<template>-->
+        <!--<div>-->
+            <!--<el-radio-group v-model="radio3">-->
+                <!--<el-radio-button label="上海"></el-radio-button>-->
+                <!--<el-radio-button label="北京"></el-radio-button>-->
+                <!--<el-radio-button label="广州"></el-radio-button>-->
+                <!--<el-radio-button label="深圳"></el-radio-button>-->
+            <!--</el-radio-group>-->
+        <!--</div>-->
+    <!--</template>-->
     <form>
     <div id="cond">
             <tb id="a1">租房方式</tb>&nbsp;:&nbsp;&nbsp;&nbsp;
@@ -127,8 +137,12 @@
     </style>
 </body>
 <script>
-   new Vue({
-
-   })
+    new Vue ({
+       data() {
+            return{
+               radio3:'shanghai'
+           };
+       }
+    })
 </script>
 </html>
