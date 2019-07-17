@@ -43,6 +43,7 @@
 
         new Vue({
             el: '#singin',
+
             //声明校验规则
             computed: {
                 rules () {
@@ -66,8 +67,8 @@
                             { required: true, message: '请输入密码', trigger: 'blur' }
                         ],
                         repassword:[
-                            { required: true, message: '请再次输入密码', trigger: 'blur' }
-                            //{ validator: validatePass2, trigger: "blur" }
+                            { required: true, message: '请再次输入密码', trigger: 'blur' },
+                            { validator: validatePass2, trigger: "blur" }
                         ],
                         tel:[
                             { required: true, message: '请输入电话号吗', trigger: 'blur' },
