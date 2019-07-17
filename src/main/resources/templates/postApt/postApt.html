@@ -3,8 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>发布房源</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="plugin/element-ui/index.css">
+    <!--引入vue-->
+    <script src="plugin/element-ui/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script src="plugin/element-ui/index.js"></script>
+    <script src="plugin/element-ui/axios.js"></script>
+    <style>
+        #app{
+
+        }
+    </style>
 </head>
 <body>
-发布房源
+<div id="app">
+
+    <el-steps :active="active" finish-status="success" simple style="margin-top: 20px">
+        <el-step title="步骤 1" ></el-step>
+        <el-step title="步骤 2" ></el-step>
+        <el-step title="步骤 3" ></el-step>
+    </el-steps>
+
+    <el-button style="margin-top: 12px;" @click="next">下一步</el-button>
+</div>
 </body>
+<script>
+    new Vue({
+        el:'#app',
+        data() {
+            return {
+                active: 0
+            };
+        },
+
+        methods: {
+            next() {
+                if (this.active++ > 2) this.active = 0;
+            }
+        }
+    })
+</script>
 </html>
