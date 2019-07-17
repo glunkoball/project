@@ -9,6 +9,7 @@
     <script src="plugin/element-ui/vue.js"></script>
     <!-- 引入组件库 -->
     <script src="plugin/element-ui/index.js"></script>
+    <script src="plugin/element-ui/axios.js"></script>
     <style>
         .el-carousel__item h3 {
             color: #475669;
@@ -76,13 +77,20 @@
     <el-dialog
             title="登陆"
             :visible.sync="centerDialogVisible"
-            width="30%"
+            width="25%"
             center>
-        
-        <span slot="footer" class="dialog-footer">
-                        <el-button @click="centerDialogVisible = false">取 消</el-button>
-                        <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
-                    </span>
+        <el-form ref="form" :rules="rules" :model="form" label-width="90px">
+            <el-form-item label="邮箱/账号:" prop="username">
+                <el-input v-model="form.username"></el-input>
+            </el-form-item>
+            <el-form-item label="密码:" prop="password">
+                <el-input v-model="form.password" type="password"></el-input>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="onSubmit('form')" style="width:100px;">SUBMIT</el-button>
+                <el-button type="primary" style="width:100px;">SIGN IN</el-button>
+            </el-form-item>
+        </el-form>
     </el-dialog>
 </div>
 <div id="slides" style="width: 70%; margin: auto;">
@@ -136,11 +144,37 @@
         data:{
             activeIndex: '1',
             activeIndex2: '1',
-            centerDialogVisible: false
+            centerDialogVisible: false,
+            form:{username:'',password:''},
+            rules:{
+                username:[{required:true,message:'请输入用户名',trigger:'blur'}],
+                password:[{required:true,message:'请输入密码',trigger:'blur'}]
+            }
         },
         methods: {
             handleSelect(key, keyPath) {
                 console.log(key, keyPath);
+            },
+            onSubmit:function(forName){
+                this.$refs[forName].validate((valid)=>{
+                    if (valid) {
+                        alert(111);
+                        //往后台发送ajax请求 ，校验用户名和密码
+                        axios.post('checkUser',this.form)
+                            .then(function (res) {
+                                //如果登录成功
+                                if(res.data.success){
+                                    //跳转到主界面
+                                    window.location.href="index";
+                                }else{
+                                    Vue.prototype.$message.error(res.data.error);
+                                }
+                            })
+                            .catch(function (error) {
+                                Vue.prototype.$message.error("服务器产生异常，请联系管理员");
+                            });
+                    }
+                });
             }
         }
     })
