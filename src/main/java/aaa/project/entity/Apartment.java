@@ -1,5 +1,8 @@
 package aaa.project.entity;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class Apartment {
     //房屋基本信息
     private String AptNum;//房源编号
@@ -14,35 +17,39 @@ public class Apartment {
     private Integer whichfloor;//楼层
     private Integer totalfloor;//总楼层
     //房源配套信息
-    private Boolean elevator;//电梯
-    private Boolean parking;//停车位
-    private Boolean internet;//宽带
-    private Boolean bed;//床
-    private Boolean sofa;//沙发
-    private Boolean chair;//椅子
-    private Boolean TV;//电视
-    private Boolean AC;//空调
-    private Boolean refrigerator;//冰箱
-    private Boolean washer;//洗衣机
-    private Boolean gas;//燃气
-    private Boolean colony;//阳台
+    private ArrayList facility;
+    private Integer elevator;//电梯
+    private Integer parking;//停车位
+    private Integer internet;//宽带
+    private Integer bed;//床
+    private Integer sofa;//沙发
+    private Integer chair;//椅子
+    private Integer TV;//电视
+    private Integer AC;//空调
+    private Integer refrigerator;//冰箱
+    private Integer washer;//洗衣机
+    private Integer gas;//燃气
+    private Integer colony;//阳台
     //出租方式以及租金
-    private Boolean allCharged;//托管
-    private Boolean together;//整租
-    private Boolean split;//合租
-    private Boolean decoration;//申请装修后合租
+    private ArrayList rentMethods;
+    private Integer allCharged;//托管
+    private Integer together;//整租
+    private Integer split;//合租
+    private Integer decoration;//申请装修后合租
     private String paymentMethods;//付款方式(押一付一，押一付三，无押金月付，半年付，年付)
     private String moveinDate;//搬入时间
-    private Boolean waterFee;//负责水费
-    private Boolean electricityFee;//负责电费
-    private Boolean gasFee;//负责燃气费
-    private Boolean InternetFee;//负责网费
-    private Boolean communityFee;//负责物业费
-    private Boolean wireFee;//负责有线电视费
-    private Boolean parkingFee;//负责停车费
+    private ArrayList includedService;
+    private Integer waterFee;//负责水费
+    private Integer electricityFee;//负责电费
+    private Integer gasFee;//负责燃气费
+    private Integer InternetFee;//负责网费
+    private Integer communityFee;//负责物业费
+    private Integer wireFee;//负责有线电视费
+    private Integer parkingFee;//负责停车费
     //出租要求
-    private Boolean pet;//宠物
-    private Boolean smoking;//吸烟
+    private ArrayList rentRequirement;
+    private Integer pet;//宠物
+    private Integer smoking;//吸烟
     //房源照片最多四张
 /*  private String url1;
     private String url2;
@@ -54,8 +61,8 @@ public class Apartment {
     private String url6;//身份证
 */
     //其他信息
-    private Boolean key;//是否交钥匙
-    private String checkAptTime;//看房时间(仅周末，仅工作日，随时看房)
+    private Integer key;//是否交钥匙
+    private ArrayList checkAptTime;//看房时间(仅周末，仅工作日，随时看房)
     private String description;//描述
 
     public String getAptNum() {
@@ -146,131 +153,139 @@ public class Apartment {
         this.totalfloor = totalfloor;
     }
 
-    public Boolean getElevator() {
+    public ArrayList getFacility() {
+        return facility;
+    }
+
+    public void setFacility(ArrayList facility) {
+        this.facility = facility;
+    }
+
+    public Integer getElevator() {
         return elevator;
     }
 
-    public void setElevator(Boolean elevator) {
+    public void setElevator(Integer elevator) {
         this.elevator = elevator;
     }
 
-    public Boolean getParking() {
+    public Integer getParking() {
         return parking;
     }
 
-    public void setParking(Boolean parking) {
+    public void setParking(Integer parking) {
         this.parking = parking;
     }
 
-    public Boolean getInternet() {
+    public Integer getInternet() {
         return internet;
     }
 
-    public void setInternet(Boolean internet) {
+    public void setInternet(Integer internet) {
         this.internet = internet;
     }
 
-    public Boolean getBed() {
+    public Integer getBed() {
         return bed;
     }
 
-    public void setBed(Boolean bed) {
+    public void setBed(Integer bed) {
         this.bed = bed;
     }
 
-    public Boolean getSofa() {
+    public Integer getSofa() {
         return sofa;
     }
 
-    public void setSofa(Boolean sofa) {
+    public void setSofa(Integer sofa) {
         this.sofa = sofa;
     }
 
-    public Boolean getChair() {
+    public Integer getChair() {
         return chair;
     }
 
-    public void setChair(Boolean chair) {
+    public void setChair(Integer chair) {
         this.chair = chair;
     }
 
-    public Boolean getTV() {
+    public Integer getTV() {
         return TV;
     }
 
-    public void setTV(Boolean TV) {
+    public void setTV(Integer TV) {
         this.TV = TV;
     }
 
-    public Boolean getAC() {
+    public Integer getAC() {
         return AC;
     }
 
-    public void setAC(Boolean AC) {
+    public void setAC(Integer AC) {
         this.AC = AC;
     }
 
-    public Boolean getRefrigerator() {
+    public Integer getRefrigerator() {
         return refrigerator;
     }
 
-    public void setRefrigerator(Boolean refrigerator) {
+    public void setRefrigerator(Integer refrigerator) {
         this.refrigerator = refrigerator;
     }
 
-    public Boolean getWasher() {
+    public Integer getWasher() {
         return washer;
     }
 
-    public void setWasher(Boolean washer) {
+    public void setWasher(Integer washer) {
         this.washer = washer;
     }
 
-    public Boolean getGas() {
+    public Integer getGas() {
         return gas;
     }
 
-    public void setGas(Boolean gas) {
+    public void setGas(Integer gas) {
         this.gas = gas;
     }
 
-    public Boolean getColony() {
+    public Integer getColony() {
         return colony;
     }
 
-    public void setColony(Boolean colony) {
+    public void setColony(Integer colony) {
         this.colony = colony;
     }
 
-    public Boolean getAllCharged() {
+    public Integer getAllCharged() {
         return allCharged;
     }
 
-    public void setAllCharged(Boolean allCharged) {
+    public void setAllCharged(Integer allCharged) {
         this.allCharged = allCharged;
     }
 
-    public Boolean getTogether() {
+    public Integer getTogether() {
         return together;
     }
 
-    public void setTogether(Boolean together) {
+    public void setTogether(Integer together) {
         this.together = together;
     }
 
-    public Boolean getSplit() {
+    public Integer getSplit() {
         return split;
     }
 
-    public void setSplit(Boolean split) {
+    public void setSplit(Integer split) {
         this.split = split;
     }
 
-    public Boolean getDecoration() {
+    public Integer getDecoration() {
         return decoration;
     }
 
-    public void setDecoration(Boolean decoration) {
+    public void setDecoration(Integer decoration) {
         this.decoration = decoration;
     }
 
@@ -290,35 +305,91 @@ public class Apartment {
         this.moveinDate = moveinDate;
     }
 
-    public Boolean getPet() {
+    public Integer getWaterFee() {
+        return waterFee;
+    }
+
+    public void setWaterFee(Integer waterFee) {
+        this.waterFee = waterFee;
+    }
+
+    public Integer getElectricityFee() {
+        return electricityFee;
+    }
+
+    public void setElectricityFee(Integer electricityFee) {
+        this.electricityFee = electricityFee;
+    }
+
+    public Integer getGasFee() {
+        return gasFee;
+    }
+
+    public void setGasFee(Integer gasFee) {
+        this.gasFee = gasFee;
+    }
+
+    public Integer getInternetFee() {
+        return InternetFee;
+    }
+
+    public void setInternetFee(Integer internetFee) {
+        InternetFee = internetFee;
+    }
+
+    public Integer getCommunityFee() {
+        return communityFee;
+    }
+
+    public void setCommunityFee(Integer communityFee) {
+        this.communityFee = communityFee;
+    }
+
+    public Integer getWireFee() {
+        return wireFee;
+    }
+
+    public void setWireFee(Integer wireFee) {
+        this.wireFee = wireFee;
+    }
+
+    public Integer getParkingFee() {
+        return parkingFee;
+    }
+
+    public void setParkingFee(Integer parkingFee) {
+        this.parkingFee = parkingFee;
+    }
+
+    public Integer getPet() {
         return pet;
     }
 
-    public void setPet(Boolean pet) {
+    public void setPet(Integer pet) {
         this.pet = pet;
     }
 
-    public Boolean getSmoking() {
+    public Integer getSmoking() {
         return smoking;
     }
 
-    public void setSmoking(Boolean smoking) {
+    public void setSmoking(Integer smoking) {
         this.smoking = smoking;
     }
 
-    public Boolean getKey() {
+    public Integer getKey() {
         return key;
     }
 
-    public void setKey(Boolean key) {
+    public void setKey(Integer key) {
         this.key = key;
     }
 
-    public String getCheckAptTime() {
+    public ArrayList getCheckAptTime() {
         return checkAptTime;
     }
 
-    public void setCheckAptTime(String checkAptTime) {
+    public void setCheckAptTime(ArrayList checkAptTime) {
         this.checkAptTime = checkAptTime;
     }
 
@@ -330,59 +401,27 @@ public class Apartment {
         this.description = description;
     }
 
-    public Boolean getWaterFee() {
-        return waterFee;
+    public ArrayList getRentMethods() {
+        return rentMethods;
     }
 
-    public void setWaterFee(Boolean waterFee) {
-        this.waterFee = waterFee;
+    public void setRentMethods(ArrayList rentMethods) {
+        this.rentMethods = rentMethods;
     }
 
-    public Boolean getElectricityFee() {
-        return electricityFee;
+    public ArrayList getIncludedService() {
+        return includedService;
     }
 
-    public void setElectricityFee(Boolean electricityFee) {
-        this.electricityFee = electricityFee;
+    public void setIncludedService(ArrayList includedService) {
+        this.includedService = includedService;
     }
 
-    public Boolean getGasFee() {
-        return gasFee;
+    public ArrayList getRentRequirement() {
+        return rentRequirement;
     }
 
-    public void setGasFee(Boolean gasFee) {
-        this.gasFee = gasFee;
-    }
-
-    public Boolean getInternetFee() {
-        return InternetFee;
-    }
-
-    public void setInternetFee(Boolean internetFee) {
-        InternetFee = internetFee;
-    }
-
-    public Boolean getCommunityFee() {
-        return communityFee;
-    }
-
-    public void setCommunityFee(Boolean communityFee) {
-        this.communityFee = communityFee;
-    }
-
-    public Boolean getWireFee() {
-        return wireFee;
-    }
-
-    public void setWireFee(Boolean wireFee) {
-        this.wireFee = wireFee;
-    }
-
-    public Boolean getParkingFee() {
-        return parkingFee;
-    }
-
-    public void setParkingFee(Boolean parkingFee) {
-        this.parkingFee = parkingFee;
+    public void setRentRequirement(ArrayList rentRequirement) {
+        this.rentRequirement = rentRequirement;
     }
 }
