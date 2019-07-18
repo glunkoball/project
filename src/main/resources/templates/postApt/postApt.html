@@ -12,7 +12,28 @@
     <script src="plugin/element-ui/axios.js"></script>
     <style>
         #app{
+            width: 60%;
+            margin: auto;
+        }
+        .text {
+            font-size: 14px;
+        }
 
+        .item {
+            margin-bottom: 18px;
+        }
+
+        .clearfix:before,
+        .clearfix:after {
+            display: table;
+            content: "";
+        }
+        .clearfix:after {
+            clear: both
+        }
+
+        .box-card {
+            width: 480px;
         }
     </style>
 </head>
@@ -25,7 +46,207 @@
         <el-step title="步骤 3" ></el-step>
     </el-steps>
 
+    <div class="steps" style="width: 100px;height: 100px;border: 1px solid black;">
+        1
+    </div>
+
+    <!--<el-button style="margin-top: 12px;" @click="before">上一步</el-button>-->
     <el-button style="margin-top: 12px;" @click="next">下一步</el-button>
+
+    <el-form :model="ruleForm" :rules="rules" ref="ruleForm"  label-width="100px" class="demo-ruleForm">
+        <el-card class="box-card" style="width: 800px;">
+            <div slot="header" class="clearfix">
+                <span>房屋基本信息</span>
+                <i style="float: right;" class="el-icon-document"></i>
+            </div>
+            <div  class="text item" >
+                <div class="fisrtRow">
+                    <el-form-item  label="城市" prop="city" style="float: left;">
+                        <el-input v-model="ruleForm.city" style="width: 100px;"></el-input>
+                    </el-form-item>
+                    <el-form-item label="所在区" prop="district" style="float: left;">
+                        <el-input v-model="ruleForm.district" style="width: 100px;"></el-input>
+                    </el-form-item>
+                    <el-form-item label="小区名" prop="community" style="float: left;">
+                        <el-input v-model="ruleForm.community" style="width: 200px;"></el-input>
+                    </el-form-item>
+                    <div style="clear:both;"></div>
+                </div>
+                <div class="secondRow">
+                    <el-form-item prop="bedrooms"style="float: left;" label="户型">
+                        <el-input v-model="ruleForm.bedrooms" style="width: 100px;"><span slot="suffix">室</span></el-input>
+                    </el-form-item>
+                    <el-form-item prop="bathrooms"style="float: left;">
+                        <el-input v-model="ruleForm.bathrooms" style="width: 100px;"><span slot="suffix">卫</span></el-input>
+                    </el-form-item>
+                    <el-form-item prop="livingrooms"style="float: left;">
+                        <el-input v-model="ruleForm.livingrooms" style="width: 100px;"><span slot="suffix">厅</span></el-input>
+                    </el-form-item>
+                    <div style="clear: both;"></div>
+                </div>
+                <div class="thirdRow">
+                    <el-form-item prop="area"style="float: left;" label="面积">
+                        <el-input v-model="ruleForm.area" style="width: 100px;"><span slot="suffix">平米</span></el-input>
+                    </el-form-item>
+                    <el-form-item prop="whichfloor"style="float: left;" label="楼层信息">
+                        <el-input v-model="ruleForm.whichfloor" style="width: 100px;"><span slot="prefix">第</span><span slot="suffix">层</span></el-input>
+                    </el-form-item>
+                    <el-form-item prop="totalfloor"style="float: left;">
+                        <el-input v-model="ruleForm.totalfloor" style="width: 100px;"><span slot="prefix">共</span><span slot="suffix">层</span></el-input>
+                    </el-form-item>
+                    <div style="clear: both;"></div>
+                </div>
+                <div class="forthRow">
+                    <el-form-item prop="facing" label="朝向">
+                        <template>
+                            <el-select v-model="ruleForm.facing" placeholder="请选择朝向">
+                                <el-option
+                                        v-for="item in facing"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </template>
+                    </el-form-item>
+                </div>
+
+            </div>
+
+        </el-card>
+
+
+        <el-card class="box-card" style="width: 800px;">
+            <div slot="header" class="clearfix">
+                <span>房屋配置</span>
+                <i style="float: right;" class="el-icon-document"></i>
+            </div>
+            <div  class="text item" >
+                <div class="fisrtRow">
+                    <el-form-item label="电梯" prop="elevator">
+                        <el-select v-model="ruleForm.elevator" placeholder="是否有电梯">
+                            <el-option
+                                    v-for="item in elevator"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="车位" prop="parking">
+                        <el-select v-model="ruleForm.parking" placeholder="是否有车位">
+                            <el-option
+                                    v-for="item in parking"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+
+                    <el-form-item label="配套设施" prop="facility">
+                        <el-checkbox-group v-model="ruleForm.facility">
+                            <el-checkbox label="网络" name="internet" ></el-checkbox>
+                            <el-checkbox label="床" name="bed" >床</el-checkbox>
+                            <el-checkbox label="沙发" name="sofa"  >沙发</el-checkbox>
+                            <el-checkbox label="桌椅" name="chair"  ></el-checkbox>
+                            <el-checkbox label="电视" name="TV"  ></el-checkbox>
+                            <el-checkbox label="空调" name="AC"  ></el-checkbox>
+                            <el-checkbox label="冰箱" name="refrigerator"  ></el-checkbox>
+                            <el-checkbox label="洗衣机" name="washer"  ></el-checkbox>
+                            <el-checkbox label="燃气" name="washer" ></el-checkbox>
+                            <el-checkbox label="阳台" name="colony" ></el-checkbox>
+                        </el-checkbox-group>
+                    </el-form-item>
+
+                    <div style="clear:both;"></div>
+                </div>
+
+            </div>
+        </el-card>
+
+
+        <el-card class="box-card" style="width: 800px;">
+            <div slot="header" class="clearfix">
+                <span>租房方式和租金细节</span>
+                <i style="float: right;" class="el-icon-document"></i>
+            </div>
+            <div  class="text item" >
+                <div class="fisrtRow">
+                    <el-form-item label="出租方式" prop="rentMethods">
+                        <el-checkbox-group v-model="ruleForm.rentMethods">
+                            <el-checkbox label="托管" name="allCharged" ></el-checkbox>
+                            <el-checkbox label="整租" name="together" ></el-checkbox>
+                            <el-checkbox label="合租" name="split"  ></el-checkbox>
+                            <el-checkbox label="装修出租" name="decoration"  ></el-checkbox>
+                        </el-checkbox-group>
+                    </el-form-item>
+                    <el-form-item prop="price" label="月租金">
+                        <el-input v-model="ruleForm.price" style="width: 100px;"><span slot="prefix">￥</span><span slot="suffix">/月</span></el-input>
+                    </el-form-item>
+                    <el-form-item label="最早入住" required prop="moveinDate">
+                        <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.moveinDate" style="width: 200px;"></el-date-picker>
+                    </el-form-item>
+                    <el-form-item label="租金包含" prop="includedService">
+                        <el-checkbox-group v-model="ruleForm.includedService">
+                            <el-checkbox label="水费" name="internet" ></el-checkbox>
+                            <el-checkbox label="电费" name="bed" ></el-checkbox>
+                            <el-checkbox label="燃气费" name="sofa"  ></el-checkbox>
+                            <el-checkbox label="宽带费" name="chair"  ></el-checkbox>
+                            <el-checkbox label="物业费" name="TV"  ></el-checkbox>
+                            <el-checkbox label="有线电视费" name="AC"  ></el-checkbox>
+                            <el-checkbox label="停车费" name="refrigerator"  ></el-checkbox>
+                        </el-checkbox-group>
+                    </el-form-item>
+                </div>
+
+            </div>
+        </el-card>
+
+        <el-card class="box-card" style="width: 800px;">
+            <div slot="header" class="clearfix">
+                <span>其他信息</span>
+                <i style="float: right;" class="el-icon-document"></i>
+            </div>
+            <div  class="text item" >
+                <div class="fisrtRow">
+                    <el-form-item label="租客要求" prop="rentRequirement">
+                        <el-checkbox-group v-model="ruleForm.rentRequirement">
+                            <el-checkbox label="禁烟" name="internet" ></el-checkbox>
+                            <el-checkbox label="禁宠物" name="bed" ></el-checkbox>
+                        </el-checkbox-group>
+                    </el-form-item>
+
+                    <el-form-item label="钥匙" prop="key">
+                        <el-radio-group v-model="ruleForm.key">
+                            <el-radio label="1">交钥匙</el-radio>
+                            <el-radio label="0">拒绝交钥匙</el-radio>
+                        </el-radio-group>
+                    </el-form-item>
+
+                    <el-form-item label="看房时间" prop="checkAptTime">
+                        <el-checkbox-group v-model="ruleForm.checkAptTime">
+                            <el-checkbox label="周末" name="internet" ></el-checkbox>
+                            <el-checkbox label="工作日" name="bed" ></el-checkbox>
+                            <el-checkbox label="随时看房" name="bed" ></el-checkbox>
+                        </el-checkbox-group>
+                    </el-form-item>
+
+                    <el-form-item label="房源描述" prop="description" style="width: 600px;">
+                        <el-input type="textarea" v-model="ruleForm.description"></el-input>
+                    </el-form-item>
+                </div>
+
+            </div>
+            <el-form-item>
+                <el-button type="primary" @click="onSubmit('ruleForm')">提交</el-button>
+            </el-form-item>
+        </el-card>
+
+
+    </el-form>
 </div>
 </body>
 <script>
@@ -33,14 +254,74 @@
         el:'#app',
         data() {
             return {
-                active: 0
+                active: 0,
+
+                ruleForm:{
+                    city:'上海',
+                    district:'',
+                    community:'',
+                    bedrooms:'',
+                    bathrooms:'',
+                    livingrooms:'',
+                    area:'',
+                    facility:[],
+                    includedService:[],
+                    rentMethods:[],
+                    rentRequirement:[],
+                    key:'',
+                    checkAptTime:[]
+                },
+                facing:[{value:'东',label:'东'},{value:'西',label:'西'},{value:'南',label:'南'},{value:'北',label:'北'},
+                    {value:'东北',label:'东北'},{value:'西北',label:'西北'},{value:'西南',label:'西南'},{value:'东南',label:'东南'}],value:'',
+                elevator:[{value:1,label:'有电梯'},{value:0,label:'无电梯'}],value:'',
+                parking:[{value:1,label:'有车位'},{value:0,label:'无车位'}],value:'',
+                rules:{
+                    city:[{required:true,message:'请填写房屋所在市',trigger:'blur'}],
+                    district:[{required:true,message:'请填写房屋所在区',trigger:'blur'}],
+                    community:[{required:true,message:'请填写房屋所在小区名',trigger:'blur'}],
+                    bedrooms:[{required:true,message:'请填写卧室',trigger:'blur'}],
+                    bathrooms:[{required:true,message:'请填写卫生间',trigger:'blur'}],
+                    livingrooms:[{required:true,message:'请填写厅',trigger:'blur'}],
+                    area:[{required:true,message:'请填写房面积',trigger:'blur'}],
+                    whichfloor:[{required:true,message:'请填写层数',trigger:'blur'}],
+                    totalfloor:[{required:true,message:'请填写总楼层',trigger:'blur'}],
+                    facing:[{required:true,message:'请选择朝向',trigger:'change'}],
+                    elevator:[{required:true,message:'请选择是否有电梯',trigger:'change'}],
+                    parking:[{required:true,message:'请选择是否车位',trigger:'change'}],
+                    rentMethods:[{type:'array',required:true,message:'请选择出租方式',trigger:'change'}],
+                    price:[{required:true,message:'请填写月租金',trigger:'blur'}],
+                    key:[{required:true,message:'请选择是否交钥匙',trigger:'change'}],
+                    checkAptTime:[{type:'array',required:true,message:'请选择看房时间',trigger:'change'}],
+                    description:[{required:true,message:'请填写房源描述',trigger:'blur'}]
+                }
             };
         },
+
 
         methods: {
             next() {
                 if (this.active++ > 2) this.active = 0;
+            },
+            onSubmit:function(forName){
+                this.$refs[forName].validate((valid)=>{
+                    if (valid) {
+                        //往后台发送ajax请求 ，校验用户名和密码
+                        axios.post('publishApt',this.ruleForm)
+                            .then(function (res) {
+                                //如果登录成功
+                                if(res.data.success){
+                                    //跳转到主界面
+                                    window.location.href="index";
+                                }
+                                //如果登陆失败，弹出错误提醒的提示
+                                else{
+                                    Vue.prototype.$message.error(res.data.error);
+                                }
+                            })
+                    }
+                });
             }
+
         }
     })
 </script>
