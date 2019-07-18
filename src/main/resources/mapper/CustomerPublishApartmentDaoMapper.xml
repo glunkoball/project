@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="aaa.project.dao.CustomerPublishApartmentDao">
+    <insert id="publishApt1">
+        insert into apartmentinfo1 (AptNum,   bedrooms,   bathrooms,   livingrooms,   area,   facing,   city,   district,   community,   whichfloor,   totalfloor)
+                          values (#{AptNum},#{bedrooms},#{bathrooms},#{livingrooms},#{area},#{facing},#{city},#{district},#{community},#{whichfloor},#{totalfloor})
+    </insert>
+    <insert id="publishApt2">
+        insert into apartmentinfo2 (  AptNum,   elevator,   parking,   internet,   bed,   sofa,   chair,   TV,   AC,   refrigerator,   washer,   gas,   colony)
+                            values (#{AptNum},#{elevator},#{parking},#{internet},#{bed},#{sofa},#{chair},#{TV},#{AC},#{refrigerator},#{washer},#{gas},#{colony})
+    </insert>
+    <insert id="publishApt3">
+        insert into apartmentinfo3(  AptNum,   allCharged,   together,   split,   decoration,   price,   moveinDate,   waterFee,   electricityFee,   gasFee,   InternetFee,   communityFee,   wireFee,   parkingFee,   pet,   smoking,   keys,   checkAptTime,   description)
+                           values (#{AptNum},#{allCharged},#{together},#{split},#{decoration},#{price},#{moveinDate},#{waterFee},#{electricityFee},#{gasFee},#{InternetFee},#{communityFee},#{wireFee},#{parkingFee},#{pet},#{smoking},#{keys},#{checkAptTime},#{description})
+    </insert>
+</mapper>

@@ -180,7 +180,7 @@
                             <el-checkbox label="托管" name="allCharged" ></el-checkbox>
                             <el-checkbox label="整租" name="together" ></el-checkbox>
                             <el-checkbox label="合租" name="split"  ></el-checkbox>
-                            <el-checkbox label="装修出租" name="decoration"  ></el-checkbox>
+                            <el-checkbox label="装修出租" name="decoration" ></el-checkbox>
                         </el-checkbox-group>
                     </el-form-item>
                     <el-form-item prop="price" label="月租金">
@@ -258,12 +258,15 @@
 
                 ruleForm:{
                     city:'上海',
-                    district:'',
-                    community:'',
-                    bedrooms:'',
-                    bathrooms:'',
-                    livingrooms:'',
-                    area:'',
+                    district:'浦东区',
+                    community:'暖元小区',
+                    bedrooms:1,
+                    bathrooms:2,
+                    livingrooms:3,
+                    area:'160.8',
+                    whichfloor:2,
+                    totalfloor:3,
+                    facing:'东',
                     facility:[],
                     includedService:[],
                     rentMethods:[],
@@ -271,7 +274,7 @@
                     key:'',
                     checkAptTime:[]
                 },
-                facing:[{value:'东',label:'东'},{value:'西',label:'西'},{value:'南',label:'南'},{value:'北',label:'北'},
+                facing:[{value:'1',label:'东'},{value:'西',label:'西'},{value:'南',label:'南'},{value:'北',label:'北'},
                     {value:'东北',label:'东北'},{value:'西北',label:'西北'},{value:'西南',label:'西南'},{value:'东南',label:'东南'}],value:'',
                 elevator:[{value:1,label:'有电梯'},{value:0,label:'无电梯'}],value:'',
                 parking:[{value:1,label:'有车位'},{value:0,label:'无车位'}],value:'',

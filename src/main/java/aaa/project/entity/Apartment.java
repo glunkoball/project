@@ -37,6 +37,7 @@ public class Apartment {
     private Integer split;//合租
     private Integer decoration;//申请装修后合租
     private String paymentMethods;//付款方式(押一付一，押一付三，无押金月付，半年付，年付)
+    private Double price;//租金
     private String moveinDate;//搬入时间
     private ArrayList includedService;
     private Integer waterFee;//负责水费
@@ -48,6 +49,7 @@ public class Apartment {
     private Integer parkingFee;//负责停车费
     //出租要求
     private ArrayList rentRequirement;
+
     private Integer pet;//宠物
     private Integer smoking;//吸烟
     //房源照片最多四张
@@ -61,9 +63,17 @@ public class Apartment {
     private String url6;//身份证
 */
     //其他信息
-    private Integer key;//是否交钥匙
+    private Integer keys;//是否交钥匙
     private ArrayList checkAptTime;//看房时间(仅周末，仅工作日，随时看房)
     private String description;//描述
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 
     public String getAptNum() {
         return AptNum;
@@ -378,11 +388,11 @@ public class Apartment {
     }
 
     public Integer getKey() {
-        return key;
+        return keys;
     }
 
     public void setKey(Integer key) {
-        this.key = key;
+        this.keys = key;
     }
 
     public ArrayList getCheckAptTime() {
