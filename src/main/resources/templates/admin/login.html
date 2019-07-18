@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <!-- 引入样式 -->
@@ -10,7 +10,7 @@
     <script src="../plugin/element-ui/index.js"></script>
     <!--引入axios库-->
     <script src="../plugin/element-ui/axios.js"></script>
-
+    <title>登录</title>
 </head>
 <body>
 <div id="app" style="width:400px;border:0px solid red;margin:auto;margin-top:200px;">
@@ -56,11 +56,14 @@
         methods:{
             //登录的事件
             onSubmit:function(formName){
+
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         //往后台发送ajax请求 ，校验用户名和密码
                         axios.post('checkUser',this.form)
                             .then(function (res) {
+                                alert(456);
+                                console.info(res);
                                 //如果登录成功
                                 if(res.data.success){
                                     //跳转到主界面
@@ -69,14 +72,12 @@
                                     Vue.prototype.$message.error(res.data.error);
                                 }
                             })
-                            .catch(function (error) {
-                                Vue.prototype.$message.error("服务器产生异常，请联系管理员");
-                            });
+
                     } else {
                         console.log('error submit!!');
-                return false;
-            }
-            });
+                        return false;
+                    }
+                });
             },
             //重置的事件
             resetForm:function(formName){
@@ -86,7 +87,7 @@
 
 
         }
-    })
+    });
 </script>
 
 </html>

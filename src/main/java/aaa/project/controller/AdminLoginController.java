@@ -5,6 +5,10 @@ import aaa.project.common.DefaultMsg;
 import aaa.project.entity.Admin;
 import aaa.project.entity.Module;
 import aaa.project.service.AdminLoginService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +30,14 @@ public class AdminLoginController {
     @RequestMapping("/login")
     public String toadmainLogin(){
         return "admin/login";
+    }
+   @RequestMapping("/toError")
+   public String error(){
+       return "admin/error";
+   }
+    @RequestMapping("/aback")
+    public String aback(){
+        return "redirect:/admin/login";
     }
 
     @RequestMapping("/welcome")
@@ -50,7 +62,18 @@ public class AdminLoginController {
     @RequestMapping("/checkUser")
     @ResponseBody
     public DefaultMsg checkUser(@RequestBody Admin admin, HttpSession session){
-        Admin admins = adminLoginService.findUserAndPassword(admin);
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken upt = new UsernamePasswordToken(admin.getUsername(), admin.getPassword());
+        DefaultMsg dm=new DefaultMsg();
+        try{
+            subject.login(upt);
+        }
+        catch (AuthenticationException e){
+            e.printStackTrace();
+            dm.setSuccess(0);
+            dm.setError("用户名或者密码错误");
+        }
+        /* Admin admins = adminLoginService.findUserAndPassword(admin);
         DefaultMsg dm = new DefaultMsg();
         //认证失败
         if(admins==null){
@@ -58,7 +81,7 @@ public class AdminLoginController {
             dm.setError("用户名或者密码输入错误");
         }else{
             session.setAttribute(Constants.SESSION_USER,admins);
-        }
+        }*/
         return dm;
     }
     /**
@@ -68,8 +91,10 @@ public class AdminLoginController {
     @RequestMapping("/getUserMenus")
     @ResponseBody
     public List<Module> getUserMenus(HttpSession session){
-        Admin user = (Admin) session.getAttribute(Constants.SESSION_USER);
-        List<Module> modules = adminLoginService.queryUserMenus(user);
+        Subject subject = SecurityUtils.getSubject();
+        Admin principal =(Admin) subject.getPrincipal();
+        //Admin user = (Admin) session.getAttribute(Constants.SESSION_USER);
+        List<Module> modules = adminLoginService.queryUserMenus(principal);
         return modules;
     }
 }

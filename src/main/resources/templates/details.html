@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <!-- 引入样式 -->
@@ -8,8 +8,8 @@
     <script src="plugin/element-ui/vue.js"></script>
     <!-- 引入组件库 -->
     <script src="plugin/element-ui/index.js"></script>
-    <!--引入axios库-->
-    <!--<script src="plugin/element-ui/axios.js"></script>-->
+
+   <!--<script src="plugin/element-ui/axios.js"></script>-->
 
 
 </head>
@@ -24,9 +24,9 @@
 
             <el-main>
                 <div style="border: 1px solid #EBEEF5;margin-top: -20px;margin-left:-29px;margin-right:-20px;height: 70px;padding-top: 8px;">
-                    <span style="font-family: PingFang SC;font-size: 20px;margin-left: 20px">自如友家·龙湖蔚澜香醍·4居室-01卧</span>
+                    <span style="font-family: PingFang SC;font-size: 20px;margin-left: 20px" th:text="${oneHome.city}+'·'+${oneHome.community}+'·'+${oneHome.bedrooms}+'居室'"></span>
                     <br>
-                    <span style="color: #ebb563;margin-left: 20px;margin-top: 5px">￥2200/月</span>
+                    <span style="color: #ebb563;margin-left: 20px;margin-top: 5px" th:text="'￥'+${oneHome.price}+'/月'">￥2200/月</span>
                     <el-button type="primary" icon="el-icon-share" style="height: 30px;background-color:#ebb563;width: 40px;margin-left: 760px;border: 1px solid  #ebb563" ></el-button>
                     <el-button type="primary" icon="el-icon-star-off" style="height: 30px;background-color: #ebb563;width: 40px;border: 1px solid  #ebb563"></el-button>
 
@@ -39,34 +39,54 @@
                     </el-carousel>
                 </div>
                 <el-tabs type="border-card">
-                    <el-tab-pane label="房源信息">
-                        带独卫带阳台，朝南，面积大，只有可遇不可求。小区为高端小区，由上海有名物业公司龙湖物业有限公司管理，小区内有别墅群，环境安静舒适
-                        。距离地铁直线距离约150米，交通方便
+                    <el-tab-pane label="房源信息" >
+                        <span th:text="${oneHome.description}">带独卫带阳台，朝南，面积大，只有可遇不可求。小区为高端小区，由上海有名物业公司龙湖物业有限公司管理，小区内有别墅群，环境安静舒适
+                        。距离地铁直线距离约150米，交通方便</span>
+
                     </el-tab-pane>
                     <el-tab-pane label="设施信息" style="height: 400px">
 
                         <el-card class="box-card" style="height: 300px;width: 150px;float: left" header="特征">
                                 <ur >
-                                    <li>热水器</li>
-                                    <li>暖气</li>
-                                    <li>宽带</li>
-                                    <li>天然气</li>
+
+                                    <li th:if="${oneHome.colony}==1">阳台</li>
+                                    <li th:if="${oneHome.internet}==1">宽带</li>
+                                    <li th:if="${oneHome.gas}==1">天然气</li>
                                 </ur>
                         </el-card>
 
-                        <el-card class="box-card" style="height: 300px;width:150px;float:left;margin-left: 30px" header="宠物">
-                            <ur >
-                                <li>猫</li>
-                                <li>狗</li>
-                            </ur>
-                        </el-card>
+
                         <el-card class="box-card" style="height: 300px;width: 150px;float:left;margin-left: 30px" header="家具">
                             <ur >
-                                <li>电视</li>
-                                <li>冰箱</li>
-                                <li>洗衣机</li>
-                                <li>空调</li>
-                                <li>衣柜</li>
+                                <li th:if="${oneHome.bed}==1">床</li>
+                                <li th:if="${oneHome.sofa}==1">沙发</li>
+                                <li th:if="${oneHome.TV}==1">电视</li>
+                                <li th:if="${oneHome.refrigerator}==1" >冰箱</li>
+                                <li th:if="${oneHome.washer}==1">洗衣机</li>
+                                <li th:if="${oneHome.AC}==1">空调</li>
+                                <li th:if="${oneHome.chair}==1">椅子</li>
+                            </ur>
+                        </el-card>
+                        <el-card class="box-card" style="height: 300px;width: 150px;float:left;margin-left: 30px" header="停车位">
+                           <span th:switch="${oneHome.parking}" >
+                           <span class="bla"  th:case="1">有</span>
+                           <span class="bla"  th:case="0">否</span>
+                          </span>
+                        </el-card>
+                        <el-card class="box-card" style="height: 300px;width:150px;float:left;margin-left: 30px" header="其他">
+                            <ur >
+                                <li>宠物：
+                                    <span th:switch="${oneHome.pet}" >
+                           <span class="bla"  th:case="1">可以</span>
+                           <span class="bla"  th:case="0">不可以</span>
+                          </span>
+                                </li>
+                                <li>吸烟：
+                                    <span th:switch="${oneHome.smoking}" >
+                           <span class="bla"  th:case="1">可以</span>
+                           <span class="bla"  th:case="0">不可以</span>
+                          </span>
+                                </li>
                             </ur>
                         </el-card>
 
@@ -114,7 +134,8 @@
                             </table>
                         </div>
                     </el-tab-pane>
-                    <el-tab-pane label="地图"><iframe src="map" height="500px" width="700px" frameborder="0" scrolling="no" align="left"></iframe></el-tab-pane>
+                    <el-tab-pane label="地图">
+                        <iframe src="map" height="500px" width="700px" frameborder="0" scrolling="no" align="left"></iframe></el-tab-pane>
                 </el-tabs>
 
 
@@ -138,18 +159,21 @@
 
                     <span style="color: red;font-size: 12px">毕业生租房月付/0押金/送搬家券</span>
                     <el-divider></el-divider>
-                    <span class="gray">使用面积</span><span class="bla">14.4m²</span>
+                    <span class="gray">使用面积</span><span class="bla" th:text="${oneHome.area}">14.4m²</span>
                     <br>
-                    <span class="gray">户型</span><span class="bla">3室1厅</span>
+                    <span class="gray">户型</span><span class="bla" th:text="${oneHome.livingrooms}+'厅'+${oneHome.bedrooms}+'室'+${oneHome.bathrooms}+'卫'">3室1厅</span>
                     <br>
-                    <span class="gray">朝向</span><span class="bla">朝南</span>
+
+                    <span class="gray">朝向</span><span class="bla" th:text="${oneHome.facing}">朝南</span>
                     <br>
-                    <span class="gray">位置</span><span class="bla">距4号线枣园站步行约127米</span>
+
+                    <span class="gray">楼层</span><span class="bla" th:text="${oneHome.whichfloor}+'/'+${oneHome.totalfloor}" >12</span>
                     <br>
-                    <span class="gray">楼层</span><span class="bla">12</span>
-                    <br>
-                    <span class="gray">电梯</span><span class="bla">有</span>
-                    <br>
+                    <span class="gray" >电梯</span>
+                    <span th:switch="${oneHome.elevator}" >
+                    <span class="bla"  th:case="1">有</span>
+                        <span class="bla"  th:case="0">否</span>
+                    </span>
                 </el-card>
 
 

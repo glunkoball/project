@@ -1,0 +1,14 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="aaa.project.dao.CustomSearchDetailsDao">
+    <select id="findOneHome" resultType="aaa.project.entity.Apartment">
+       select * from apartmentinfo1 a1
+       INNER JOIN apartmentinfo2 a2 on a1.aptNum=a2.aptNum
+       INNER JOIN apartmentinfo3 a3 on a1.aptNum=a3.aptNum
+       INNER JOIN apartmentinfo4 a4 on a1.aptNum=a4.aptNum
+       where a1.aptNum=20190717164200
+    </select>
+
+
+
+</mapper>

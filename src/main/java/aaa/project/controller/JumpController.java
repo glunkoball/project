@@ -33,10 +33,7 @@ public class JumpController {
         return "signin";
     }
 
-    @RequestMapping("/details")
-    public String toDetails(){
-        return "details";
-    }
+
     @RequestMapping("/map")
     public String tomap(){
         return "map";

@@ -8,4 +8,6 @@ import java.util.List;
 public interface AdminLoginService {
     public Admin findUserAndPassword(Admin admin);
     public List<Module> queryUserMenus(Admin user);
+    public  List<String> queryPermitByShiro(Admin user);
+    public  Admin findByUsername(String username);
 }

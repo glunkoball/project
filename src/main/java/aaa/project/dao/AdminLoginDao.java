@@ -29,4 +29,6 @@ public interface AdminLoginDao {
      * @return
      */
     public List<Module> listTwoModules(@Param("user") Admin user, @Param("parent") Module parent);
+    public  Admin findByUsername(String username);
+
 }
