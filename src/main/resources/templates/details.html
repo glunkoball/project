@@ -100,39 +100,30 @@
                         </div>
                         <br>
                         <div>
-                            <table style="width: 400px;height: 400px;" border="1" cellspacing="0" cellpadding="0">
-                             <tr>
-                                <th>付款方式</th>
-                                <th>租金</th>
-                                <th>服务费/年</th>
-                                <th>押金</th>
-                                </tr>
-                                <tr>
-                                    <td>月付</td>
-                                    <td>￥2200</td>
-                                    <td>￥2200</td>
-                                    <td>￥2200</td>
-                                </tr>
-                                <tr>
-                                    <td>季付</td>
-                                    <td>￥2200</td>
-                                    <td>￥2200</td>
-                                    <td>￥2200</td>
-                                </tr>
-                                <tr>
-                                    <td>年付</td>
-                                    <td>￥2200</td>
-                                    <td>￥2200</td>
-                                    <td>￥2200</td>
-                                </tr>
-                                <tr>
-                                    <td>分期付款</td>
-                                    <td>￥2200</td>
-                                    <td>￥2200</td>
-                                    <td>￥2200</td>
-                                </tr>
-                            </table>
-                        </div>
+                            <el-table
+                                    :data="tableData"
+                                    border
+                                    style="width: 100%">
+                                <el-table-column
+                                        prop="payWay"
+                                        label="付款方式"
+                                        width="180">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="rentMoney"
+                                        label="租金"
+                                        width="180">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="coverFee"
+                                        label="服务费/年">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="cashPledge"
+                                        label="押金">
+                                </el-table-column>
+                            </el-table>
+                         </div>
                     </el-tab-pane>
                     <el-tab-pane label="地图">
                         <iframe src="map" height="500px" width="700px" frameborder="0" scrolling="no" align="left"></iframe></el-tab-pane>
@@ -187,29 +178,29 @@
                 <el-button type="text" @click="dialogFormVisible = true">预约看房</el-button>
 
                 <el-dialog title="填写信息" :visible.sync="dialogFormVisible">
-                    <el-form :model="form">
-                        <el-form-item label="姓名" :label-width="formLabelWidth">
-                            <el-input v-model="form.name" autocomplete="off" style="width: 150px"></el-input>
+                    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+                        <el-form-item label="姓名" prop="customname">
+                            <el-input v-model="ruleForm.customname" style="width:150px"></el-input>
                         </el-form-item>
-                        <el-form-item label="电话" :label-width="formLabelWidth" style="width: 150px">
-                            <el-input v-model="form.phone" autocomplete="off"></el-input>
+                        <el-form-item label="电话" prop="customphone">
+                            <el-input v-model="ruleForm.customphone" style="width:150px"></el-input>
                         </el-form-item>
-                        <el-form-item label="邮箱" :label-width="formLabelWidth" style="width: 150px">
-                            <el-input v-model="form.email" autocomplete="off"></el-input>
+                        <el-form-item label="邮箱" prop="customemail">
+                            <el-input v-model="ruleForm.customemail" style="width:150px"></el-input>
                         </el-form-item>
-                        <el-form-item label="留言" :label-width="formLabelWidth">
-                            <el-input
-                                    type="textarea"
-                                    :rows="2"
-                                    placeholder="请输入内容"
-                                    v-model="textarea">
-                            </el-input>
+                        <el-form-item label="你更倾向哪种方式" prop="wayy">
+                            <el-select v-model="ruleForm.wayy" placeholder=""style="width:150px" >
+                                <el-option label="电话" value="电话"></el-option>
+                                <el-option label="邮箱" value="邮箱"></el-option>
+                                <el-option label="两者皆可" value="两者皆可"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+                            <el-button @click="resetForm('ruleForm')">重置</el-button>
                         </el-form-item>
                     </el-form>
-                    <div slot="footer" class="dialog-footer">
-                        <el-button @click="dialogFormVisible = false">取 消</el-button>
-                        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-                    </div>
+
                 </el-dialog>
                <!-- <el-button  style="margin-left: 74px;margin-top: 47px" type="warning" round >预约信息</el-button>-->
             </el-aside>
@@ -299,22 +290,71 @@
                 {src:"image/f1.jpg"},
                 {src:"image/f2.jpg"},
                 {src:"image/f3.jpg"}],
+            tableData: [{
+                payWay: '月付',
+                rentMoney: '￥2200',
+                coverFee: '￥2200',
+                cashPledge:'￥2200'
+            }, {
+                payWay: '季付',
+                rentMoney: '￥2200',
+                coverFee: '￥2200',
+                cashPledge:'￥2200'
+            }, {
+                payWay: '年付',
+                rentMoney: '￥2200',
+                coverFee: '￥2200',
+                cashPledge:'￥2200'
+            }, {
+                payWay: '分期付款',
+                rentMoney: '￥2200',
+                coverFee: '￥2200',
+                cashPledge:'￥2200'
+            }],
             dialogVisible: false,
             dialogTableVisible: false,
             dialogFormVisible: false,
-            form: {
-                name: '',
-                region: '',
-                date1: '',
-                date2: '',
-                delivery: false,
-                type: [],
-                resource: '',
-                desc: ''
-            },
-            formLabelWidth: '120px'
+            ruleForm: {
+                customname: '',
+                customphone: '',
+                customemail: '',
+                wayy: ''
 
+            },
+            formLabelWidth: '120px',
+            rules: {
+                customname: [
+                    { required: true, message: '请输入姓名', trigger: 'blur' },
+                    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                ],
+                customphone: [
+                    { required: true, message: '请输入电话', trigger: 'blur' },
+                    { type:'phone', message: '请输入正确的电话', trigger: ['blur', 'change'] }
+                ],
+                customemail: [
+                    { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+                    { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+                ],
+                wayy: [
+                    { required: true, message: '请选择一种方式', trigger: 'change'  }
+                ]
+
+            },
+            methods: {
+                submitForm(formName) {
+                    this.$refs[formName].validate((valid) => {
+                        if (valid) {
+                            alert('submit!');
+                        } else {
+                            console.log('error submit!!');
+                            return false;
+                        }
+                    });
+                }
+            }
         }
+
+
 
 
 
