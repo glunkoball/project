@@ -32,6 +32,7 @@ public class Apartment {
     private Integer colony;//阳台
     //出租方式以及租金
     private ArrayList rentMethods;
+    private String rentMethodsForSearch;
     private Integer allCharged;//托管
     private Integer together;//整租
     private Integer split;//合租
@@ -442,5 +443,13 @@ public class Apartment {
 
     public void setRentRequirement(ArrayList rentRequirement) {
         this.rentRequirement = rentRequirement;
+    }
+
+    public String getRentMethodsForSearch() {
+        return rentMethodsForSearch;
+    }
+
+    public void setRentMethodsForSearch(String rentMethodsForSearch) {
+        this.rentMethodsForSearch = rentMethodsForSearch;
     }
 }

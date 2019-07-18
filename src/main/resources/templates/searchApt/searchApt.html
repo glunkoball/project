@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>查询房源</title>
+    <link rel="stylesheet" href="plugin/element-ui/index.css">
+    <link rel="stylesheet" href="css/selectHouse.css">
+    <script src="plugin/element-ui/vue.js"></script>
+    <script src="plugin/element-ui/index.js"></script>
+    <script src="plugin/element-ui/axios.js"></script>
+    <style>
+        #criteria{
+            width: 800px;
+            margin: 0 auto;
+        }
+        .fisrtRow{
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div id="criteria">
+    <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+    <el-card class="box-card">
+        <div slot="header" class="clearfix">
+            <span>查询条件</span>
+            <i style="float: right;" class="el-icon-search"></i>
+        </div>
+        <div  class="text item" >
+            <div class="fisrtRow" >
+                <el-form-item label="区域" prop="district">
+                    <el-radio-group v-model="ruleForm.district" size="small" >
+                        <el-radio-button label="">不限</el-radio-button>
+                        <el-radio-button label="静安区"></el-radio-button>
+                        <el-radio-button label="徐汇区"></el-radio-button>
+                        <el-radio-button label="黄浦区"></el-radio-button>
+                        <el-radio-button label="长宁区"></el-radio-button>
+                        <el-radio-button label="普陀区"></el-radio-button>
+                        <el-radio-button label="宝山区"></el-radio-button>
+                        <el-radio-button label="虹口区"></el-radio-button>
+                        <el-radio-button label="浦东区"></el-radio-button>
+                        <el-radio-button label="杨浦区"></el-radio-button>
+                        <el-radio-button label="闵行区"></el-radio-button>
+                    </el-radio-group>
+                </el-form-item>
+            </div>
+            <div class="fisrtRow">
+                <el-form-item label="方式" prop="rentMethodsForSearch">
+                    <el-radio-group v-model="ruleForm.rentMethodsForSearch" size="small">
+                        <el-radio-button label="不限"></el-radio-button>
+                        <el-radio-button label="整租"></el-radio-button>
+                        <el-radio-button label="合租"></el-radio-button>
+                    </el-radio-group>
+                </el-form-item>
+            </div>
+
+            <div class="fisrtRow">
+                <el-form-item label="价格" prop="price">
+                    <el-radio-group v-model="ruleForm.price" size="small" >
+                        <el-radio-button label="null">不限</el-radio-button>
+                        <el-radio-button label="1000">1000-3000元</el-radio-button>
+                        <el-radio-button label="3000">3000-5000元</el-radio-button>
+                        <el-radio-button label="5000">5000-7000元</el-radio-button>
+                        <el-radio-button label="7000">7000-9000元</el-radio-button>
+                        <el-radio-button label="9000">大于9000元</el-radio-button>
+                    </el-radio-group>
+                </el-form-item>
+            </div>
+
+            <div class="fisrtRow">
+                <el-form-item label="户型" prop="bedrooms">
+                    <el-radio-group v-model="ruleForm.bedrooms" size="small" >
+                        <el-radio-button label="null">不限</el-radio-button>
+                        <el-radio-button label="1">一居</el-radio-button>
+                        <el-radio-button label="2">二居</el-radio-button>
+                        <el-radio-button label="3">三居</el-radio-button>
+                        <el-radio-button label="4">四居</el-radio-button>
+                        <el-radio-button label="5">四居+</el-radio-button>
+                    </el-radio-group>
+                </el-form-item>
+            </div>
+
+            <div class="fisrtRow">
+                <el-form-item label="户型" prop="facing">
+                    <el-radio-group v-model="ruleForm.facing" size="small" >
+                        <el-radio-button label="">不限</el-radio-button>
+                        <el-radio-button label="东">东</el-radio-button>
+                        <el-radio-button label="南">南</el-radio-button>
+                        <el-radio-button label="西">西</el-radio-button>
+                        <el-radio-button label="北">北</el-radio-button>
+                        <el-radio-button label="南北">南北</el-radio-button>
+                    </el-radio-group>
+                </el-form-item>
+            </div>
+            <el-form-item>
+                <el-button type="primary" class="el-icon-search" @click="onSubmit('ruleForm')">提交</el-button>
+            </el-form-item>
+        </div>
+    </el-card>
+    </el-form>
+
+   <!-- {{testData[0].aptNum}}
+    {{testData[0].facing}}
+    {{testData[0].district}}-->
+    <div v-for="item in testData">
+        <div >{{item.aptNum}}</div>
+        <div >{{item.facing}}</div>
+        <div >{{item.district}}</div>
+        <div >{{item.bedrooms}}</div>
+    </div>
+
+</div>
+<div>
+
+</div>
+</body>
+<script>
+    new Vue({
+        el:"#criteria",
+        data(){
+            return {
+                district:'不限',
+                rentMethodsForSearch:'不限',
+                price:'0',
+                checkboxBedrooms:['不限'],
+                checkboxFacing:['不限'],
+                ruleForm: {},
+                testData:[{
+                }]
+            }
+        },
+        methods:{
+            onSubmit:function(forName){
+                var data = []
+                var _this = this;
+                this.$refs[forName].validate((valid)=>{
+                    if (valid) {
+                        //往后台发送ajax请求 ，校验用户名和密码
+                        axios.post('findAptByCriteria',this.ruleForm)
+                            .then(function (res) {
+                                _this.testData = res.data;
+                            })
+                    }
+                });
+                for(var index in this.testData){
+                    alert(this.testData[index].aptNum);
+                }
+            }
+        }
+    })
+</script>
+</html>
