@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="plugin/element-ui/index.css">
+    <link rel="stylesheet" href="css/selectHouse.css">
+    <script src="plugin/element-ui/vue.js"></script>
+    <script src="plugin/element-ui/index.js"></script>
+    <script src="plugin/element-ui/axios.js"></script>
+</head>
+<body>
+    <div id="cx">
+        <div id="cx_bd">
+            <dl class="cx_dl">
+                <dt class="f1">地区:</dt>
+                <dd>
+                    <a class="f1_at" href="#">不限</a>
+                    <a href="#">金水区</a>
+                    <a>金水区</a>
+                    <a>金水区</a>
+                    <a>金水区</a>
+                    <a>金水区</a>
+                </dd>
+            </dl>
+            <dl class="cx_dl">
+                <dt class="f1">租金:</dt>
+                <dd>
+                    <a class="f1_at">不限</a>
+                    <a>500以下</a>
+                    <a>500-1000元</a>
+                    <a>1000-1500元</a>
+                    <a>1500-2000元</a>
+                    <a>2000-3000元</a>
+                    <a>3000-4500元</a>
+                    <a>4500元以上</a>
+                </dd>
+            </dl>
+            <dl class="cx_dl">
+                <dt class="f1">厅室:</dt>
+                <dd>
+                    <a class="f1_at">不限</a>
+                    <a>一室</a>
+                    <a>两室</a>
+                    <a>三室</a>
+                    <a>四室</a>
+                    <a>四室以上</a>
+                </dd>
+            </dl>
+            <dl class="cx_dl">
+                <dt class="f1">方式:</dt>
+                <dd>
+                    <a class="f1_at">不限</a>
+                    <a>整套出租</a>
+                    <a>单间出租</a>
+                </dd>
+            </dl>
+            <dl class="cx_dl">
+                <dt class="f1">地区:</dt>
+                <dd>
+                    <a class="f1_at">不限</a>
+                    <a>金水区</a>
+                    <a>金水区</a>
+                    <a>金水区</a>
+                    <a>金水区</a>
+                    <a>金水区</a>
+                </dd>
+            </dl>
+        </div>
+    </div>
+</body>
+<script>
+    //往后台发送ajax请求 ，校验用户名和密码
+    axios.post('listCity')
+        .then(function (res) {
+            console.log(res);
+        })
+</script>
+</html>
