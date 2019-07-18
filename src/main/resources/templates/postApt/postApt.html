@@ -226,8 +226,8 @@
                         </el-radio-group>
                     </el-form-item>
 
-                    <el-form-item label="看房时间" prop="checkAptTime">
-                        <el-checkbox-group v-model="ruleForm.checkAptTime">
+                    <el-form-item label="看房时间" prop="checkAptList">
+                        <el-checkbox-group v-model="ruleForm.checkAptList">
                             <el-checkbox label="周末" name="internet" ></el-checkbox>
                             <el-checkbox label="工作日" name="bed" ></el-checkbox>
                             <el-checkbox label="随时看房" name="bed" ></el-checkbox>
@@ -272,7 +272,7 @@
                     rentMethods:[],
                     rentRequirement:[],
                     key:'',
-                    checkAptTime:[]
+                    checkAptList:[]
                 },
                 facing:[{value:'1',label:'东'},{value:'西',label:'西'},{value:'南',label:'南'},{value:'北',label:'北'},
                     {value:'东北',label:'东北'},{value:'西北',label:'西北'},{value:'西南',label:'西南'},{value:'东南',label:'东南'}],value:'',
@@ -294,7 +294,7 @@
                     rentMethods:[{type:'array',required:true,message:'请选择出租方式',trigger:'change'}],
                     price:[{required:true,message:'请填写月租金',trigger:'blur'}],
                     key:[{required:true,message:'请选择是否交钥匙',trigger:'change'}],
-                    checkAptTime:[{type:'array',required:true,message:'请选择看房时间',trigger:'change'}],
+                    checkAptList:[{type:'array',required:true,message:'请选择看房时间',trigger:'change'}],
                     description:[{required:true,message:'请填写房源描述',trigger:'blur'}]
                 }
             };
@@ -313,13 +313,14 @@
                             .then(function (res) {
                                 //如果登录成功
                                 if(res.data.success){
-                                    //跳转到主界面
+                                    Vue.prototype.$message.success("发布房源成功，等待审核");
                                     window.location.href="index";
-                                }
-                                //如果登陆失败，弹出错误提醒的提示
-                                else{
+                                } else{
                                     Vue.prototype.$message.error(res.data.error);
                                 }
+                            })
+                            .catch(function (error) {
+                                Vue.prototype.$message.error("服务区异常，请联系管理员");
                             })
                     }
                 });

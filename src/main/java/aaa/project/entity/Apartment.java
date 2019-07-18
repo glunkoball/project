@@ -63,9 +63,18 @@ public class Apartment {
     private String url6;//身份证
 */
     //其他信息
-    private Integer keys;//是否交钥匙
-    private ArrayList checkAptTime;//看房时间(仅周末，仅工作日，随时看房)
+    private Integer isKey;//是否交钥匙
+    private ArrayList checkAptList; //看房数组
+    private String  checkAptTime;//看房时间(仅周末，仅工作日，随时看房)
     private String description;//描述
+
+    public ArrayList getCheckAptList() {
+        return checkAptList;
+    }
+
+    public void setCheckAptList(ArrayList checkAptList) {
+        this.checkAptList = checkAptList;
+    }
 
     public Double getPrice() {
         return price;
@@ -387,19 +396,19 @@ public class Apartment {
         this.smoking = smoking;
     }
 
-    public Integer getKey() {
-        return keys;
+    public Integer getIsKey() {
+        return isKey;
     }
 
-    public void setKey(Integer key) {
-        this.keys = key;
+    public void setIsKey(Integer isKey) {
+        this.isKey = isKey;
     }
 
-    public ArrayList getCheckAptTime() {
+    public String getCheckAptTime() {
         return checkAptTime;
     }
 
-    public void setCheckAptTime(ArrayList checkAptTime) {
+    public void setCheckAptTime(String checkAptTime) {
         this.checkAptTime = checkAptTime;
     }
 

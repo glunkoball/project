@@ -4,6 +4,7 @@ import aaa.project.common.DefaultMsg;
 import aaa.project.dao.CustomerPublishApartmentDao;
 import aaa.project.entity.Apartment;
 import aaa.project.service.CustomerPublishApartmentService;
+import org.apache.tomcat.util.buf.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +27,7 @@ public class CustomerPublishApartmentServiceImpl implements CustomerPublishApart
         String format = sdf.format(date);
         System.out.println("日期字符串："+format);
         apartment.setAptNum(format);
-       //count =customerPublishApartmentDao.publishApt1(apartment);
+       count =customerPublishApartmentDao.publishApt1(apartment);
         ArrayList facility = apartment.getFacility();
         System.out.println(facility.size());
         for(int i =0;i<facility.size();i++){
@@ -52,7 +53,7 @@ public class CustomerPublishApartmentServiceImpl implements CustomerPublishApart
                 apartment.setColony(1);
             }
         }
-       //count =customerPublishApartmentDao.publishApt2(apartment);
+       count =customerPublishApartmentDao.publishApt2(apartment);
         ArrayList rentMethods = apartment.getRentMethods();
         for(int i = 0; i<rentMethods.size();i++){
             if(rentMethods.get(i).equals("托管")){
@@ -91,10 +92,15 @@ public class CustomerPublishApartmentServiceImpl implements CustomerPublishApart
                 apartment.setPet(1);
             }
         }
+        ArrayList checkAptList = apartment.getCheckAptList();
+        String str = StringUtils.join(checkAptList,',');
+        System.out.println(str);
+        apartment.setCheckAptTime(str);
+
         count =customerPublishApartmentDao.publishApt3(apartment);
         if(count<1){
             dm.setSuccess(0);
-            dm.setError("添加房源失败");
+            dm.setError("发布房源失败，请刷新重试");
         }
         return dm;
     }

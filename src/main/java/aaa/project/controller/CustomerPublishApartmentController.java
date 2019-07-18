@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class CustomerPublishApartmentController {
@@ -14,10 +15,10 @@ public class CustomerPublishApartmentController {
     private CustomerPublishApartmentService customerPublishApartmentService;
 
     @RequestMapping("/publishApt")
+    @ResponseBody
     public DefaultMsg publishApt(@RequestBody Apartment apartment){
-        System.out.println(apartment);
         DefaultMsg dm =customerPublishApartmentService.publishApt(apartment);
-        return null;
+        return dm;
     }
 
 }

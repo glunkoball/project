@@ -11,7 +11,7 @@
                             values (#{AptNum},#{elevator},#{parking},#{internet},#{bed},#{sofa},#{chair},#{TV},#{AC},#{refrigerator},#{washer},#{gas},#{colony})
     </insert>
     <insert id="publishApt3">
-        insert into apartmentinfo3(  AptNum,   allCharged,   together,   split,   decoration,   price,   moveinDate,   waterFee,   electricityFee,   gasFee,   InternetFee,   communityFee,   wireFee,   parkingFee,   pet,   smoking,   keys,   checkAptTime,   description)
-                           values (#{AptNum},#{allCharged},#{together},#{split},#{decoration},#{price},#{moveinDate},#{waterFee},#{electricityFee},#{gasFee},#{InternetFee},#{communityFee},#{wireFee},#{parkingFee},#{pet},#{smoking},#{keys},#{checkAptTime},#{description})
+        insert into apartmentinfo3(  AptNum,   allCharged,   together,   split,   decoration,   price,   moveinDate,   waterFee,   electricityFee,   gasFee,   InternetFee,   communityFee,   wireFee,   parkingFee,   pet,   smoking,   isKey,   checkAptTime,   description)
+                           values (#{AptNum},#{allCharged},#{together},#{split},#{decoration},#{price},#{moveinDate},#{waterFee},#{electricityFee},#{gasFee},#{InternetFee},#{communityFee},#{wireFee},#{parkingFee},#{pet},#{smoking},#{isKey},#{checkAptTime},#{description})
     </insert>
 </mapper>
