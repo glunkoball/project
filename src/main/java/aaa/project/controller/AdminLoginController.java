@@ -11,6 +11,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,6 +24,7 @@ import java.util.List;
 public class AdminLoginController {
     @Autowired
     private AdminLoginService adminLoginService;
+
     /**
      *跳转后台登录界面
      * @return
@@ -81,10 +83,7 @@ public class AdminLoginController {
      * 跳转后台的管理主界面
      * @return
      */
-    @RequestMapping("/index")
-    public String toIndex(){
-        return "admin/index";
-    }
+
 
     /**
      * 校验登录名和密码
@@ -92,12 +91,15 @@ public class AdminLoginController {
      * @param session
      * @return
      */
+    //UsernamePasswordToken u=null;
     @RequestMapping("/checkUser")
     @ResponseBody
-    public DefaultMsg checkUser(@RequestBody Admin admin, HttpSession session){
+    public DefaultMsg checkUser(@RequestBody Admin admin, HttpSession session,Model model){
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken upt = new UsernamePasswordToken(admin.getUsername(), admin.getPassword());
         DefaultMsg dm=new DefaultMsg();
+        UsernamePasswordToken u = upt;
+        System.out.println("dieci"+u);
         try{
             subject.login(upt);
         }
@@ -117,6 +119,17 @@ public class AdminLoginController {
         }*/
         return dm;
     }
+
+    @RequestMapping("/index")
+    public String toIndex(Model model){
+       // System.out.println("adas"+u);
+       // model.addAttribute("uu",u.getUsername());
+        Subject subject = SecurityUtils.getSubject();
+        Admin principal =(Admin) subject.getPrincipal();
+        model.addAttribute("uu",principal.getUsername());
+        return "admin/index";
+    }
+
     /**
      * 查询用户能操作的菜单
      * @return

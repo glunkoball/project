@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <!-- 引入样式 -->
@@ -17,14 +17,30 @@
 <div id="app">
 <el-container style="height: 100%">
     <el-header>
-        <a href="aback">
 
-        </a>
+
+
+        <el-dropdown trigger="click" style="position: absolute; top: 20px; right: 100px;">
+  <span class="el-dropdown-link">
+      <img src="../image/touxiang.jpg" style="width: 35px;height: 35px;position: relative" class="round_icon">
+      <span th:text="${uu}" style="font-size: 15px;position: absolute; top: 10px; left: 40px;color: #585663">asa</span>
+      <i style="position: absolute; top: 12px; left: 75px;" class="el-icon-arrow-down el-icon--right"></i>
+  </span>
+            <el-dropdown-menu slot="dropdown" style="width: 60px;">
+                <el-link  href="aback" style="padding-left: 13px">退出</el-link>
+
+            </el-dropdown-menu>
+        </el-dropdown>
+
+
     </el-header>
     <el-container>
     <el-aside width="200px">
         <!-- 树形控件-->
-        <el-tree :data="data" :props="defaultProps"  @node-click="treeClick" ></el-tree>
+
+        <el-tree :data="data" :props="defaultProps"  @node-click="treeClick" >
+
+        </el-tree>
 
     </el-aside>
 
@@ -68,6 +84,14 @@
     body > .el-container {
         margin-bottom: 0px;
     }
+    .round_icon{
+        border-radius:100px;
+    }
+    .el-tree{
+        color: #8c939d;
+        background-color: #494953;
+    }
+
 
 
 </style>
@@ -90,6 +114,8 @@
                     closable:false
                 }
             ],
+
+
             //激活某个选项卡
             activeName:'首页'
         },
@@ -112,7 +138,7 @@
         methods:{
             //声明树形结构单击的事件
             treeClick:function(node){
-                if(node.level_==1){
+                if(node.slevel==1){
                     return ;
                 }
                 //声明变量  代表当前的节点在选项卡中存在不存在
