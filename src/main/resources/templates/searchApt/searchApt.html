@@ -10,11 +10,47 @@
     <script src="plugin/element-ui/axios.js"></script>
     <style>
         #criteria{
-            width: 800px;
+            width: 1000px;
             margin: 0 auto;
         }
         .fisrtRow{
             margin-bottom: 20px;
+        }
+        .searchContent{
+            width: 1000px;
+            margin: 30px auto;
+            border:0px solid red;
+        }
+        .everyContent{
+            width: 100%;
+            height: 250px;
+            margin-bottom: 20px;
+            border: 0px solid black;
+        }
+        .aptPics{
+            width: 400px;
+            height: 250px;
+            float: left;
+            border: 0px solid yellow;
+        }
+        .aptContent{
+            padding-left: 50px;
+            width: 300px;
+            height: 100%;
+            border: 0px solid black;
+            float: left;
+        }
+        .price{
+            float: right;
+            width: 250px;
+            height: 30%;
+            border: 0px solid blue;
+        }
+        .aptText{
+            margin-bottom: 30px;
+            color: #000;
+            size: 20px;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -81,7 +117,7 @@
             </div>
 
             <div class="fisrtRow">
-                <el-form-item label="户型" prop="facing">
+                <el-form-item label="朝向" prop="facing">
                     <el-radio-group v-model="ruleForm.facing" size="small" >
                         <el-radio-button label="">不限</el-radio-button>
                         <el-radio-button label="东">东</el-radio-button>
@@ -99,15 +135,31 @@
     </el-card>
     </el-form>
 
-   <!-- {{testData[0].aptNum}}
-    {{testData[0].facing}}
-    {{testData[0].district}}-->
-    <div v-for="item in testData">
-        <div >{{item.aptNum}}</div>
-        <div >{{item.facing}}</div>
-        <div >{{item.district}}</div>
-        <div >{{item.bedrooms}}</div>
+    <div class="searchContent">
+        <div v-for="item in testData" class="everyContent">
+            <div class="aptPics" >
+                <a href="details">
+                    <img src="image/slides1.jpg" width="100%" height="100%">
+                </a>
+            </div>
+            <div class="aptContent">
+                <el-breadcrumb class="aptText" separator-class="el-icon-arrow-right">
+                    <el-breadcrumb-item>{{item.district}}</el-breadcrumb-item>
+                    <el-breadcrumb-item>{{item.community}}</el-breadcrumb-item>
+                </el-breadcrumb>
+
+                <el-breadcrumb class="aptText" separator="/">
+                    <el-breadcrumb-item>{{item.bedrooms}}室{{item.bathrooms}}卫{{item.livingrooms}}厅</el-breadcrumb-item>
+                    <el-breadcrumb-item>朝向:  {{item.facing}}</el-breadcrumb-item>
+                    <el-breadcrumb-item>面积:  {{item.area}}</el-breadcrumb-item>
+                </el-breadcrumb>
+            </div>
+            <div class="price">
+                <div >价格：{{item.price}}/月</div>
+            </div>
+        </div>
     </div>
+
 
 </div>
 <div>
@@ -125,13 +177,24 @@
                 checkboxBedrooms:['不限'],
                 checkboxFacing:['不限'],
                 ruleForm: {},
-                testData:[{
-                }]
+                testData:[{}]
             }
         },
+
+        //页面加载时执行的函数
+        mounted(){
+                let _this = this;
+                axios.post('findAptByCriteria',this.ruleForm)
+                    .then(function (res) {
+                        //ajax请求后返回的res为json数据
+                        //res.data通过vue语法赋值给声明的testData
+                        _this.testData = res.data;
+                    })
+        },
+
+        //渲染内的所有方法
         methods:{
             onSubmit:function(forName){
-                var data = []
                 var _this = this;
                 this.$refs[forName].validate((valid)=>{
                     if (valid) {
@@ -142,9 +205,6 @@
                             })
                     }
                 });
-                for(var index in this.testData){
-                    alert(this.testData[index].aptNum);
-                }
             }
         }
     })
