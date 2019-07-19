@@ -31,6 +31,35 @@ public class AdminLoginController {
     public String toadmainLogin(){
         return "admin/login";
     }
+
+    /**
+     * 跳转至租赁管理中的房源管理
+     * @return
+     */
+    @RequestMapping("rent/apartmentSource")
+    public String toApartmentManagement(){
+        return "admin/apartmentManagement/ApartmentManagement";
+    }
+
+    /**
+     * 看房管理
+     * @return
+     */
+    @RequestMapping("rent/checkApartment")
+    public String toCheckApartment(){
+        return "admin/apartmentManagement/CheckApartment";
+    }
+
+    /**
+     * 房屋审核
+     * @return
+     */
+    @RequestMapping("check/checkSubmission")
+    public String toCheckSubmission(){
+        return "admin/check/audit";
+    }
+
+
    @RequestMapping("/toError")
    public String error(){
        return "admin/error";
@@ -40,12 +69,16 @@ public class AdminLoginController {
         return "redirect:/admin/login";
     }
 
+    /**
+     * 跳转至后台的Home主页面
+     * @return
+     */
     @RequestMapping("/welcome")
     public String welcome(){
         return "admin/welcome";
     }
     /**
-     * 跳转后台的主界面
+     * 跳转后台的管理主界面
      * @return
      */
     @RequestMapping("/index")
