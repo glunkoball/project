@@ -138,7 +138,7 @@
     <div class="searchContent">
         <div v-for="item in testData" class="everyContent">
             <div class="aptPics" >
-                <a href="details">
+                <a :href="'details?aptNum='+item.aptNum">
                     <img src="image/slides1.jpg" width="100%" height="100%">
                 </a>
             </div>

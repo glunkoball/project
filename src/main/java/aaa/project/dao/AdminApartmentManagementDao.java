@@ -10,6 +10,8 @@ import java.util.List;
 @Repository
 public interface AdminApartmentManagementDao {
     public List<Apartment> findAllApt();
+
+    public List<Apartment> findAvailableApt(Apartment apartment);
     public List<Apartment> findMyApt();
 
 }
