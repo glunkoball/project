@@ -23,4 +23,10 @@ public class AdminApartmentManagementController {
         return aptList;
     }
 
+    @RequestMapping(" rent/myApt")
+    @ResponseBody
+    public List<Apartment> findMyApt(){
+        List<Apartment> aptList = adminApartmentManagementService.findMyApt();
+        return aptList;
+    }
 }

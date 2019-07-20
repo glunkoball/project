@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface AdminApartmentManagementService {
     public List<Apartment> findAllApt();
+    public List<Apartment> findMyApt();
 }

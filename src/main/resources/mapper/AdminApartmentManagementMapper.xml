@@ -7,4 +7,12 @@
        left join apartmentinfo3 a3 on a1.aptNum=a3.aptNum
        left join apartmentinfo4 a4 on a1.aptNum=a4.aptNum
     </select>
+    <select id="findMyApt" resultType="aaa.project.entity.Apartment">
+         select * from apartmentinfo1 a1
+       left join apartmentinfo2 a2 on a1.aptNum=a2.aptNum
+       left join apartmentinfo3 a3 on a1.aptNum=a3.aptNum
+       left join apartmentinfo4 a4 on a1.aptNum=a4.aptNum
+       left join apt_status ass on ass.statusid=a1.state
+       where a1.state in (2,3)
+    </select>
 </mapper>

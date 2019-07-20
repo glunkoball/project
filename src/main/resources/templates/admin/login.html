@@ -12,25 +12,33 @@
     <script src="../plugin/element-ui/axios.js"></script>
     <title>登录</title>
 </head>
-<body>
+<body style="background-color: black">
 <div id="app" style="width:400px;border:0px solid red;margin:auto;margin-top:200px;">
-    <el-card class="box-card" style="padding-right: 40px;" header="用户登录">
+    <el-card class="box-card" style="padding-right: 40px;color: #ec5c11;background-color: black;border-color:black">
         <el-form ref="form" :rules="rules" :model="form" label-width="80px">
-            <el-form-item label="用户名:" prop="username">
-                <el-input v-model="form.username"  suffix-icon="el-icon-date"></el-input>
+            <el-form-item label="用户名:" prop="username" style="color: #ec5c11">
+                <el-input v-model="form.username"   style="border: none;"></el-input>
             </el-form-item>
-            <el-form-item label="密码:" prop="password">
+            <el-form-item label="密码:" prop="password"  style="color: #ec5c11">
                 <el-input v-model="form.password" type="password"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="onSubmit('form')" style="width:100px;">登录</el-button>
-                <el-button type="primary" @click="resetForm('form')"   style="width:100px;">重置</el-button>
+                <el-button type="primary" @click="onSubmit('form')" style="width:100px;background-color: #ec5c11;border-color: #ec5c11">登录</el-button>
+                <el-button type="primary" @click="resetForm('form')"   style="width:100px;background-color: #ec5c11;border-color: #ec5c11">重置</el-button>
             </el-form-item>
         </el-form>
 
 
     </el-card>
 </div>
+<style>
+    .el-input__inner{
+        border: none;
+        border-bottom: 1px solid #ec5c11;
+        background-color: black;
+
+    }
+</style>
 </body>
 <script>
 
