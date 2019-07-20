@@ -1,10 +1,13 @@
 package aaa.project.controller;
 
+import aaa.project.common.DefaultMsg;
 import aaa.project.entity.Apartment;
+import aaa.project.entity.InterestedCustom;
 import aaa.project.service.CustomSearchDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -34,6 +37,14 @@ public class CustomSearchDetailsController {
         model.addAttribute("oneHome",oneHome);
 
         return "details";
+    }
+    @RequestMapping("/saveOrUpdate")
+    @ResponseBody
+    public DefaultMsg saveOrUpdate(@RequestBody InterestedCustom custom){
+
+        DefaultMsg de = customSearchDetailsService.save(custom);
+        return de;
+
     }
 
 }
