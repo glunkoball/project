@@ -25,11 +25,9 @@ public class CustomerPublishApartmentServiceImpl implements CustomerPublishApart
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         String format = sdf.format(date);
-        System.out.println("日期字符串："+format);
         apartment.setAptNum(format);
        count =customerPublishApartmentDao.publishApt1(apartment);
         ArrayList facility = apartment.getFacility();
-        System.out.println(facility.size());
         for(int i =0;i<facility.size();i++){
             if(facility.get(i).equals("网络")){
                 apartment.setInternet(1);
@@ -94,7 +92,6 @@ public class CustomerPublishApartmentServiceImpl implements CustomerPublishApart
         }
         ArrayList checkAptList = apartment.getCheckAptList();
         String str = StringUtils.join(checkAptList,',');
-        System.out.println(str);
         apartment.setCheckAptTime(str);
 
         count =customerPublishApartmentDao.publishApt3(apartment);

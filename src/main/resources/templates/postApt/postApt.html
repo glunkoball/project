@@ -35,26 +35,39 @@
         .box-card {
             width: 480px;
         }
+        .div1{
+            display: none;
+            background: red;
+        }
+        .div2{
+            display: none;
+        }
+        .div3{
+            display: none;
+        }
+        .div4{
+            display: none;
+        }
+        .btNext{
+            display: none;
+        }
+        .btReturn{
+            display: none;
+        }
     </style>
 </head>
 <body>
 <div id="app">
 
-    <el-steps :active="active" finish-status="success" simple style="margin-top: 20px">
+    <el-steps :active="active" finish-status="success" simple style="margin-top: 20px; width:656px ; padding: 13px 74px">
         <el-step title="步骤 1" ></el-step>
         <el-step title="步骤 2" ></el-step>
         <el-step title="步骤 3" ></el-step>
+        <el-step title="步骤 4" ></el-step>
     </el-steps>
 
-    <div class="steps" style="width: 100px;height: 100px;border: 1px solid black;">
-        1
-    </div>
-
-    <!--<el-button style="margin-top: 12px;" @click="before">上一步</el-button>-->
-    <el-button style="margin-top: 12px;" @click="next">下一步</el-button>
-
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm"  label-width="100px" class="demo-ruleForm">
-        <el-card class="box-card" style="width: 800px;">
+        <el-card class="box-card" style="width: 800px;height: 465px" v-bind:class="house1" >
             <div slot="header" class="clearfix">
                 <span>房屋基本信息</span>
                 <i style="float: right;" class="el-icon-document"></i>
@@ -116,7 +129,7 @@
         </el-card>
 
 
-        <el-card class="box-card" style="width: 800px;">
+        <el-card class="box-card" style="width: 800px;height: 465px" v-bind:class="house2">
             <div slot="header" class="clearfix">
                 <span>房屋配置</span>
                 <i style="float: right;" class="el-icon-document"></i>
@@ -168,7 +181,7 @@
         </el-card>
 
 
-        <el-card class="box-card" style="width: 800px;">
+        <el-card class="box-card" style="width: 800px;height: 465px" v-bind:class="house3">
             <div slot="header" class="clearfix">
                 <span>租房方式和租金细节</span>
                 <i style="float: right;" class="el-icon-document"></i>
@@ -183,6 +196,12 @@
                             <el-checkbox label="装修出租" name="decoration" ></el-checkbox>
                         </el-checkbox-group>
                     </el-form-item>
+                    <el-collapse v-model="activeNames" @change="handleChange">
+                        <el-collapse-item title="一致性 Consistency" name="1">
+                            <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
+                            <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
+                        </el-collapse-item>
+                    </el-collapse>
                     <el-form-item prop="price" label="月租金">
                         <el-input v-model="ruleForm.price" style="width: 100px;"><span slot="prefix">￥</span><span slot="suffix">/月</span></el-input>
                     </el-form-item>
@@ -205,7 +224,7 @@
             </div>
         </el-card>
 
-        <el-card class="box-card" style="width: 800px;">
+        <el-card class="box-card" style="width: 800px;" v-bind:class="house4">
             <div slot="header" class="clearfix">
                 <span>其他信息</span>
                 <i style="float: right;" class="el-icon-document"></i>
@@ -244,8 +263,9 @@
                 <el-button type="primary" @click="onSubmit('ruleForm')">提交</el-button>
             </el-form-item>
         </el-card>
-
-
+        <!--<el-button style="margin-top: 12px;" @click="before">上一步</el-button>-->
+        <el-button v-bind:class="butNext" style="margin-top: 12px; width:220px; float: right; margin-right: 99px" @click="next('ruleForm')">下一步</el-button>
+        <el-button v-bind:class="butReturn" style="margin-top: 12px; width:220px; float:left; margin-right: 99px" @click="before">上一步</el-button>
     </el-form>
 </div>
 </body>
@@ -254,18 +274,36 @@
         el:'#app',
         data() {
             return {
+                butNext:{
+                    btNext:false
+                },
+                butReturn:{
+                  btReturn:true
+                },
+                activeNames:['1'],
+                house1:{
+                     div1:false
+                },
+                house2:{
+                    div2:true
+                },
+                house3:{
+                    div3:true
+                },
+                house4:{
+                    div4:true
+                },
                 active: 0,
-
                 ruleForm:{
                     city:'上海',
-                    district:'浦东区',
+                    district:'',
                     community:'暖元小区',
-                    bedrooms:1,
-                    bathrooms:2,
-                    livingrooms:3,
-                    area:'160.8',
-                    whichfloor:2,
-                    totalfloor:3,
+                    bedrooms:'',
+                    bathrooms:'',
+                    livingrooms:'',
+                    area:'',
+                    whichfloor:'',
+                    totalfloor:'',
                     facing:'东',
                     facility:[],
                     includedService:[],
@@ -299,11 +337,35 @@
                 }
             };
         },
-
-
+        //事件
         methods: {
-            next() {
-                if (this.active++ > 2) this.active = 0;
+            before:function(){ },
+            next:function(forName) {
+                let vue =this;
+                //if (this.active++ > 3) this.active = 4;
+                this.$refs[forName].validate((valid) => {
+                    if (!valid) {
+                        alert("123");
+                        let bz =vue.active++;
+                        alert(bz)
+                        if(bz==1) {
+                            this.house1.div1 = true;
+                            this.house2.div2 = false;
+                            alert(bz);
+                        }
+                        if(bz==2){
+                            this.house2.div2=true;
+                            this.house3.div3=false;
+                        }
+                        if(bz==3){
+                            this.house3.div3=true;
+                            this.house4.div4=false;
+                        }
+                    }else {
+
+                    }
+                });
+
             },
             onSubmit:function(forName){
                 this.$refs[forName].validate((valid)=>{
@@ -314,7 +376,7 @@
                                 //如果登录成功
                                 if(res.data.success){
                                     Vue.prototype.$message.success("发布房源成功，等待审核");
-                                    window.location.href="index";
+                                    //window.location.href="index";
                                 } else{
                                     Vue.prototype.$message.error(res.data.error);
                                 }
@@ -324,8 +386,10 @@
                             })
                     }
                 });
-            }
+            },
+            handleChange:function () {
 
+            }
         }
     })
 </script>
