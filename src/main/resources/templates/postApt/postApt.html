@@ -54,6 +54,12 @@
         .btReturn{
             display: none;
         }
+        #bNext:hover{
+            background: #ECA110;
+        }
+        #bReturn:hover{
+            background:#ECA110;
+        }
     </style>
 </head>
 <body>
@@ -264,8 +270,8 @@
             </el-form-item>
         </el-card>
         <!--<el-button style="margin-top: 12px;" @click="before">上一步</el-button>-->
-        <el-button v-bind:class="butNext" style="margin-top: 12px; width:220px; float: right; margin-right: 99px" @click="next('ruleForm')">下一步</el-button>
-        <el-button v-bind:class="butReturn" style="margin-top: 12px; width:220px; float:left; margin-right: 99px" @click="before">上一步</el-button>
+        <el-button round id="bNext" v-bind:class="butNext" style="margin-top: 12px; width:220px; float: right; margin-right: 99px ; " @click="next('ruleForm')">下一步<i class="el-icon-right"></i></el-button>
+        <el-button round  id="bReturn" v-bind:class="butReturn" style="margin-top: 12px; width:220px; float:left; margin-right: 99px" @click="before"><i class="el-icon-back"></i>上一步</el-button>
     </el-form>
 </div>
 </body>
@@ -340,32 +346,61 @@
         //事件
         methods: {
             before:function(){ },
+            before:function(){
+                if(this.active==1){
+                    this.active--;
+                    this.house1.div1 = false;
+                    this.house2.div2 = true;
+                    this.house3.div3 = true;
+                    this.house4.div4 = true;
+                    this.butNext.btNext=false;
+                    this.butReturn.btReturn=true;
+
+                }
+                if(this.active==2){
+                    this.active--;
+                    this.house1.div1 = true;
+                    this.house2.div2 = false
+                    this.house3.div3 = true;
+                    this.house4.div4 = true;
+                }
+                if(this.active==3){
+                    this.active--;
+                    this.house1.div1 = true;
+                    this.house2.div2 = true;
+                    this.house3.div3 = false;
+                    this.house4.div4 = true;
+                    this.butReturn.btReturn=false;
+                    this.butNext.btNext=false;
+                }
+            },
             next:function(forName) {
                 let vue =this;
+                let bz =this.active;
                 //if (this.active++ > 3) this.active = 4;
-                this.$refs[forName].validate((valid) => {
+                vue.$refs[forName].validate((valid) => {
                     if (!valid) {
-                        alert("123");
-                        let bz =vue.active++;
-                        alert(bz)
-                        if(bz==1) {
+                         bz = vue.active++;
+                        if(bz==0) {
                             this.house1.div1 = true;
                             this.house2.div2 = false;
-                            alert(bz);
+                            vue.butReturn.btReturn=false;
                         }
-                        if(bz==2){
+                        if(bz==1){
+                            bz =vue.active+1;
                             this.house2.div2=true;
                             this.house3.div3=false;
+                            vue.butReturn.btReturn=false;
                         }
-                        if(bz==3){
+                        if(bz==2){
                             this.house3.div3=true;
                             this.house4.div4=false;
+                            vue.butReturn.btReturn=false;
+                            vue.butNext.btNext=true;
                         }
-                    }else {
 
                     }
                 });
-
             },
             onSubmit:function(forName){
                 this.$refs[forName].validate((valid)=>{
