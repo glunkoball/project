@@ -377,9 +377,8 @@
             next:function(forName) {
                 let vue =this;
                 let bz =this.active;
-                //if (this.active++ > 3) this.active = 4;
-                vue.$refs[forName].validate((valid) => {
-                    if (!valid) {
+                //vue.$refs[forName].validate((valid) => {
+                    //if (!valid) {
                          bz = vue.active++;
                         if(bz==0) {
                             this.house1.div1 = true;
@@ -399,8 +398,8 @@
                             vue.butNext.btNext=true;
                         }
 
-                    }
-                });
+                   // }
+                //});
             },
             onSubmit:function(forName){
                 this.$refs[forName].validate((valid)=>{
