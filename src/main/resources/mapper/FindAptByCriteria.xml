@@ -1,0 +1,22 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="aaa.project.dao.CustomerFindAptByCriteriaDao">
+    <select id="CustomerFindAptByCriteria" resultType="aaa.project.entity.Apartment">
+        select * from apartmentinfo1 ai1
+        left join apartmentinfo2 ai2 on ai1.aptNum=ai2.aptNum
+        left join apartmentinfo3 ai3 on ai1.aptNum= ai3.aptNum
+        left join apartmentinfo4 ai4 on ai1.aptNum=ai4.aptNum
+        <where>
+            <if test="bedrooms != null">and bedrooms = #{bedrooms}</if>
+            <if test="facing != null"> and facing like '%${facing}%'</if>
+            <if test="district != null">and district like '%${district}%'</if>
+            <if test="price == 1000">and price between 1000 and 3000</if>
+            <if test="price == 3000">and price between 3000 and 5000</if>
+            <if test="price == 5000">and price between 5000 and 7000</if>
+            <if test="price == 7000">and price between 7000 and 9000</if>
+            <if test="price == 9000">and price >9000</if>
+            <if test="rentMethodsForSearch =='整租'">and together = 1</if>
+            <if test="rentMethodsForSearch =='合租'">and split = 1</if>
+        </where>
+    </select>
+</mapper>

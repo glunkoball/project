@@ -21,7 +21,7 @@ public class JumpController {
      */
     @RequestMapping("/search")
     public String toSearch(){
-        return "searchApt/overview";
+        return "searchApt/searchApt";
     }
 
     /**

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>查询房源</title>
+    <link rel="stylesheet" href="plugin/element-ui/index.css">
+    <link rel="stylesheet" href="css/selectHouse.css">
+    <script src="plugin/element-ui/vue.js"></script>
+    <script src="plugin/element-ui/index.js"></script>
+    <script src="plugin/element-ui/axios.js"></script>
+    <style>
+        #criteria{
+            width: 1000px;
+            margin: 0 auto;
+        }
+        .fisrtRow{
+            margin-bottom: 20px;
+        }
+        .searchContent{
+            width: 1000px;
+            margin: 30px auto;
+            border:0px solid red;
+        }
+        .everyContent{
+            width: 100%;
+            height: 250px;
+            margin-bottom: 20px;
+            border: 0px solid black;
+        }
+        .aptPics{
+            width: 400px;
+            height: 250px;
+            float: left;
+            border: 0px solid yellow;
+        }
+        .aptContent{
+            padding-left: 50px;
+            width: 300px;
+            height: 100%;
+            border: 0px solid black;
+            float: left;
+        }
+        .price{
+            float: right;
+            width: 250px;
+            height: 30%;
+            border: 0px solid blue;
+        }
+        .aptText{
+            margin-bottom: 30px;
+            color: #000;
+            size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div id="criteria">
+    <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+    <el-card class="box-card">
+        <div slot="header" class="clearfix">
+            <span>查询条件</span>
+            <i style="float: right;" class="el-icon-search"></i>
+        </div>
+        <div  class="text item" >
+            <div class="fisrtRow" >
+                <el-form-item label="区域" prop="district">
+                    <el-radio-group v-model="ruleForm.district" size="small" >
+                        <el-radio-button label="">不限</el-radio-button>
+                        <el-radio-button label="静安区"></el-radio-button>
+                        <el-radio-button label="徐汇区"></el-radio-button>
+                        <el-radio-button label="黄浦区"></el-radio-button>
+                        <el-radio-button label="长宁区"></el-radio-button>
+                        <el-radio-button label="普陀区"></el-radio-button>
+                        <el-radio-button label="宝山区"></el-radio-button>
+                        <el-radio-button label="虹口区"></el-radio-button>
+                        <el-radio-button label="浦东区"></el-radio-button>
+                        <el-radio-button label="杨浦区"></el-radio-button>
+                        <el-radio-button label="闵行区"></el-radio-button>
+                    </el-radio-group>
+                </el-form-item>
+            </div>
+            <div class="fisrtRow">
+                <el-form-item label="方式" prop="rentMethodsForSearch">
+                    <el-radio-group v-model="ruleForm.rentMethodsForSearch" size="small">
+                        <el-radio-button label="不限"></el-radio-button>
+                        <el-radio-button label="整租"></el-radio-button>
+                        <el-radio-button label="合租"></el-radio-button>
+                    </el-radio-group>
+                </el-form-item>
+            </div>
+
+            <div class="fisrtRow">
+                <el-form-item label="价格" prop="price">
+                    <el-radio-group v-model="ruleForm.price" size="small" >
+                        <el-radio-button label="null">不限</el-radio-button>
+                        <el-radio-button label="1000">1000-3000元</el-radio-button>
+                        <el-radio-button label="3000">3000-5000元</el-radio-button>
+                        <el-radio-button label="5000">5000-7000元</el-radio-button>
+                        <el-radio-button label="7000">7000-9000元</el-radio-button>
+                        <el-radio-button label="9000">大于9000元</el-radio-button>
+                    </el-radio-group>
+                </el-form-item>
+            </div>
+
+            <div class="fisrtRow">
+                <el-form-item label="户型" prop="bedrooms">
+                    <el-radio-group v-model="ruleForm.bedrooms" size="small" >
+                        <el-radio-button label="null">不限</el-radio-button>
+                        <el-radio-button label="1">一居</el-radio-button>
+                        <el-radio-button label="2">二居</el-radio-button>
+                        <el-radio-button label="3">三居</el-radio-button>
+                        <el-radio-button label="4">四居</el-radio-button>
+                        <el-radio-button label="5">四居+</el-radio-button>
+                    </el-radio-group>
+                </el-form-item>
+            </div>
+
+            <div class="fisrtRow">
+                <el-form-item label="朝向" prop="facing">
+                    <el-radio-group v-model="ruleForm.facing" size="small" >
+                        <el-radio-button label="">不限</el-radio-button>
+                        <el-radio-button label="东">东</el-radio-button>
+                        <el-radio-button label="南">南</el-radio-button>
+                        <el-radio-button label="西">西</el-radio-button>
+                        <el-radio-button label="北">北</el-radio-button>
+                        <el-radio-button label="南北">南北</el-radio-button>
+                    </el-radio-group>
+                </el-form-item>
+            </div>
+            <el-form-item>
+                <el-button type="primary" class="el-icon-search" @click="onSubmit('ruleForm')">提交</el-button>
+            </el-form-item>
+        </div>
+    </el-card>
+    </el-form>
+
+    <div class="searchContent">
+        <div v-for="item in testData" class="everyContent">
+            <div class="aptPics" >
+                <a href="details">
+                    <img src="image/slides1.jpg" width="100%" height="100%">
+                </a>
+            </div>
+            <div class="aptContent">
+                <el-breadcrumb class="aptText" separator-class="el-icon-arrow-right">
+                    <el-breadcrumb-item>{{item.district}}</el-breadcrumb-item>
+                    <el-breadcrumb-item>{{item.community}}</el-breadcrumb-item>
+                </el-breadcrumb>
+
+                <el-breadcrumb class="aptText" separator="/">
+                    <el-breadcrumb-item>{{item.bedrooms}}室{{item.bathrooms}}卫{{item.livingrooms}}厅</el-breadcrumb-item>
+                    <el-breadcrumb-item>朝向:  {{item.facing}}</el-breadcrumb-item>
+                    <el-breadcrumb-item>面积:  {{item.area}}</el-breadcrumb-item>
+                </el-breadcrumb>
+            </div>
+            <div class="price">
+                <div >价格：{{item.price}}/月</div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<div>
+
+</div>
+</body>
+<script>
+    new Vue({
+        el:"#criteria",
+        data(){
+            return {
+                district:'不限',
+                rentMethodsForSearch:'不限',
+                price:'0',
+                checkboxBedrooms:['不限'],
+                checkboxFacing:['不限'],
+                ruleForm: {},
+                testData:[{}]
+            }
+        },
+
+        //页面加载时执行的函数
+        mounted(){
+                let _this = this;
+                axios.post('findAptByCriteria',this.ruleForm)
+                    .then(function (res) {
+                        //ajax请求后返回的res为json数据
+                        //res.data通过vue语法赋值给声明的testData
+                        _this.testData = res.data;
+                    })
+        },
+
+        //渲染内的所有方法
+        methods:{
+            onSubmit:function(forName){
+                var _this = this;
+                this.$refs[forName].validate((valid)=>{
+                    if (valid) {
+                        //往后台发送ajax请求 ，校验用户名和密码
+                        axios.post('findAptByCriteria',this.ruleForm)
+                            .then(function (res) {
+                                _this.testData = res.data;
+                            })
+                    }
+                });
+            }
+        }
+    })
+</script>
+</html>

@@ -62,7 +62,7 @@
                         //往后台发送ajax请求 ，校验用户名和密码
                         axios.post('checkUser',this.form)
                             .then(function (res) {
-                                alert(456);
+
                                 console.info(res);
                                 //如果登录成功
                                 if(res.data.success){
