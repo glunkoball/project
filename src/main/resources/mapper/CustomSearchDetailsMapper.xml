@@ -8,7 +8,9 @@
        INNER JOIN apartmentinfo4 a4 on a1.aptNum=a4.aptNum
        where a1.aptNum=20190717164200
     </select>
-
+    <insert id="save">
+        insert into custominfo(customname,customphone,customemail,wayy,customdesc) values(#{customname},#{customphone},#{customemail},#{wayy},#{customdesc})
+    </insert>
 
 
 </mapper>

@@ -1,10 +1,108 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>房屋管理</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" th:href="@{/plugin/element-ui/index.css}">
+    <!--引入vue-->
+    <script th:src="@{/plugin/element-ui/vue.js}"></script>
+    <!-- 引入组件库 -->
+    <script th:src="@{/plugin/element-ui/index.js}"></script>
+    <script th:src="@{/plugin/element-ui/axios.js}"></script>
+    <style>
+        .demo-table-expand {
+            font-size: 0;
+        }
+        .demo-table-expand label {
+            width: 90px;
+            color: #99a9bf;
+        }
+        .demo-table-expand .el-form-item {
+            margin-right: 0;
+            margin-bottom: 0;
+            width: 50%;
+        }
+    </style>
 </head>
 <body>
 房屋管理
+<div id="app">
+    <el-table
+            :data="tableData"
+            style="width: 100%">
+        <el-table-column type="expand">
+            <template slot-scope="props">
+                <el-form label-position="left" inline class="demo-table-expand">
+                    <el-form-item label="楼层/总楼层">
+                        <span>{{ props.row.whichfloor }}/{{ props.row.totalfloor}}</span>
+                    </el-form-item>
+                    <el-form-item label="配套设施">
+                        <span><i :class="props.row.elevator ? classA: classB"></i>电梯</span>&nbsp;&nbsp;&nbsp;
+                        <span><i :class="props.row.elevator ? classA: classB"></i>停车位</span>&nbsp;&nbsp;&nbsp;
+                        <span><i :class="props.row.internet ? classA: classB"></i>宽带</span>&nbsp;&nbsp;&nbsp;
+                        <span><i :class="props.row.bed ? classA: classB"></i>床</span>&nbsp;&nbsp;&nbsp;
+                        <span><i :class="props.row.sofa ? classA: classB"></i>沙发</span>&nbsp;&nbsp;&nbsp;
+                        <span><i :class="props.row.chair ? classA: classB"></i>桌椅</span>&nbsp;&nbsp;&nbsp;
+                        <span><i :class="props.row.TV ? classA: classB"></i>电视</span>&nbsp;&nbsp;&nbsp;
+                        <span><i :class="props.row.AC ? classA: classB"></i>空调</span>&nbsp;&nbsp;&nbsp;
+                        <span><i :class="props.row.refrigerator ? classA: classB"></i>冰箱</span>&nbsp;&nbsp;&nbsp;
+                        <span><i :class="props.row.washer ? classA: classB"></i>洗衣机</span>&nbsp;&nbsp;&nbsp;
+                        <span><i :class="props.row.gas ? classA: classB"></i>燃气</span>&nbsp;&nbsp;&nbsp;
+                        <span><i :class="props.row.colony ? classA: classB"></i>阳台</span>
+                    </el-form-item>
+                    <el-form-item label="商品 ID">
+                        <span>{{ props.row.id }}</span>
+                    </el-form-item>
+                    <el-form-item label="店铺 ID">
+                        <span>{{ props.row.shopId }}</span>
+                    </el-form-item>
+                    <el-form-item label="商品分类">
+                        <span>{{ props.row.category }}</span>
+                    </el-form-item>
+                    <el-form-item label="店铺地址">
+                        <span>{{ props.row.address }}</span>
+                    </el-form-item>
+                    <el-form-item label="商品描述">
+                        <span>{{ props.row.desc }}</span>
+                    </el-form-item>
+                </el-form>
+            </template>
+        </el-table-column>
+        <el-table-column label="房源编号" prop="aptNum" width="180px"></el-table-column>
+        <el-table-column label="城市" prop="city"></el-table-column>
+        <el-table-column label="区" prop="district"></el-table-column>
+        <el-table-column label="小区" prop="community"></el-table-column>
+        <el-table-column label="卧室" prop="bedrooms"></el-table-column>
+        <el-table-column label="卫生间" prop="bathrooms"></el-table-column>
+        <el-table-column label="厅室" prop="livingrooms"></el-table-column>
+        <el-table-column label="面积" prop="area"></el-table-column>
+        <el-table-column label="朝向" prop="facing"></el-table-column>
+        <el-table-column label="价位" prop="price"></el-table-column>
+    </el-table>
+</div>
 </body>
+<script>
+    new Vue({
+        el:'#app',
+        data:function(){
+            return{
+                tableData: [{}],
+                classA:'el-icon-check',
+                classB:'el-icon-remove'
+            }
+        },
+        mounted:function(){
+            var vue = this;
+            axios.post('findAllApt')
+                .then(function(res){
+                    console.info(this.data);
+                    vue.tableData = res.data;
+                })
+                .catch(function(error){
+                   Vue.prototype.$message.error('服务器产生异常');
+                });
+        }
+    })
+</script>
 </html>

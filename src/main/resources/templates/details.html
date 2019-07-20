@@ -175,7 +175,7 @@
                       <br>
                       158693966
                 </el-card>
-                <el-button type="text" @click="dialogFormVisible = true">预约看房</el-button>
+                <el-button type="text" @click="dialogFormVisible = true" style="margin-left: 85px">REQUEST HOLD</el-button>
 
                 <el-dialog title="填写信息" :visible.sync="dialogFormVisible">
                     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
@@ -194,6 +194,9 @@
                                 <el-option label="邮箱" value="邮箱"></el-option>
                                 <el-option label="两者皆可" value="两者皆可"></el-option>
                             </el-select>
+                        </el-form-item>
+                        <el-form-item label="留言" prop="customdesc">
+                            <el-input type="textarea" v-model="ruleForm.customdesc"></el-input>
                         </el-form-item>
                         <el-form-item>
                             <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
@@ -339,7 +342,8 @@
                     customname: '',
                     customphone: '',
                     customemail: '',
-                    wayy: ''
+                    wayy: '',
+                    customdesc:''
 
                 },
                 formLabelWidth: '120px',
@@ -364,15 +368,36 @@
 
             methods: {
                     submitForm(formName) {
+                        var vue = this;
                         this.$refs[formName].validate((valid) => {
                             if (valid) {
                                 alert('submit!');
+                                axios.post('saveOrUpdate',this.ruleForm)
+                                    .then(function (res) {
+                                        //如果登录成功
+                                        if(res.data.success){
+                                            //刷新界面
+                                           // vue.loadTableData();
+                                            //关闭窗口
+                                            vue.dialogVisible=false;
+                                            Vue.prototype.$message("成功提交");
+                                        }else{
+                                            Vue.prototype.$message.error(res.data.error);
+                                        }
+                                    })
+                                    .catch(function (error) {
+                                        console.info(error);
+                                        Vue.prototype.$message.error("保存服务器产生异常，请联系管理员");
+                                    });
                             } else {
                                 console.log('error submit!!');
                                 return false;
                             }
                         });
-                    }
+                    },
+                resetForm(formName){
+                    this.$refs[formName].resetFields();
+                },
                 }
 
     });

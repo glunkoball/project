@@ -1,6 +1,7 @@
 package aaa.project.dao;
 
 import aaa.project.entity.Apartment;
+import aaa.project.entity.InterestedCustom;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -14,5 +15,6 @@ public interface CustomSearchDetailsDao {
      * @return
      */
     public Apartment findOneHome();
+    public Integer save(InterestedCustom custom);
 
 }
