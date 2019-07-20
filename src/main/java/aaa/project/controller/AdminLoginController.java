@@ -1,6 +1,5 @@
 package aaa.project.controller;
 
-import aaa.project.common.Constants;
 import aaa.project.common.DefaultMsg;
 import aaa.project.entity.Admin;
 import aaa.project.entity.Module;
