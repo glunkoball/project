@@ -7,7 +7,7 @@ import aaa.project.entity.InterestedCustom;
 import java.util.List;
 
 public interface CustomSearchDetailsService {
-    public Apartment findOneHome();
+    public Apartment findOneHome(String aptNum);
     public DefaultMsg save(InterestedCustom custom);
 
 }

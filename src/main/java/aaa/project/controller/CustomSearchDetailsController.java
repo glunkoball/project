@@ -30,12 +30,10 @@ public class CustomSearchDetailsController {
      * @return
      */
     @RequestMapping("/details")
-
-    public String findHome(Model model){
-        Apartment oneHome = customSearchDetailsService.findOneHome();
+    public String findHome(Model model,String aptNum ){
+        Apartment oneHome = customSearchDetailsService.findOneHome(aptNum);
         System.out.println(oneHome);
         model.addAttribute("oneHome",oneHome);
-
         return "details";
     }
     @RequestMapping("/saveOrUpdate")

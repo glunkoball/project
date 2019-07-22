@@ -18,8 +18,8 @@ public class CustomSearchDetailsServiceImpl  implements CustomSearchDetailsServi
     @Autowired
     private CustomSearchDetailsDao customSearchDetailsDao;
     @Override
-    public Apartment findOneHome() {
-        return customSearchDetailsDao.findOneHome();
+    public Apartment findOneHome(String aptNum) {
+        return customSearchDetailsDao.findOneHome(aptNum);
     }
 
     @Override

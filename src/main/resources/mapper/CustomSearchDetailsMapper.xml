@@ -3,10 +3,10 @@
 <mapper namespace="aaa.project.dao.CustomSearchDetailsDao">
     <select id="findOneHome" resultType="aaa.project.entity.Apartment">
        select * from apartmentinfo1 a1
-       INNER JOIN apartmentinfo2 a2 on a1.aptNum=a2.aptNum
-       INNER JOIN apartmentinfo3 a3 on a1.aptNum=a3.aptNum
-       INNER JOIN apartmentinfo4 a4 on a1.aptNum=a4.aptNum
-       where a1.aptNum=20190717164200
+       left join apartmentinfo2 a2 on a1.aptNum=a2.aptNum
+       left join apartmentinfo3 a3 on a1.aptNum=a3.aptNum
+       left join apartmentinfo4 a4 on a1.aptNum=a4.aptNum
+       where a1.aptNum=#{aptNum}
     </select>
     <insert id="save">
         insert into custominfo(customname,customphone,customemail,wayy,customdesc) values(#{customname},#{customphone},#{customemail},#{wayy},#{customdesc})
