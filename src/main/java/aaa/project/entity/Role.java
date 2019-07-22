@@ -2,7 +2,7 @@ package aaa.project.entity;
 
 public class Role {
     private Integer id;
-    private String name;
+    private String rolename;
 
     public Integer getId() {
         return id;
@@ -12,11 +12,11 @@ public class Role {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getRolename() {
+        return rolename;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRolename(String rolename) {
+        this.rolename = rolename;
     }
 }

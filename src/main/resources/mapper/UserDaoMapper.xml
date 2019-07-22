@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="aaa.project.dao.UserDao">
+    <select id="listAllUser" resultType="aaa.project.entity.Admin">
+        select * from(
+        select u.*,r.id as r_id,r.name,
+
+        rownum r from users u
+        left join user_role ur on ur.u_id=u.id
+        left join role r on ur.r_id=r.id
+        <where>
+            <if test="keyword!=null">
+                u.username like '%${keyword}%' or  u.address like '%${keyword}%'
+            </if>
+            and rownum &lt;#{currentPage}*#{pagesize}+1
+        </where>
+        )u where u.r>(#{currentPage}-1)*#{pagesize}
+    </select>
+</mapper>
