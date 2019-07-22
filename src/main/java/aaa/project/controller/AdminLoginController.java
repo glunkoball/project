@@ -65,7 +65,14 @@ public class AdminLoginController {
     public String toCheckSubmission(){
         return "admin/check/audit";
     }
-
+    /**
+     * 钥匙管理
+     * @return
+     */
+    @RequestMapping("check/keyManagement")
+    public String toKeyManagement(){
+        return "admin/check/record";
+    }
 
    @RequestMapping("/toError")
    public String error(){
