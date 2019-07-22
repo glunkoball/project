@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="aaa.project.dao.AdminRecordDao">
+    <select id="recordlistAll" resultType="aaa.project.entity.Apartment">
+        select * from record
+    </select>
+    <update id="recordborrow">
+        UPDATE record set  keystate = 1  where aptNum = #{newAptNum}
+    </update>
+    <update id="recordrepay">
+        UPDATE record set  keystate = 0  where aptNum = #{newAptNum}
+    </update>
+    <insert id="addrecord">
+         insert  into record values(#{AptNum},#{address},#{aid},#{contact},#{keystate},#{date})
+    </insert>
+</mapper>
