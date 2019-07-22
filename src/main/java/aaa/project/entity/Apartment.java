@@ -524,5 +524,4 @@ public class Apartment {
     public void setDate(Date date) {
         this.date = date;
     }
-
 }
