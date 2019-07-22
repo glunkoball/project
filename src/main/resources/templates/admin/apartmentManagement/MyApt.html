@@ -114,7 +114,6 @@
         },
         mounted:function(){
             var vue = this;
-            alert(123);
             axios.post('findMyApt')
                 .then(function(res){
                     console.info(res.data);

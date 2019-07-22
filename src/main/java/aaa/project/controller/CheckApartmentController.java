@@ -1,6 +1,9 @@
 package aaa.project.controller;
 
+import aaa.project.common.Constants;
 import aaa.project.common.DefaultMsg;
+import aaa.project.common.PageModel;
+import aaa.project.entity.Custominfo;
 import aaa.project.service.CheckApartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +16,8 @@ public class CheckApartmentController {
     private CheckApartmentService checkApartmentService;
     @RequestMapping("admin/listCustomInfo")
     @ResponseBody
-    public DefaultMsg listCustomInfo(){
-        return null;
+    public PageModel<Custominfo> listCustomInfo( Integer currentPage){
+        PageModel<Custominfo> pageModel = checkApartmentService.listCustomInfo(currentPage, Constants.DEFAULT_PAGE_SIZE);
+        return pageModel;
     }
 }
