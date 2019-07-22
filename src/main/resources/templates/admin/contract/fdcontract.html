@@ -23,9 +23,14 @@
     <!--房源信息-->
     <div>
         房源编号：
-        <el-input style="width:300px;" v-model="" ></el-input>
-        <el-button type="success" @click="search"  icon="el-icon-search">搜索</el-button>
-        <br>
+        <el-form :inline="true" :model="form" class="demo-form-inline">
+            <el-form-item label="房源编号">
+                <el-input v-model="form.aptNum" placeholder="请输入房源编号"></el-input>
+            </el-form-item>
+            <el-form-item>
+
+                <el-button @click="search('form')">查询</el-button>
+            </el-form-item>
         <el-table
                 :data="tableData"
                 border
@@ -39,6 +44,7 @@
             <el-table-column label="厅室" prop="livingrooms"></el-table-column>
             <el-table-column label="面积" prop="area"></el-table-column>
         </el-table>
+        </el-form>
     </div>
 
     <el-button style="margin-top: 12px;" @click="prev" v-if="active==1||active==2||active==3">上一步</el-button>
@@ -51,7 +57,8 @@
         el:'#app',
         data() {
             return {
-                active: 0
+                active: 0,
+
             };
         },
 
@@ -62,6 +69,19 @@
             prev() {
                 --this.active;
                 if (this.active<0) this.active = 0;
+            },
+            search:function () {
+                var vue = this;
+                alert(123);
+                axios.post('findMyApt')
+                    .then(function(res){
+                        console.info(res.data);
+                        vue.tableData = res.data;
+                    })
+                    .catch(function(error){
+                        console.info(error);
+                        Vue.prototype.$message.error('服务器产生异常');
+                    });
             }
         }
     })

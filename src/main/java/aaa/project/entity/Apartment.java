@@ -77,8 +77,15 @@ public class Apartment {
     private String contact;//经纪人联系方式
     private Integer keystate;//钥匙状态
     private Date date;//上次借出时间
+    private Status status;
 
+    public Status getStatus() {
+        return status;
+    }
 
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
     public String getAptNum() {
         return AptNum;
