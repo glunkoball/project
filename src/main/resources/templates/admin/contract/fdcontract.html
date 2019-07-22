@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>生成与房东的合同</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" th:href="@{/plugin/element-ui/index.css}">
+    <!--引入vue-->
+    <script th:src="@{/plugin/element-ui/vue.js}"></script>
+    <!-- 引入组件库 -->
+    <script th:src="@{/plugin/element-ui/index.js}"></script>
+    <script th:src="@{/plugin/element-ui/axios.js}"></script>
+</head>
+<body>
+<div id="app">
+<el-steps :active="active" finish-status="success">
+    <el-step title="房源信息"></el-step>
+    <el-step title="房东信息"></el-step>
+    <el-step title="付款方式"></el-step>
+    <el-step title="合同"></el-step>
+</el-steps>
+    <span v-if="active==0">sadwd</span>
+    <!--房源信息-->
+    <div>
+        房源编号：
+        <el-input style="width:300px;" v-model="" ></el-input>
+        <el-button type="success" @click="search"  icon="el-icon-search">搜索</el-button>
+        <br>
+        <el-table
+                :data="tableData"
+                border
+                style="width: 100%">
+            <el-table-column label="房源编号" prop="aptNum" width="180px"></el-table-column>
+            <el-table-column label="城市" prop="city"></el-table-column>
+            <el-table-column label="区" prop="district"></el-table-column>
+            <el-table-column label="小区" prop="community"></el-table-column>
+            <el-table-column label="卧室" prop="bedrooms"></el-table-column>
+            <el-table-column label="卫生间" prop="bathrooms"></el-table-column>
+            <el-table-column label="厅室" prop="livingrooms"></el-table-column>
+            <el-table-column label="面积" prop="area"></el-table-column>
+        </el-table>
+    </div>
+
+    <el-button style="margin-top: 12px;" @click="prev" v-if="active==1||active==2||active==3">上一步</el-button>
+    <el-button style="margin-top: 12px;" @click="next" v-if="active==0||active==1||active==2">下一步</el-button>
+
+</div>
+</body>
+<script>
+    new Vue({
+        el:'#app',
+        data() {
+            return {
+                active: 0
+            };
+        },
+
+        methods: {
+            next() {
+                if (this.active++ > 4) this.active = 0;
+            },
+            prev() {
+                --this.active;
+                if (this.active<0) this.active = 0;
+            }
+        }
+    })
+</script>
+</html>

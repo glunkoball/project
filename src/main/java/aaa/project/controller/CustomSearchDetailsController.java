@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -30,17 +31,20 @@ public class CustomSearchDetailsController {
      * @return
      */
     @RequestMapping("/details")
-    public String findHome(Model model,String aptNum ){
+    public String findHome(Model model, String aptNum, HttpSession session){
         Apartment oneHome = customSearchDetailsService.findOneHome(aptNum);
         System.out.println(oneHome);
         model.addAttribute("oneHome",oneHome);
+        session.setAttribute("home",oneHome);
         return "details";
     }
     @RequestMapping("/saveOrUpdate")
     @ResponseBody
-    public DefaultMsg saveOrUpdate(@RequestBody InterestedCustom custom){
+    public DefaultMsg saveOrUpdate(@RequestBody InterestedCustom custom,HttpSession session){
+        Apartment home =(Apartment) session.getAttribute("home");
+        String aptNum = home.getAptNum();
+        DefaultMsg de = customSearchDetailsService.save(custom,aptNum);
 
-        DefaultMsg de = customSearchDetailsService.save(custom);
         return de;
 
     }

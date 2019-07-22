@@ -23,10 +23,14 @@ public class CustomSearchDetailsServiceImpl  implements CustomSearchDetailsServi
     }
 
     @Override
-    public DefaultMsg save(InterestedCustom custom) {
+    public DefaultMsg save(InterestedCustom custom,String aptNum) {
+        Integer customId=null;
         Integer count=0;
         if(custom.getCustomid()==null){
             count=customSearchDetailsDao.save(custom);
+            customId = customSearchDetailsDao.findCustomId();
+            //建立房源和感兴趣人的中间表
+            customSearchDetailsDao.BindCusAndApt(aptNum,customId);
         }
         DefaultMsg dm = new DefaultMsg();
         if(count==0){

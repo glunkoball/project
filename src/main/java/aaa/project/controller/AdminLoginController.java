@@ -138,7 +138,7 @@ public class AdminLoginController {
        // model.addAttribute("uu",u.getUsername());
         Subject subject = SecurityUtils.getSubject();
         Admin principal =(Admin) subject.getPrincipal();
-        model.addAttribute("uu",principal.getUsername());
+        model.addAttribute("uu",principal);
         return "admin/index";
     }
 

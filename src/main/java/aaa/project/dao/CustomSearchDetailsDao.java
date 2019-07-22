@@ -17,5 +17,8 @@ public interface CustomSearchDetailsDao {
      */
     public Apartment findOneHome(@Param("aptNum") String aptNum);
     public Integer save(InterestedCustom custom);
+    public Integer findCustomId();
+    public  void BindCusAndApt(@Param("aptNum") String aptNum,@Param("customid") Integer customid);
+
 
 }

@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface CustomSearchDetailsService {
     public Apartment findOneHome(String aptNum);
-    public DefaultMsg save(InterestedCustom custom);
+    public DefaultMsg save(InterestedCustom custom,String aptNum);
 
 }
