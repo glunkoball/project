@@ -19,12 +19,18 @@
             <if test="rentMethodsForSearch =='合租'">and split = 1</if>
         </where>
     </select>
-    <select id="findMyApt" resultType="aaa.project.entity.Apartment">
+    <resultMap id="aptMap" type="aaa.project.entity.Apartment" autoMapping="true">
+          <id column="aptNum" property="aptNum"></id>
+          <association property="status" javaType="aaa.project.entity.Status" autoMapping="true">
+              <id column="statusid" property="statusid"></id>
+          </association>
+    </resultMap>
+    <select id="findMyApt" resultMap="aptMap">
          select * from apartmentinfo1 a1
        left join apartmentinfo2 a2 on a1.aptNum=a2.aptNum
        left join apartmentinfo3 a3 on a1.aptNum=a3.aptNum
        left join apartmentinfo4 a4 on a1.aptNum=a4.aptNum
        left join apt_status ass on ass.statusid=a1.state
-       where a1.state in (2,3)
+       where a1.state in (2,3) and a1.aid=3
     </select>
 </mapper>

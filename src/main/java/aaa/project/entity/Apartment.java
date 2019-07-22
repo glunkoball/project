@@ -69,6 +69,18 @@ public class Apartment {
     private String  checkAptTime;//看房时间(仅周末，仅工作日，随时看房)
     private String description;//描述
 
+
+    //状态表多表联查
+    private Status status;
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     public ArrayList getCheckAptList() {
         return checkAptList;
     }

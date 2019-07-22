@@ -42,6 +42,12 @@ public class AdminLoginController {
         return "admin/apartmentManagement/ApartmentManagement";
     }
 
+
+
+    @RequestMapping("rent/myApt")
+    public String toMyApt(){
+        return "admin/apartmentManagement/MyApt";
+    }
     /**
      * 看房管理
      * @return
