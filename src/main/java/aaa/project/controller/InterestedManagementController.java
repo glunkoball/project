@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("admin/rent")
@@ -18,6 +19,7 @@ public class InterestedManagementController {
     @Autowired
     private InterestedManagementService interestedManagementService;
     @RequestMapping("listInterestedManagement")
+    @ResponseBody
     public PageModel<Apartment> listInterestedManagement(Integer currentPage ){
         PageModel<Apartment> pm =interestedManagementService.listInterestedManagement(currentPage, Constants.DEFAULT_PAGE_SIZE);
         return pm;

@@ -23,7 +23,7 @@ public class InterestedManagementServiceImpl implements InterestedManagementServ
         Subject subject = SecurityUtils.getSubject();
         Admin ad = (Admin)subject.getPrincipal();
         pm.setTotal(interestedManagementDao.countInterestedManagement(ad.getId()));
-        pm.setRows(interestedManagementDao.listInterestedManagement(currentPage,pageSize,ad.getId()));
+        pm.setRows(interestedManagementDao.listInterestedManagement(start,pageSize,ad.getId()));
         return pm;
     }
 }

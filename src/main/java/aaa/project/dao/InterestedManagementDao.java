@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface InterestedManagementDao {
-    List<Apartment> listInterestedManagement(@Param("currentPage") Integer currentPage,@Param("pageSize") Integer pageSize, @Param("id") Integer id);
+    List<Apartment> listInterestedManagement(@Param("start") Integer start,@Param("pageSize") Integer pageSize, @Param("id") Integer id);
 
     Integer countInterestedManagement(Integer id);
 }

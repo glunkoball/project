@@ -26,7 +26,6 @@
     </style>
 </head>
 <body>
-有意租房
 <div id="app">
     <el-table
             v-loading="vloading"
@@ -42,8 +41,8 @@
         <el-table-column label="卧室" prop="bedrooms"></el-table-column>
         <el-table-column label="卫生间" prop="bathrooms"></el-table-column>
         <el-table-column label="厅室" prop="livingrooms"></el-table-column>
-        <el-table-column label="房东姓名" prop="name"></el-table-column>
-        <el-table-column label="房东电话" prop="livingrooms"></el-table-column>
+        <el-table-column label="房东姓名" prop="user.name"></el-table-column>
+        <el-table-column label="房东电话" prop="user.tel"></el-table-column>
         <el-table-column label="操作">
             <template slot-scope="scope">
                 <el-button
@@ -53,7 +52,18 @@
             </template>
         </el-table-column>
     </el-table>
-
+    <!--有意看房对话框-->
+    <el-dialog
+            title="有意看房者对话框"
+            :visible.sync="dialogVisible"
+            width="80%"
+            >
+        <!--按钮-->
+        <span slot="footer" class="dialog-footer">
+                        <el-button @click="resetForm()">取 消</el-button>
+                        <el-button type="primary" @click="onSubmit('form')">确 定</el-button>
+                   </span>
+    </el-dialog>
     <!-- 分页工具栏-->
     <el-pagination
             background
@@ -70,6 +80,7 @@
     new Vue({
         el:'#app',
         data:{
+            dialogVisible: false,
             tableData:[],
             //控制是否显示加载中
             vloading:false,
@@ -85,7 +96,11 @@
         //事件
         methods:{
             //有意看房者
-            handleEdit:function(){},
+            handleEdit:function(index,row){
+                //显示对话框
+                this.dialogVisible=true;
+                this.title='有意看房者';
+            },
             //声明加载表格数据的方法
             loadTableData:function(){
                 this.vloading=true;
