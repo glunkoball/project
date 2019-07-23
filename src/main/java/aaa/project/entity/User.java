@@ -9,6 +9,15 @@ public class User {
     private String name;
     private String password;
     private String tel;
+    private String identification;
+
+    public String getIdentification() {
+        return identification;
+    }
+
+    public void setIdentification(String identification) {
+        this.identification = identification;
+    }
 
     public User() {
     }

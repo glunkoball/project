@@ -116,6 +116,7 @@
             var vue = this;
             axios.post('findMyApt')
                 .then(function(res){
+
                     console.info(res.data);
                     vue.tableData = res.data;
                 })
