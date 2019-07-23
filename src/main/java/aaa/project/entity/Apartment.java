@@ -5,6 +5,16 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Apartment {
+    //状态名
+    private   String statusname;
+
+    public String getStatusname() {
+        return statusname;
+    }
+
+    public void setStatusname(String statusname) {
+        this.statusname = statusname;
+    }
 
     //房源对应一个房东
     private User user;

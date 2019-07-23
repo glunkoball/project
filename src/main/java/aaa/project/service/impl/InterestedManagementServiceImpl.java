@@ -19,6 +19,7 @@ public class InterestedManagementServiceImpl implements InterestedManagementServ
     @Override
     public PageModel<Apartment> listInterestedManagement(Integer currentPage,Integer pageSize) {
         PageModel<Apartment> pm = new PageModel<Apartment>();
+        Integer start =(currentPage-1)*pageSize;
         Subject subject = SecurityUtils.getSubject();
         Admin ad = (Admin)subject.getPrincipal();
         pm.setTotal(interestedManagementDao.countInterestedManagement(ad.getId()));
