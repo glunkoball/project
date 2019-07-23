@@ -37,4 +37,14 @@ public class Admin {
     public void setR_id(Integer r_id) {
         this.r_id = r_id;
     }
+
+    @Override
+    public String toString() {
+        return "Admin{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", r_id=" + r_id +
+                '}';
+    }
 }

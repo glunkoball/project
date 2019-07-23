@@ -23,7 +23,14 @@ import java.util.List;
 public class AdminLoginController {
     @Autowired
     private AdminLoginService adminLoginService;
-
+    /**
+     *跳转有意租房管理
+     * @return
+     */
+    @RequestMapping("rent/interestedManagement")
+    public String toInterestedManagement(){
+        return "admin/apartmentManagement/interestedManagement";
+    }
     /**
      *跳转后台登录界面
      * @return

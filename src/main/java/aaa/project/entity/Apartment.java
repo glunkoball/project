@@ -5,6 +5,18 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Apartment {
+
+    //房源对应一个房东
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     //房屋基本信息
     private String AptNum;//房源编号
     private Integer bedrooms;//卧室
