@@ -9,16 +9,26 @@ public class User {
     private String name;
     private String password;
     private String tel;
+    private String identification;
 
     public User() {
     }
 
-    public User(Integer id, String username, String name, String password, String tel) {
+    public User(Integer id, String username, String name, String password, String tel,String identification) {
         this.id = id;
         this.username = username;
         this.name = name;
         this.password = password;
         this.tel = tel;
+        this.identification=identification;
+    }
+
+    public String getIdentification() {
+        return identification;
+    }
+
+    public void setIdentification(String identification) {
+        this.identification = identification;
     }
 
     public Integer getId() {
@@ -69,6 +79,7 @@ public class User {
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", tel='" + tel + '\'' +
+                ", identification =' "+identification+'\''+
                 '}';
     }
 }
