@@ -8,8 +8,18 @@ public class Admin {
     private String username;
     private String password ;
     private Integer r_id;
-    private String roleStrs;
-    private List<Role> roles = new ArrayList<Role>();
+    private String name;
+    private String telephone;
+    private String address;
+    private String rolename;
+
+    public String getRolename() {
+        return rolename;
+    }
+
+    public void setRolename(String rolename) {
+        this.rolename = rolename;
+    }
 
     public Integer getId() {
         return id;
@@ -43,19 +53,29 @@ public class Admin {
         this.r_id = r_id;
     }
 
-    public String getRoleStrs() {
-        return roleStrs;
+    public String getName() {
+        return name;
     }
 
-    public void setRoleStrs(String roleStrs) {
-        this.roleStrs = roleStrs;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public List<Role> getRoles() {
-        return roles;
+
+    public String getTelephone() {
+        return telephone;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
 }
