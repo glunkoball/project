@@ -58,9 +58,48 @@
             :visible.sync="dialogVisible"
             width="80%"
             >
+        <el-table
+                stripe border
+                height="300"
+                :data="custData"
+                style="width: 100%">
+            <el-table-column label="编号" prop="customid"></el-table-column>
+            <el-table-column label="姓名" prop="customname"></el-table-column>
+            <el-table-column label="电话" prop="customphone"></el-table-column>
+            <el-table-column label="邮箱" prop="customemail"></el-table-column>
+            <el-table-column label="倾向那种方式" prop="wayy"></el-table-column>
+            <el-table-column label="备注" prop="customdesc"></el-table-column>
+            <el-table-column label="操作">
+                <template slot-scope="scope">
+                    <el-button
+                            size="mini"
+                            @click="addTime(scope.$index, scope.row)"
+                    >预约看房时间</el-button>
+                </template>
+            </el-table-column>
+        </el-table>
         <!--按钮-->
         <span slot="footer" class="dialog-footer">
-                        <el-button @click="resetForm()">取 消</el-button>
+                        <el-button @click="close">关闭</el-button>
+                   </span>
+    </el-dialog>
+    <!--预约看房时间对话框-->
+    <el-dialog
+            title="预约看房时间"
+            :visible.sync="dialogVisible2"
+            width="30%"
+    >
+
+            <input type="hidden" v-model="customid" prop="customid" >
+                <el-date-picker
+                        v-model="custTime"
+                        type="datetime"
+                        placeholder="选择日期时间">
+                </el-date-picker>
+
+
+        <span slot="footer" class="dialog-footer">
+                        <el-button @click="closeTime">取 消</el-button>
                         <el-button type="primary" @click="onSubmit('form')">确 定</el-button>
                    </span>
     </el-dialog>
@@ -80,6 +119,11 @@
     new Vue({
         el:'#app',
         data:{
+            aptNum:'',
+            customid:null,
+            custTime:new Date(),
+            dialogVisible2:false,
+            custData:[],
             dialogVisible: false,
             tableData:[],
             //控制是否显示加载中
@@ -87,6 +131,7 @@
             //当前页的变量
             currentPage:1,
             total:0,
+            //校验
         },
         //当vue组件加载完成之后会自动调用这个函数
         mounted:function(){
@@ -95,11 +140,57 @@
         },
         //事件
         methods:{
+            //关闭预约时间框
+            closeTime:function(){
+                this.dialogVisible2=false;
+            },
+            //提交预约时间
+            onSubmit:function(){
+                var vue =this;
+                axios.get('addCustTime',{params:{custTime:this.custTime,customid:this.customid,aptNum:this.aptNum}})
+                    .then(function (res) {
+                       if(res.data.success){
+                           Vue.prototype.$message.success("预约时间成功");
+                       }else{
+                           Vue.prototype.$message.err(res.data.error);
+                       }
+                    })
+                    .catch(function (error) {
+                        Vue.prototype.$message.error("服务器产生异常，请联系管理员");
+                    });
+                vue.dialogVisible2=false;
+                vue.loadCustData();
+            },
+            //打开预约时间框
+            addTime:function(index,row){
+                this.dialogVisible2=true;
+                this.customid = row.customid;
+            },
+            //关闭
+            close:function(){
+                this.dialogVisible=false;
+            },
             //有意看房者
             handleEdit:function(index,row){
                 //显示对话框
                 this.dialogVisible=true;
-                this.title='有意看房者';
+                this.title='有意租房者';
+                this.aptNum =row.aptNum;
+                //加载有意看房者数据
+                this.loadCustData();
+            },
+            //加载有意看房者数据
+            loadCustData:function(){
+                var vue =this;
+                axios.get('listCustominfo',{params:{aptNum:this.aptNum}})
+                    .then(function (res) {
+                        console.info(res.data.rows);
+                        //赋值分页数据
+                        vue.custData=res.data.rows;
+                    })
+                    .catch(function (error) {
+                        Vue.prototype.$message.error("服务器产生异常，请联系管理员");
+                    });
             },
             //声明加载表格数据的方法
             loadTableData:function(){

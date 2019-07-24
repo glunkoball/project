@@ -1,9 +1,11 @@
 package aaa.project.controller;
 
 import aaa.project.common.Constants;
+import aaa.project.common.DefaultMsg;
 import aaa.project.common.PageModel;
 import aaa.project.entity.Admin;
 import aaa.project.entity.Apartment;
+import aaa.project.entity.Custominfo;
 import aaa.project.service.InterestedManagementService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -18,6 +20,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class InterestedManagementController {
     @Autowired
     private InterestedManagementService interestedManagementService;
+
+    /**
+     * 查出房源信息加房东信息 分页
+     * @param currentPage
+     * @return
+     */
     @RequestMapping("listInterestedManagement")
     @ResponseBody
     public PageModel<Apartment> listInterestedManagement(Integer currentPage ){
@@ -25,4 +33,27 @@ public class InterestedManagementController {
         return pm;
     }
 
+    /**
+     * 查出 有意看房者的信息
+     * @param currentPage
+     * @return
+     */
+    @RequestMapping("listCustominfo")
+    @ResponseBody
+    public PageModel<Custominfo> listCustominfo(String  aptNum ){
+        PageModel<Custominfo> pm2 =interestedManagementService.listCustominfo(aptNum);
+        return pm2;
+    }
+
+    /**
+     * 添加预约时间
+     * @param custTime
+     * @return
+     */
+    @RequestMapping("addCustTime")
+    @ResponseBody
+    public DefaultMsg addCustTime(String custTime,Integer customid,String aptNum){
+        DefaultMsg dm =interestedManagementService.addCustTime(custTime,customid,aptNum);
+        return dm;
+    }
 }

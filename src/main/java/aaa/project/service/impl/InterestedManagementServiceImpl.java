@@ -1,9 +1,11 @@
 package aaa.project.service.impl;
 
+import aaa.project.common.DefaultMsg;
 import aaa.project.common.PageModel;
 import aaa.project.dao.InterestedManagementDao;
 import aaa.project.entity.Admin;
 import aaa.project.entity.Apartment;
+import aaa.project.entity.Custominfo;
 import aaa.project.service.InterestedManagementService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -25,5 +27,29 @@ public class InterestedManagementServiceImpl implements InterestedManagementServ
         pm.setTotal(interestedManagementDao.countInterestedManagement(ad.getId()));
         pm.setRows(interestedManagementDao.listInterestedManagement(start,pageSize,ad.getId()));
         return pm;
+    }
+
+    @Override
+    public PageModel<Custominfo> listCustominfo(String aptNum) {
+        PageModel<Custominfo> pm2 = new PageModel<Custominfo>();
+        pm2.setRows(interestedManagementDao.listCustominfo(aptNum));
+        return pm2;
+    }
+
+    @Override
+    public DefaultMsg addCustTime(String custTime, Integer customid,String aptNum) {
+        DefaultMsg dm = new DefaultMsg();
+        Integer count =0;
+        if(custTime!= null && customid!=null){
+            count =interestedManagementDao.addCustTime(custTime,customid,aptNum);
+            if(count<1){
+                dm.setSuccess(0);
+                dm.setError("预约时间失败，请重试");
+            }
+        }else {
+            dm.setSuccess(0);
+            dm.setError("预约时间失败");
+        }
+        return dm;
     }
 }
