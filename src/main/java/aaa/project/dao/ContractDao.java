@@ -2,6 +2,7 @@ package aaa.project.dao;
 
 import aaa.project.entity.Apartment;
 import aaa.project.entity.OwerContract;
+import aaa.project.entity.TenantContract;
 import aaa.project.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -19,4 +20,8 @@ public interface ContractDao {
     public boolean addtocontract(OwerContract owerContract);
     public void savecontract(@Param("aptNum")String  aptNum,@Param("owerid") Integer owerid,@Param("pid")Integer pid);
     public List<OwerContract> findcontract(Integer pid);
+    public boolean addzkcontract(TenantContract tenantContract);
+    public List<TenantContract> findzkcontract(Integer pid);
+    public void savezkcontract(@Param("aptNum")String  aptNum,@Param("tenantid") Integer tenantid,@Param("pid")Integer pid);
+
 }

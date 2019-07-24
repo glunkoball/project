@@ -3,9 +3,11 @@ package aaa.project.controller;
 import aaa.project.common.DefaultMsg;
 import aaa.project.entity.Apartment;
 import aaa.project.entity.OwerContract;
+import aaa.project.entity.TenantContract;
 import aaa.project.entity.User;
 import aaa.project.po.FdForm;
 import aaa.project.po.RuleForm;
+import aaa.project.po.Zform;
 import aaa.project.service.ContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,10 @@ public class ContractController {
     @RequestMapping("contract/createContractA")
     public String createContractA(){
         return "admin/contract/fdcontract";
+    }
+    @RequestMapping("contract/createContractB")
+    public String createContractB(){
+        return "admin/contract/zkcontract";
     }
 
     /**
@@ -57,6 +63,12 @@ public class ContractController {
 
         return fd;
     }
+
+    /**
+     * 把房东那一套信息都提交到合同表中
+     * @param owerContract
+     * @return
+     */
     @RequestMapping("contract/addtocontract")
     @ResponseBody
     public DefaultMsg addtocontract(@RequestBody OwerContract owerContract){
@@ -90,5 +102,49 @@ public class ContractController {
 
         return "admin/contract/makecontract";
     }
+    @RequestMapping("contract/findZk")
+    @ResponseBody
+    public List<User> findZk(@RequestBody User user){
+        String id = user.getIdentification();
+
+        List<User> fz = contractService.findFd(id);
+
+        return fz;
+    }
+
+    /**
+     * 将支付方式什么的加入到租客的那个合同表中
+     * @param tenantContract
+     * @return
+     */
+    @RequestMapping("contract/addzkcontract")
+    @ResponseBody
+    public DefaultMsg addzkcontract(@RequestBody TenantContract tenantContract){
+        DefaultMsg dm = new DefaultMsg();
+        if(contractService.addzkcontract(tenantContract)){
+
+        }
+        else{
+            dm.setSuccess(0);
+            dm.setError("失败");
+        }
+        return dm;
+    }
+
+    @RequestMapping("contract/makezkContract")
+    public String makezkContract(String aptNum,Integer pid,String  uid,Model model){
+        System.out.println(aptNum);
+        System.out.println(pid);
+        contractService.savezkcontract(aptNum,pid,uid);
+        List<User> fd = contractService.findFd(uid);
+        model.addAttribute("fz",fd);
+        List<Apartment> apt = contractService.findAptById(aptNum);
+        model.addAttribute("aptt",apt);
+        List<TenantContract> pay = contractService.findzkcontract(pid);
+        model.addAttribute("payy",pay);
+
+        return "admin/contract/makezkcontract";
+    }
+
 
 }

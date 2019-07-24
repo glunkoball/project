@@ -1,7 +1,10 @@
 package aaa.project.service.impl;
 
 import aaa.project.dao.AdminAuditDao;
+import aaa.project.entity.Admin;
 import aaa.project.entity.Apartment;
+import aaa.project.entity.Params;
+import aaa.project.entity.User;
 import aaa.project.service.AdminAuditService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,9 +20,20 @@ public class AdminAuditServiceImpl implements AdminAuditService {
         return adminAuditDao.listAll();
     }
 
+    @Override
+    public Integer pass(String newAptNum) {
+        return adminAuditDao.pass(newAptNum);
+    }
 
     @Override
-    public List<Apartment> findById(String newAptNum) {
-        return adminAuditDao.findById(newAptNum);
+    public List<Admin> bindingbutton(String AptNum) {
+        return adminAuditDao.bindingbutton(AptNum);
     }
+
+    @Override
+    public Integer binding(Params params) {
+        return adminAuditDao.binding(params);
+    }
+
+
 }

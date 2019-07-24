@@ -1,10 +1,381 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>个人中心</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="plugin/element-ui/index.css">
+    <!--引入vue-->
+    <script src="plugin/element-ui/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script src="plugin/element-ui/index.js"></script>
+    <script src="plugin/element-ui/axios.js"></script>
+    <style>
+        .content{
+            width: 1000px;
+            margin: 0 auto;
+        }
+        .el-tabs__nav-scroll{
+            background-color: white;
+        }
+        .el-tabs__content{
+            height: 500px;
+        }
+        .el-tabs,.el-tabs--left{
+            height: 500px;
+        }
+        .personalInfo{
+            width: 200px;
+        }
+         .demo-table-expand {
+             font-size: 0;
+         }
+        .demo-table-expand label {
+            width: 90px;
+            color: #99a9bf;
+        }
+        .demo-table-expand .el-form-item {
+            margin-right: 0;
+            margin-bottom: 0;
+            width: 50%;
+        }
+    </style>
 </head>
 <body>
 个人中心
+<div id="app">
+    <div class="content">
+        <el-tabs :tab-position="personalTab" style="height: 400px;">
+            <el-tab-pane label="账号管理">
+                <el-tabs :tab-position="accountTab" style="height: 400px;">
+                    <el-tab-pane label="我的信息">
+                        <div class="personalInfo">
+                            <el-form :model="updatePersonalInfoForm" :rules="updatePersonalInfoRules" ref="updatePersonalInfoForm" label-width="100px" class="demo-ruleForm">
+                                <el-form-item label="姓名" prop="name">
+                                    <el-input class="personalInfo" th:value="${session.session_user.name}" suffix-icon="el-icon-user" disabled="true" ></el-input>
+                                </el-form-item>
+                                <el-form-item label="电话" prop="tel">
+                                        <el-input class="personalInfo" v-model="updatePersonalInfoForm.tel" th:value="${session.session_user.tel}" suffix-icon="el-icon-mobile-phone"></el-input>
+                                </el-form-item>
+                                <el-form-item label="邮箱" prop="email">
+                                    <el-input class="personalInfo" th:value="${session.session_user.username}" suffix-icon="el-icon-message" disabled="true"></el-input>
+                                </el-form-item>
+                                <el-form-item label="身份证" prop="identification">
+                                    <el-input class="personalInfo" th:value="${session.session_user.identification}" suffix-icon="el-icon-coordinate" disabled="true"></el-input>
+                                </el-form-item>
+                                <el-form-item>
+                                    <el-button type="primary" @click="updateTel('updatePersonalInfoForm')">确认修改联系方式</el-button>
+                                </el-form-item>
+                            </el-form>
+                        </div>
+                    </el-tab-pane>
+                    <el-tab-pane label="修改密码">
+                        <div class="changePassword">
+                            <el-form :model="changePasswordForm" :rules="changePasswordRules" ref="changePasswordForm" label-width="100px" class="demo-ruleForm">
+                                <el-form-item label="输入旧密码" prop="oldPassword">
+                                    <el-input v-model="changePasswordForm.oldPassword"></el-input>
+                                </el-form-item>
+                                <el-form-item label="输入新密码" prop="newPassword">
+                                    <el-input v-model="changePasswordForm.oldPassword"></el-input>
+                                </el-form-item>
+                                <el-form-item label="重新输入新密码" prop="confirmPassword">
+                                    <el-input v-model="changePasswordForm.confirmPassword"></el-input>
+                                </el-form-item>
+                                <el-form-item>
+                                    <el-button type="primary" @click="updatePassword('changePasswordForm')">确认修改密码</el-button>
+                                </el-form-item>
+                            </el-form>
+                        </div>
+                    </el-tab-pane>
+                </el-tabs>
+            </el-tab-pane>
+            <el-tab-pane label="我的房子" >
+                <el-tabs :tab-position="myAptTab">
+                    <el-tab-pane label="我的房源" >
+                        <el-table
+                                :data="myApt1"
+                                style="width: 100%">
+                            <el-table-column type="expand">
+                                <template slot-scope="props">
+                                    <el-form label-position="left" inline class="demo-table-expand">
+                                        <el-form-item label="地址">
+                                            <span>{{ props.row.address }}</span>
+                                        </el-form-item>
+                                        <el-form-item label="户型">
+                                            <span>{{ props.row.bedrooms }}室/{{ props.row.livingrooms }}厅/{{ props.row.bathrooms }}卫</span>
+                                        </el-form-item>
+                                        <el-form-item label="面积">
+                                            <span>{{ props.row.area }}</span>
+                                        </el-form-item>
+                                        <el-form-item label="经纪人姓名">
+                                            <span>{{ props.row.admin.name }}</span>
+                                        </el-form-item>
+                                        <el-form-item label="经纪人电话">
+                                            <span>{{ props.row.admin.telephone }}</span>
+                                        </el-form-item>
+                                    </el-form>
+                                </template>
+                            </el-table-column>
+                            <el-table-column
+                                    label="房源编号"
+                                    prop="aptNum">
+                            </el-table-column>
+                            <el-table-column
+                                    label="城市"
+                                    prop="city">
+                            </el-table-column>
+                            <el-table-column
+                                    label="区"
+                                    prop="district">
+                            </el-table-column>
+                            <el-table-column
+                                    label="社区"
+                                    prop="community">
+                            </el-table-column>
+                            <el-table-column
+                                    label="状态"
+                                    prop="state">
+
+                            </el-table-column>
+                            <el-table-column label="我的身份">
+                                <template slot-scope="scope">
+                                    <span v-if="scope.row.uid == myId">房东</span>
+                                    <span v-else>租客</span>
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                    </el-tab-pane>
+                </el-tabs>
+            </el-tab-pane>
+            <el-tab-pane label="我的合同">
+                <el-tabs :tab-position="myContractTab">
+                    <el-tab-pane label="甲方合同">
+                        <el-table
+                                :data="JiaContract"
+                                style="width: 100%">
+                            <el-table-column
+                                    label="房屋编号"
+                                    width="150">
+                                <template slot-scope="scope">
+                                    <span style="margin-left: 10px">{{ scope.row.aptNum }}</span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column
+                                    label="我的身份"
+                                    width="80">房东
+                            </el-table-column>
+                            <el-table-column
+                                    label="合同生效日期"
+                                    width="130">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date1 }}</span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column
+                                    label="合同失效日期"
+                                    width="130">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date2 }}</span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column
+                                    label="租金"
+                                    width="150">
+                                <template slot-scope="scope">
+                                    <el-popover trigger="hover" placement="top">
+                                        <p>收款方式: {{ scope.row.pway }}</p>
+                                        <p>租期时间: {{ scope.row.peroid }}个月</p>
+                                        <div slot="reference" class="name-wrapper">
+                                            <el-tag size="medium"><i class="el-icon-money"></i>{{ scope.row.money }}元/月</el-tag>
+                                        </div>
+                                    </el-popover>
+                                </template>
+                            </el-table-column>
+                            <el-table-column
+                                    label="小区"
+                                    width="150">
+                                <template slot-scope="scope">
+                                    <el-popover trigger="hover" placement="top">
+                                        <p>地址: {{ scope.row.apartment.address }}</p>
+                                        <p>户型: {{ scope.row.apartment.bedrooms }}室/{{ scope.row.apartment.livingrooms }}厅/{{ scope.row.apartment.bathrooms }}卫</p>
+                                        <p>面积: {{ scope.row.apartment.area }}</p>
+                                        <div slot="reference" class="name-wrapper">
+                                            <el-tag size="medium"><i class="el-icon-house"></i>{{ scope.row.apartment.community }}</el-tag>
+                                        </div>
+                                    </el-popover>
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                    </el-tab-pane>
+
+                    <el-tab-pane label="乙方合同">
+                        <el-table
+                                :data="YiContract"
+                                style="width: 100%">
+                            <el-table-column
+                                    label="房屋编号"
+                                    width="150">
+                                <template slot-scope="scope">
+                                    <span style="margin-left: 10px">{{ scope.row.aptNum }}</span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column
+                                    label="我的身份"
+                                    width="80">租客
+                            </el-table-column>
+                            <el-table-column
+                                    label="合同生效日期"
+                                    width="130">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date1 }}</span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column
+                                    label="合同失效日期"
+                                    width="130">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date2 }}</span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column
+                                    label="租金"
+                                    width="150">
+                                <template slot-scope="scope">
+                                    <el-popover trigger="hover" placement="top">
+                                        <p>付款方式: {{ scope.row.pway }}</p>
+                                        <p>租期时间: {{ scope.row.peroid }}个月</p>
+                                        <div slot="reference" class="name-wrapper">
+                                            <el-tag size="medium"><i class="el-icon-money"></i>{{ scope.row.money }}元/月</el-tag>
+                                        </div>
+                                    </el-popover>
+                                </template>
+                            </el-table-column>
+                            <el-table-column
+                                    label="小区"
+                                    width="150">
+                                <template slot-scope="scope">
+                                    <el-popover trigger="hover" placement="top">
+                                        <p>地址: {{ scope.row.apartment.address }}</p>
+                                        <p>户型: {{ scope.row.apartment.bedrooms }}室/{{ scope.row.apartment.livingrooms }}厅/{{ scope.row.apartment.bathrooms }}卫</p>
+                                        <p>面积: {{ scope.row.apartment.area }}</p>
+                                        <div slot="reference" class="name-wrapper">
+                                            <el-tag size="medium"><i class="el-icon-house"></i>{{ scope.row.apartment.community }}</el-tag>
+                                        </div>
+                                    </el-popover>
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                    </el-tab-pane>
+                </el-tabs>
+            </el-tab-pane>
+            <el-tab-pane label="在线支付">在线支付</el-tab-pane>
+            <el-tab-pane label="交易记录">交易记录</el-tab-pane>
+        </el-tabs>
+    </div>
+</div>
 </body>
+<script th:inline="javascript">
+    new Vue({
+        el:'#app',
+        data(){
+            return {
+                myId:[[${session.session_user.id}]],
+                personalTab:'left',
+                accountTab:'top',
+                myAptTab:'top',
+                myContractTab:'top',
+                myApt1:[{
+                   }],
+                JiaContract:[{}],
+                YiContract:[{}],
+                changePasswordForm:{
+                    oldPassword:'',
+                    newPassword:'',
+                    confirmPassword:''
+                },
+                updatePersonalInfoForm:{
+
+                },
+                changePasswordRules:{
+                    oldPassword: [
+                        { required: true, message: '请输入旧密码', trigger: 'blur' }
+                    ],newPassword: [
+                        { required: true, message: '请输入新密码', trigger: 'blur' },
+                        { min: 5, max: 8, message: '长度在 5 到 8 个字符', trigger: 'blur' }
+                    ],confirmPassword:[
+                        {}
+                    ]
+                },updatePersonalInfoRules:{
+
+                }
+            }
+        },
+        mounted(){
+            this.showMyApt();
+            this.showJiaContract();
+            this.showYiContract();
+        },
+        methods:{
+
+            updatePassword(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        alert('submit!');
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            },
+            updateTel(formName){
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        alert('submit!');
+                        axios.post('updateTel',this.updatePersonalInfoForm)
+                            .then(function (res) {
+                                if(res.data.success){
+                                    alert(11);
+                                }
+                                else{
+                                    Vue.prototype.$message.error(res.data.error);
+                                }
+                            })
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            },
+            showMyApt(){
+                var vue = this;
+                axios.post('showAllMyApt')
+                    .then(function(res){
+                        console.info(this.data);
+                        vue.myApt1 = res.data;
+                    })
+            },
+            showJiaContract(){
+                var vue = this;
+                axios.post('JiaContract')
+                    .then(function(res){
+                        console.info(this.data);
+                        vue.JiaContract = res.data;
+                    })
+            },
+            showYiContract(){
+                var vue = this;
+                axios.post('YiContract')
+                    .then(function(res){
+                        console.info(this.data);
+                        vue.YiContract = res.data;
+                    })
+            }
+        }
+    })
+
+</script>
 </html>

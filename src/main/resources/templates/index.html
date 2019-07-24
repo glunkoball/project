@@ -73,12 +73,14 @@
              <el-menu-item index="1" style="float: right; margin-right: 20px" @click="logout()">
                  <a href="logout" style="text-decoration: none;">退出</a>
             </el-menu-item>
-            <el-menu-item index="1" style="float: right; margin-right: 20px; color: white;">个人中心</el-menu-item>
+            <el-menu-item index="1" style="float: right; margin-right: 20px; color: white;">
+                <a href="personal" style="text-decoration: none">个人中心</a>
+            </el-menu-item>
             <el-menu-item index="1" style="float: right; margin-right: 20px">
                 <span th:text="${'你好，'+session.session_user.name}" style="color: white;"></span>
             </el-menu-item>
-
         </template>
+
         <template th:if="${session.session_user== null}"  >
             <el-menu-item index="1" style="float: right; margin-right: 20px" @click="centerDialogVisible = true">
                 登陆/注册

@@ -19,4 +19,14 @@
     <select id="findcontract" resultType="aaa.project.entity.OwerContract">
         SELECT * from owerContract where pid=#{pid}
     </select>
+
+    <insert id="addzkcontract">
+        insert into tenant_contract(pid,pway,money,date1,date2,peroid) VALUES(#{pid},#{pway},#{money},#{date1},#{date2},#{peroid})
+    </insert>
+    <select id="findzkcontract" resultType="aaa.project.entity.OwerContract">
+        SELECT * from tenant_contract where pid=#{pid}
+    </select>
+    <insert id="savezkcontract">
+        update tenant_contract set aptNum=#{aptNum},tenantid=#{tenantid} where pid=#{pid}
+    </insert>
 </mapper>

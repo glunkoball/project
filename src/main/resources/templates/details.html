@@ -27,7 +27,6 @@
                     <span style="font-family: PingFang SC;font-size: 20px;margin-left: 20px" th:text="${oneHome.city}+'·'+${oneHome.community}+'·'+${oneHome.bedrooms}+'居室'"></span>
                     <br>
                     <span style="color: #ebb563;margin-left: 20px;margin-top: 5px" th:text="'￥'+${oneHome.price}+'/月'">￥2200/月</span>
-
                     <el-button type="primary" icon="el-icon-share" style="height: 30px;background-color:#ebb563;width: 40px;margin-left: 500px;border: 1px solid  #ebb563" ></el-button>
                     <el-button type="primary" icon="el-icon-star-off" style="height: 30px;background-color: #ebb563;width: 40px;border: 1px solid  #ebb563"></el-button>
 
@@ -41,9 +40,6 @@
                 </div>
                 <el-tabs type="border-card">
                     <el-tab-pane label="房源信息" >
-                        房源编号：
-                        <span style="color: #c8c9cc;margin-left: 20px;margin-top: 5px" th:text="${oneHome.aptNum}"></span>
-                        <br>
                         <span th:text="${oneHome.description}">带独卫带阳台，朝南，面积大，只有可遇不可求。小区为高端小区，由上海有名物业公司龙湖物业有限公司管理，小区内有别墅群，环境安静舒适
                         。距离地铁直线距离约150米，交通方便</span>
 
@@ -375,11 +371,10 @@
                         var vue = this;
                         this.$refs[formName].validate((valid) => {
                             if (valid) {
-                                alert(this.ruleForm);
+                                alert('submit!');
                                 axios.post('saveOrUpdate',this.ruleForm)
                                     .then(function (res) {
                                         //如果登录成功
-
                                         if(res.data.success){
                                             //刷新界面
                                            // vue.loadTableData();

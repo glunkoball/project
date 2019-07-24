@@ -3,6 +3,7 @@ package aaa.project.service.impl;
 import aaa.project.dao.ContractDao;
 import aaa.project.entity.Apartment;
 import aaa.project.entity.OwerContract;
+import aaa.project.entity.TenantContract;
 import aaa.project.entity.User;
 import aaa.project.service.ContractService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,5 +72,31 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public List<OwerContract> findcontract(Integer pid) {
         return contractDao.findcontract(pid);
+    }
+
+    @Override
+    public boolean addzkcontract(TenantContract tenantContract) {
+        if(contractDao.addzkcontract(tenantContract)){
+            return  true;
+        }
+        return false;
+    }
+
+    @Override
+    public List<TenantContract> findzkcontract(Integer pid) {
+        return contractDao.findzkcontract(pid);
+    }
+
+    @Override
+    public void savezkcontract(String aptNum, Integer pid, String uid) {
+        List<Apartment> aptById = contractDao.findAptById(aptNum);
+
+
+        List<User> fd = contractDao.findFd(uid);
+        Integer tenantid = fd.get(0).getId();
+
+
+        contractDao.savezkcontract(aptNum,tenantid,pid);
+
     }
 }

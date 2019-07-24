@@ -14,6 +14,24 @@ public class OwerContract {
     private String date1;
     private String date2;
     private Integer pid;
+    private Apartment apartment;
+    private Integer peroid;
+
+    public Integer getPeroid() {
+        return peroid;
+    }
+
+    public void setPeroid(Integer peroid) {
+        this.peroid = peroid;
+    }
+
+    public Apartment getApartment() {
+        return apartment;
+    }
+
+    public void setApartment(Apartment apartment) {
+        this.apartment = apartment;
+    }
 
     public Integer getPid() {
         return pid;
