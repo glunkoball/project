@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>有意租房者管理</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" th:href="@{/plugin/element-ui/index.css}">
+    <!--引入vue-->
+    <script th:src="@{/plugin/element-ui/vue.js}"></script>
+    <!-- 引入组件库 -->
+    <script th:src="@{/plugin/element-ui/index.js}"></script>
+    <script th:src="@{/plugin/element-ui/axios.js}"></script>
+    <style>
+        .demo-table-expand {
+            font-size: 0;
+        }
+        .demo-table-expand label {
+            width: 90px;
+            color: #99a9bf;
+        }
+        .demo-table-expand .el-form-item {
+            margin-right: 0;
+            margin-bottom: 0;
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <el-table
+            v-loading="vloading"
+            stripe border
+            height="450"
+            :data="tableData"
+            style="width: 100%">
+        <el-table-column label="房源编号" prop="aptNum" width="180px"></el-table-column>
+        <el-table-column label="城市" prop="city"></el-table-column>
+        <el-table-column label="区" prop="district"></el-table-column>
+        <el-table-column label="小区" prop="community"></el-table-column>
+        <el-table-column label="详细地址" prop="address"></el-table-column>
+        <el-table-column label="卧室" prop="bedrooms"></el-table-column>
+        <el-table-column label="卫生间" prop="bathrooms"></el-table-column>
+        <el-table-column label="厅室" prop="livingrooms"></el-table-column>
+        <el-table-column label="房东姓名" prop="user.name"></el-table-column>
+        <el-table-column label="房东电话" prop="user.tel"></el-table-column>
+        <el-table-column label="操作">
+            <template slot-scope="scope">
+                <el-button
+                        size="mini"
+                        @click="handleEdit(scope.$index, scope.row)"
+                >查看有意租房人</el-button>
+            </template>
+        </el-table-column>
+    </el-table>
+    <!--有意看房对话框-->
+    <el-dialog
+            title="有意看房者对话框"
+            :visible.sync="dialogVisible"
+            width="80%"
+            >
+        <!--按钮-->
+        <span slot="footer" class="dialog-footer">
+                        <el-button @click="resetForm()">取 消</el-button>
+                        <el-button type="primary" @click="onSubmit('form')">确 定</el-button>
+                   </span>
+    </el-dialog>
+    <!-- 分页工具栏-->
+    <el-pagination
+            background
+            layout="prev, pager, next"
+            :total="total"
+            @current-change="changePage"
+    >
+    </el-pagination>
+</div>
+</body>
+<script>
+    axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+    Vue.prototype.$axios = axios;
+    new Vue({
+        el:'#app',
+        data:{
+            dialogVisible: false,
+            tableData:[],
+            //控制是否显示加载中
+            vloading:false,
+            //当前页的变量
+            currentPage:1,
+            total:0,
+        },
+        //当vue组件加载完成之后会自动调用这个函数
+        mounted:function(){
+            //加载表格数据
+            this.loadTableData();
+        },
+        //事件
+        methods:{
+            //有意看房者
+            handleEdit:function(index,row){
+                //显示对话框
+                this.dialogVisible=true;
+                this.title='有意看房者';
+            },
+            //声明加载表格数据的方法
+            loadTableData:function(){
+                this.vloading=true;
+                //向后台发起异步请求，加载树的节点的数据
+                var vue = this;
+                axios.get('listInterestedManagement',{params:{currentPage:this.currentPage}})
+                    .then(function (res) {
+                        vue.vloading=false;
+                        //赋值总条数
+                        vue.total=res.data.total;
+                        console.info(res);
+                        //赋值分页数据
+                        vue.tableData=res.data.rows;
+                    })
+                    .catch(function (error) {
+                        vue.vloading=false;
+                        Vue.prototype.$message.error("服务器产生异常，请联系管理员");
+                    });
+            },
+            //点击分页数字时触发的事件
+            changePage:function(changePage){
+                this.currentPage=changePage;
+                this.loadTableData();
+            }
+        }
+    });
+</script>
+</html>

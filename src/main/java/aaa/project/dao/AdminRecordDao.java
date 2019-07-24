@@ -10,7 +10,6 @@ import java.util.List;
 @Mapper
 @Repository
 public interface AdminRecordDao {
-
     //显示数据
     public List<Apartment> recordlistAll();
     //借出钥匙
