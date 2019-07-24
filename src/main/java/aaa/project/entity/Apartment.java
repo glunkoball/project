@@ -1,5 +1,8 @@
 package aaa.project.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.web.bind.annotation.RequestBody;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -107,6 +110,7 @@ public class Apartment {
     private String address;//房屋地址
     private String contact;//经纪人联系方式
     private Integer keystate;//钥匙状态
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date date;//上次借出时间
     private Status status;
 
@@ -562,4 +566,5 @@ public class Apartment {
     public void setDate(Date date) {
         this.date = date;
     }
+
 }

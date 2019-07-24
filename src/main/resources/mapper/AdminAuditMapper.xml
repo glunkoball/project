@@ -3,9 +3,21 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="aaa.project.dao.AdminAuditDao">
     <select id="listAll" resultType="aaa.project.entity.Apartment">
-        select *from apartmentinfo1
+      SELECT a1.*,aps.*,u.name,u.tel FROM apartmentinfo1 a1
+      LEFT JOIN
+        apt_status aps on a1.state=aps.statusid
+      LEFT JOIN
+       user u on a1.uid=u.id
+      WHERE
+      a1.state=1
     </select>
-    <select id="findById" resultType="aaa.project.entity.Apartment">
-        select * from apartmentinfo2 where aptNum=#{newAptNum}
+    <update id="pass">
+        update apartmentinfo1 set state=2 where aptNum=#{newAptNum}
+    </update>
+    <select id="bindingbutton" resultType="aaa.project.entity.Admin">
+      select * from admin where r_id=3
     </select>
+    <update id="binding">
+      update apartmentinfo1 set aid=#{id} where aptNum=#{AptNum}
+    </update>
 </mapper>

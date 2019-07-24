@@ -32,14 +32,14 @@ public class AdminRecordController {
         System.out.println(dm);
         return dm;
     }
-    //钥匙借出
+    //钥匙归还
     @RequestMapping("/recordrepay")
     @ResponseBody
     public Integer recordrepay(@RequestBody String aptNum){
-        System.out.println(aptNum);
+       // System.out.println(aptNum);
         String newAptNum = aptNum.substring(0,aptNum.length()-1);
         Integer dm = adminRecordService.recordrepay(newAptNum);
-        System.out.println(dm);
+       // System.out.println(dm);
         return dm;
     }
     //添加钥匙信息
