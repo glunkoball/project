@@ -1,5 +1,8 @@
 package aaa.project.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.web.bind.annotation.RequestBody;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -107,27 +110,9 @@ public class Apartment {
     private String address;//房屋地址
     private String contact;//经纪人联系方式
     private Integer keystate;//钥匙状态
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date date;//上次借出时间
     private Status status;
-    //房东信息
-    private String name;//房东姓名
-    private String tel;//房东联系方式
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getTel() {
-        return tel;
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel;
-    }
 
     public Status getStatus() {
         return status;
