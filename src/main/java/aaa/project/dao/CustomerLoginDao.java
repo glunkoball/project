@@ -13,4 +13,5 @@ public interface CustomerLoginDao {
      * @return
      */
     public User checkUser(User user);
+
 }

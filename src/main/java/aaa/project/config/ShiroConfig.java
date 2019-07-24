@@ -31,7 +31,6 @@ public class ShiroConfig {
         Map<String, String> filterChainDefinitionMap = shiroFilterFactoryBean.getFilterChainDefinitionMap();
 //配置不能拦截的请求
         filterChainDefinitionMap.put("/admin/login","anon");
-        filterChainDefinitionMap.put("aback", "logout");
         filterChainDefinitionMap.put("/admin/checkUser","anon");
         filterChainDefinitionMap.put("/admin/toError","anon");
        // filterChainDefinitionMap.put("/static/*","anon");
