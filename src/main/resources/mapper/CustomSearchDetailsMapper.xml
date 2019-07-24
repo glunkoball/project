@@ -8,10 +8,17 @@
        left join apartmentinfo4 a4 on a1.aptNum=a4.aptNum
        where a1.aptNum=#{aptNum}
     </select>
+
+
     <insert id="save">
         insert into custominfo(customname,customphone,customemail,wayy,customdesc) values(#{customname},#{customphone},#{customemail},#{wayy},#{customdesc})
     </insert>
-
+    <select id="findCustomId" resultType="java.lang.Integer">
+       SELECT @@identity
+    </select>
+    <insert id="BindCusAndApt">
+        insert into c_apt(customid,aptNum) VALUES (#{customid},#{aptNum})
+    </insert>
 
 
 </mapper>

@@ -1,12 +1,14 @@
 package aaa.project.common;
 
 import java.util.List;
-/*
-* 封装分页数据
-* */
+
+/**
+ * 封装分页数据
+ */
 public class PageModel<T> {
     //数据的总条数
     private Integer total;
+
     //分页数据
     private List<T> rows;
 
