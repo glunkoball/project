@@ -5,6 +5,7 @@ import aaa.project.entity.Apartment;
 import java.util.List;
 
 public interface AdminRecordService {
+
     //显示数据
     public List<Apartment> recordlistAll();
     //钥匙借出
