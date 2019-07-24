@@ -9,7 +9,7 @@
         SELECT * from apartmentinfo1 ap
                       left join  user u on ap.uid=u.id
                       <where>
-                          ap.aid=#{id}  order by  ap.aptNum  desc
+                          ap.aid=#{id} and ap.state=3  order by  ap.aptNum  desc
                           <if test="start!= null and pageSize!=null">
                               limit #{start},#{pageSize}
                           </if>

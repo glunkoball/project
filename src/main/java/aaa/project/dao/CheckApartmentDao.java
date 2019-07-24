@@ -1,5 +1,6 @@
 package aaa.project.dao;
 
+import aaa.project.entity.Capt;
 import aaa.project.entity.Custominfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -10,7 +11,9 @@ import java.util.List;
 @Repository
 public interface CheckApartmentDao {
 
-    Integer countCustominfo(Integer currentPage, Integer defaultPageSize);
+    Integer countCapt(Integer id);
 
-    List<Custominfo> listCustomInfo(Integer currentPage, Integer defaultPageSize);
+    List<Capt> listCapt(Integer start, Integer pageSize, Integer id);
+
+    Integer deleteCapt(String aptNum, Integer customid);
 }
