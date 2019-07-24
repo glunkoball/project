@@ -3,6 +3,7 @@ package aaa.project.service.impl;
 import aaa.project.dao.CustomerPersonalDao;
 import aaa.project.entity.Apartment;
 import aaa.project.entity.OwerContract;
+import aaa.project.entity.TenantContract;
 import aaa.project.service.CustomerPersonalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,5 +26,10 @@ public class CustomerPersonalServiceImpl implements CustomerPersonalService {
     @Override
     public List<OwerContract> ShowJiaContract(Integer OwnerId) {
         return customerPersonalDao.showJiaContract(OwnerId);
+    }
+
+    @Override
+    public List<TenantContract> ShowYiContract(Integer tenantId) {
+        return customerPersonalDao.showYiContract(tenantId);
     }
 }
