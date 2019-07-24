@@ -3,6 +3,7 @@ package aaa.project.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -566,5 +567,4 @@ public class Apartment {
     public void setDate(Date date) {
         this.date = date;
     }
-
 }

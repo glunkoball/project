@@ -23,14 +23,7 @@ import java.util.List;
 public class AdminLoginController {
     @Autowired
     private AdminLoginService adminLoginService;
-    /**
-     *跳转有意租房管理
-     * @return
-     */
-    @RequestMapping("rent/interestedManagement")
-    public String toInterestedManagement(){
-        return "admin/apartmentManagement/interestedManagement";
-    }
+
     /**
      *跳转后台登录界面
      * @return
@@ -72,14 +65,7 @@ public class AdminLoginController {
     public String toCheckSubmission(){
         return "admin/check/audit";
     }
-    /**
-     * 钥匙管理
-     * @return
-     */
-    @RequestMapping("check/keyManagement")
-    public String toKeyManagement(){
-        return "admin/check/record";
-    }
+
 
    @RequestMapping("/toError")
    public String error(){
@@ -145,7 +131,7 @@ public class AdminLoginController {
        // model.addAttribute("uu",u.getUsername());
         Subject subject = SecurityUtils.getSubject();
         Admin principal =(Admin) subject.getPrincipal();
-        model.addAttribute("uu",principal);
+        model.addAttribute("uu",principal.getUsername());
         return "admin/index";
     }
 

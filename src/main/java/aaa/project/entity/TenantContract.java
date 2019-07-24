@@ -13,16 +13,7 @@ public class TenantContract {
     private Double money;
     private String date1;
     private String date2;
-    private Integer pid;
     private Apartment apartment;
-
-    public Integer getPid() {
-        return pid;
-    }
-
-    public void setPid(Integer pid) {
-        this.pid = pid;
-    }
 
     public Integer getTenant() {
         return tenant;
