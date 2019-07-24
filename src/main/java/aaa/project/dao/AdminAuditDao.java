@@ -1,6 +1,9 @@
 package aaa.project.dao;
 
+import aaa.project.entity.Admin;
 import aaa.project.entity.Apartment;
+import aaa.project.entity.Params;
+import aaa.project.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +18,8 @@ public interface AdminAuditDao {
      * @return
      */
     public List<Apartment> listAll();
-    public List<Apartment> findById(String newAptNum);
+    public Integer pass(String newAptNum);
+    public List<Admin> bindingbutton(String AptNum);
+    public Integer binding(Params params);
 
 }
