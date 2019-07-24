@@ -2,8 +2,41 @@ package aaa.project.entity;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Apartment {
+    //状态名
+    private   String statusname;
+
+    public String getStatusname() {
+        return statusname;
+    }
+
+    public void setStatusname(String statusname) {
+        this.statusname = statusname;
+    }
+
+    //房源对应一个房东
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    private Admin admin;
+
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     //房屋基本信息
     private String AptNum;//房源编号
     private Integer bedrooms;//卧室
@@ -16,6 +49,9 @@ public class Apartment {
     private String community;//小区
     private Integer whichfloor;//楼层
     private Integer totalfloor;//总楼层
+    private Integer uid;//房东ID
+    private Integer state;//审核状态
+    private Integer aid;//负责经纪人ID
     //房源配套信息
     private ArrayList facility;
     private Integer elevator;//电梯
@@ -68,9 +104,11 @@ public class Apartment {
     private ArrayList checkAptList; //看房数组
     private String  checkAptTime;//看房时间(仅周末，仅工作日，随时看房)
     private String description;//描述
-
-
-    //状态表多表联查
+    //钥匙
+    private String address;//房屋地址
+    private String contact;//经纪人联系方式
+    private Integer keystate;//钥匙状态
+    private Date date;//上次借出时间
     private Status status;
 
     public Status getStatus() {
@@ -79,22 +117,6 @@ public class Apartment {
 
     public void setStatus(Status status) {
         this.status = status;
-    }
-
-    public ArrayList getCheckAptList() {
-        return checkAptList;
-    }
-
-    public void setCheckAptList(ArrayList checkAptList) {
-        this.checkAptList = checkAptList;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
     }
 
     public String getAptNum() {
@@ -183,6 +205,30 @@ public class Apartment {
 
     public void setTotalfloor(Integer totalfloor) {
         this.totalfloor = totalfloor;
+    }
+
+    public Integer getUid() {
+        return uid;
+    }
+
+    public void setUid(Integer uid) {
+        this.uid = uid;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    public Integer getAid() {
+        return aid;
+    }
+
+    public void setAid(Integer aid) {
+        this.aid = aid;
     }
 
     public ArrayList getFacility() {
@@ -289,6 +335,8 @@ public class Apartment {
         this.colony = colony;
     }
 
+
+
     public Integer getAllCharged() {
         return allCharged;
     }
@@ -329,6 +377,14 @@ public class Apartment {
         this.paymentMethods = paymentMethods;
     }
 
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
     public String getMoveinDate() {
         return moveinDate;
     }
@@ -336,6 +392,8 @@ public class Apartment {
     public void setMoveinDate(String moveinDate) {
         this.moveinDate = moveinDate;
     }
+
+
 
     public Integer getWaterFee() {
         return waterFee;
@@ -393,6 +451,8 @@ public class Apartment {
         this.parkingFee = parkingFee;
     }
 
+
+
     public Integer getPet() {
         return pet;
     }
@@ -415,6 +475,14 @@ public class Apartment {
 
     public void setIsKey(Integer isKey) {
         this.isKey = isKey;
+    }
+
+    public ArrayList getCheckAptList() {
+        return checkAptList;
+    }
+
+    public void setCheckAptList(ArrayList checkAptList) {
+        this.checkAptList = checkAptList;
     }
 
     public String getCheckAptTime() {
@@ -463,5 +531,36 @@ public class Apartment {
 
     public void setRentMethodsForSearch(String rentMethodsForSearch) {
         this.rentMethodsForSearch = rentMethodsForSearch;
+    }
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public Integer getKeystate() {
+        return keystate;
+    }
+
+    public void setKeystate(Integer keystate) {
+        this.keystate = keystate;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
