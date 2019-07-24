@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="aaa.project.dao.InterestedManagementDao">
+    <resultMap id="aptMap" type="aaa.project.entity.Apartment" autoMapping="true">
+        <association property="user" javaType="aaa.project.entity.User" autoMapping="true"></association>
+    </resultMap>
+    <select id="listInterestedManagement" resultMap="aptMap">
+        SELECT * from apartmentinfo1 ap
+                      left join  user u on ap.uid=u.id
+                      <where>
+                          ap.aid=#{id} and ap.state=3  order by  ap.aptNum  desc
+                          <if test="start!= null and pageSize!=null">
+                              limit #{start},#{pageSize}
+                          </if>
+                      </where>
+    </select>
+    <select id="countInterestedManagement" resultType="java.lang.Integer">
+        SELECT count(*) from apartmentinfo1 ap
+                      left join  user u on ap.uid=u.id
+                      where ap.aid=#{id}
+    </select>
+    <select id="listCustominfo" resultType="aaa.project.entity.Custominfo">
+        select c.* from c_apt ca left join custominfo c on ca.customid =c.customid
+                        where ca.aptNum=#{aptNum} and ca.custTime is null
+
+    </select>
+    <update id="addCustTime">
+        update c_apt set custTime=#{custTime} where customid=#{customid} and aptNum=#{aptNum}
+    </update>
+    <delete id="deleteCust">
+        delete from c_apt where customid=#{customid} and aptNum=#{aptNum}
+    </delete>
+</mapper>

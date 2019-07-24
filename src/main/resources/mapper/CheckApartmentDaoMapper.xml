@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="aaa.project.dao.CheckApartmentDao">
+    <resultMap id="captMap" type="aaa.project.entity.Capt" autoMapping="true">
+        <association property="apartment" javaType="aaa.project.entity.Apartment" autoMapping="true">
+        </association>
+        <association property="custominfo" javaType="aaa.project.entity.Custominfo" autoMapping="true">
+        </association>
+    </resultMap>
+    <select id="listCapt" resultMap="captMap">
+        select * from c_apt ca
+                  left join apartmentinfo1 a1 on ca.aptNum=a1.aptNum
+                  left join custominfo c on ca.customid =c.customid
+                  <where>
+                      a1.aid=3 and a1.state=3 and ca.custTime is not null order by  ca.custTime  desc
+                      <if test="start!= null and pageSize!=null">
+                          limit #{start},#{pageSize}
+                      </if>
+                  </where>
+    </select>
+    <select id="countCapt" resultType="java.lang.Integer">
+        select count(*) from c_apt ca
+        left join apartmentinfo1 a1 on ca.aptNum=a1.aptNum
+        left join custominfo c on ca.customid =c.customid
+        <where>
+            a1.aid=3 and a1.state=3 and ca.custTime is not null
+        </where>
+    </select>
+    <delete id="deleteCapt">
+        delete from c_apt
+        <where>
+            aptNum=#{aptNum} and customid=#{customid}
+        </where>
+    </delete>
+</mapper>

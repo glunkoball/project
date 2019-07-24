@@ -1,10 +1,141 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>看房管理</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" th:href="@{/plugin/element-ui/index.css}">
+    <!--引入vue-->
+    <script th:src="@{/plugin/element-ui/vue.js}"></script>
+    <!-- 引入组件库 -->
+    <script th:src="@{/plugin/element-ui/index.js}"></script>
+    <script th:src="@{/plugin/element-ui/axios.js}"></script>
 </head>
 <body>
-看房管理
+<div id="app">
+    <div style="margin-bottom:10px;">
+        <el-button type="primary" >添加</el-button>
+        <el-input style="width:300px;" v-model="keyword"></el-input>
+        <el-button type="success" @click="search" icon="el-icon-search">搜索</el-button>
+    </div>
+
+    <el-table
+            v-loading="vloading"
+            stripe border
+            height="450"
+            :data="tableData"
+            style="width: 100%">
+        <el-table-column label="房源编号" prop="aptNum" width="160px"></el-table-column>
+        <el-table-column label="区" prop="apartment.district"></el-table-column>
+        <el-table-column label="小区" prop="apartment.community"></el-table-column>
+        <el-table-column label="详细地址" prop="apartment.address"></el-table-column>
+        <el-table-column label="有意看房者姓名" prop="custominfo.customname"></el-table-column>
+        <el-table-column label="有意看房者电话" prop="custominfo.customphone"></el-table-column>
+        <el-table-column label="预约的时间" prop="custTime"></el-table-column>
+        <el-table-column label="操作">
+            <template slot-scope="scope">
+                <el-button
+                        size="mini"
+                        type="danger"
+                        @click="deleteCapt(scope.$index, scope.row)"
+                >删除
+                </el-button>
+            </template>
+        </el-table-column>
+    </el-table>
+
+    <!-- 分页工具栏-->
+    <el-pagination
+            background
+            layout="prev, pager, next"
+            :total="total"
+            @current-change="changePage"
+    >
+    </el-pagination>
+
+</div>
+<script>
+    axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+    Vue.prototype.$axios = axios;
+    new Vue({
+        el:'#app',
+        data:{
+            tableData:[],
+            keyword:'',
+            //控制是否显示加载中
+            vloading:false,
+            //当前页的变量
+            currentPage:1,
+            total:0,
+        },
+        //当vue组件加载完成之后会自动调用这个函数
+        mounted:function(){
+            //加载表格数据
+            this.loadTableData();
+        },
+        //事件
+        methods:{
+            //删除
+            deleteCapt:function(index, row){
+                var vue = this;
+                this.$confirm('您确定要删除员工吗?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    //往后台发送ajax请求 ，校验用户名和密码
+                    axios.get('deleteCapt',{params:{aptNum:row.aptNum,customid:row.customid}})
+                        .then(function (res) {
+                            //如果删除成功
+                            if(res.data.success){
+                                //刷新界面
+                                vue.loadTableData();
+                            }else{
+                                Vue.prototype.$message.error(res.data.error);
+                            }
+                        })
+                        .catch(function (error) {
+                            console.info(error);
+                            Vue.prototype.$message.error("保存服务器产生异常，请联系管理员");
+                        });
+                });
+            },
+            //声明加载表格数据的方法
+            loadTableData:function(){
+                this.vloading=true;
+                var vue = this;
+                    axios.get('listCapt',{params:{currentPage:this.currentPage}})
+                    .then(function (res) {
+                        vue.vloading=false;
+                        //赋值总条数
+                        vue.total=res.data.total;
+                        console.info(res);
+                        //赋值分页数据
+                        vue.tableData=res.data.rows;
+                    })
+                    .catch(function (error) {
+                        vue.vloading=false;
+                        Vue.prototype.$message.error("服务器产生异常，请联系管理员");
+                    });
+            },
+
+            //搜索
+            search:function(){
+                //获取用户的输入
+                //this.loadTableData();
+            },
+            //点击分页数字时触发的事件
+            changePage:function(changePage){
+                this.currentPage=changePage;
+                //this.loadTableData();
+            }
+
+        }
+
+
+    });
+
+</script>
+
 </body>
 </html>
