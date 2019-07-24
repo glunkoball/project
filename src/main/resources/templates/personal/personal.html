@@ -155,14 +155,18 @@
                                 style="width: 100%">
                             <el-table-column
                                     label="房屋编号"
-                                    width="180">
+                                    width="150">
                                 <template slot-scope="scope">
                                     <span style="margin-left: 10px">{{ scope.row.aptNum }}</span>
                                 </template>
                             </el-table-column>
                             <el-table-column
+                                    label="我的身份"
+                                    width="80">房东
+                            </el-table-column>
+                            <el-table-column
                                     label="合同生效日期"
-                                    width="150">
+                                    width="130">
                                 <template slot-scope="scope">
                                     <i class="el-icon-time"></i>
                                     <span style="margin-left: 10px">{{ scope.row.date1 }}</span>
@@ -170,7 +174,7 @@
                             </el-table-column>
                             <el-table-column
                                     label="合同失效日期"
-                                    width="150">
+                                    width="130">
                                 <template slot-scope="scope">
                                     <i class="el-icon-time"></i>
                                     <span style="margin-left: 10px">{{ scope.row.date2 }}</span>
@@ -181,23 +185,24 @@
                                     width="150">
                                 <template slot-scope="scope">
                                     <el-popover trigger="hover" placement="top">
-                                        <p>支付方式: {{ scope.row.pway }}</p>
-                                        <p>租期时间: {{ scope.row.peroid }}</p>
+                                        <p>收款方式: {{ scope.row.pway }}</p>
+                                        <p>租期时间: {{ scope.row.peroid }}个月</p>
                                         <div slot="reference" class="name-wrapper">
-                                            <el-tag size="medium">{{ scope.row.money }}</el-tag>
+                                            <el-tag size="medium"><i class="el-icon-money"></i>{{ scope.row.money }}元/月</el-tag>
                                         </div>
                                     </el-popover>
                                 </template>
                             </el-table-column>
                             <el-table-column
                                     label="小区"
-                                    width="250">
+                                    width="150">
                                 <template slot-scope="scope">
                                     <el-popover trigger="hover" placement="top">
-                                        <p>支付方式: {{ scope.row.pway }}</p>
-                                        <p>租期时间: {{ scope.row.peroid }}</p>
+                                        <p>地址: {{ scope.row.apartment.address }}</p>
+                                        <p>户型: {{ scope.row.apartment.bedrooms }}室/{{ scope.row.apartment.livingrooms }}厅/{{ scope.row.apartment.bathrooms }}卫</p>
+                                        <p>面积: {{ scope.row.apartment.area }}</p>
                                         <div slot="reference" class="name-wrapper">
-                                            <el-tag size="medium"><i class="el-icon-house"></i>{{ scope.row.apartment.address }}</el-tag>
+                                            <el-tag size="medium"><i class="el-icon-house"></i>{{ scope.row.apartment.community }}</el-tag>
                                         </div>
                                     </el-popover>
                                 </template>
