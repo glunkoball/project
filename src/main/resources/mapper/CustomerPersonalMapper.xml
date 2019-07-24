@@ -22,12 +22,12 @@
         <association property="apartment" javaType="aaa.project.entity.Apartment" autoMapping="true"></association>
     </resultMap>
 
-    <select id="showYiContract" resultMap="contract">
+    <select id="showYiContract" resultMap="YiContract">
         select * from tenant_contract tc
         left join apartmentinfo1 a1 on a1.aptNum = tc.aptNum
         where tenantid = #{tenantId}
     </select>
-    <resultMap id="contract" type="aaa.project.entity.TenantContract" autoMapping="true">
+    <resultMap id="YiContract" type="aaa.project.entity.TenantContract" autoMapping="true">
         <association property="apartment" javaType="aaa.project.entity.Apartment" autoMapping="true"></association>
     </resultMap>
 
