@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>生成与房东的合同</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" th:href="@{/plugin/element-ui/index.css}">
+    <!--引入vue-->
+    <script th:src="@{/plugin/element-ui/vue.js}"></script>
+    <!-- 引入组件库 -->
+    <script th:src="@{/plugin/element-ui/index.js}"></script>
+    <script th:src="@{/plugin/element-ui/axios.js}"></script>
+</head>
+<body>
+<div id="app">
+    <el-steps :active="active" finish-status="success">
+        <el-step title="房源信息"></el-step>
+        <el-step title="租客信息"></el-step>
+        <el-step title="付款方式"></el-step>
+        <el-step title="合同"></el-step>
+    </el-steps>
+
+    <!--房源信息-->
+    <div v-if="active==0">
+
+        <el-form  :model="ruleform"  ref="ruleform" class="demo-form-inline">
+            <el-form-item label="房源编号" style="width: 300px">
+                <el-input v-model="ruleform.aptNum" placeholder="请输入房源编号" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item label="详细地址" style="width: 300px">
+                <el-input v-model="ruleform.address"  style="width: 300px"></el-input>
+            </el-form-item>
+            <el-form-item style="width: 150px;">
+
+                <el-button @click="search('ruleform')" >提交</el-button>
+            </el-form-item>
+        </el-form>
+        <el-table
+                :data="tableData"
+                border
+                style="width: 100%">
+            <el-table-column label="房源编号" prop="aptNum" width="180px"></el-table-column>
+            <el-table-column label="城市" prop="city"></el-table-column>
+            <el-table-column label="区" prop="district"></el-table-column>
+            <el-table-column label="小区" prop="community"></el-table-column>
+            <el-table-column label="地址" prop="address"></el-table-column>
+            <el-table-column label="卧室" prop="bedrooms"></el-table-column>
+            <el-table-column label="卫生间" prop="bathrooms"></el-table-column>
+            <el-table-column label="厅室" prop="livingrooms"></el-table-column>
+            <el-table-column label="面积" prop="area"></el-table-column>
+        </el-table>
+
+    </div>
+
+    <!--房东信息-->
+    <div v-if="active==1">
+
+        <el-form  :model="zkform"  ref="zkform" class="demo-form-inline">
+            <el-form-item label="租客身份证号">
+                <el-input v-model="zkform.identification" placeholder="请输入身份证号" style="width: 200px"></el-input>
+            </el-form-item>
+            <el-form-item>
+
+                <el-button @click="searchfd('zkform')">查询</el-button>
+            </el-form-item>
+        </el-form>
+        <el-table
+                :data="zktableData"
+                border
+                style="width: 100%">
+            <el-table-column label="租客姓名" prop="name" width="180px"></el-table-column>
+            <el-table-column label="电话" prop="tel"></el-table-column>
+            <el-table-column label="身份证号" prop="identification"></el-table-column>
+        </el-table>
+
+    </div>
+
+
+
+
+    <!--付款方式-->
+    <div v-if="active==2">
+
+        <el-form  :model="payform"  ref="payform" class="demo-form-inline">
+            <el-form-item label="付款方式编号(不能重复)" prop="pid">
+                <el-input v-model="payform.pid" style="width:150px"></el-input>
+            </el-form-item>
+            <el-form-item label="付款方式"  prop="pway">
+                <el-select v-model="payform.pway" placeholder="">
+                    <el-option label="月付" value="月付"></el-option>
+                    <el-option label="季付" value="季付"></el-option>
+                    <el-option label="半年付" value="半年付"></el-option>
+                    <el-option label="年付" value="年付"></el-option>
+                </el-select>
+            </el-form-item>
+
+            <el-form-item label="月租金￥" prop="name">
+                <el-input v-model="payform.money" style="width:150px"></el-input>
+            </el-form-item>
+
+            <el-form-item label="租期时间" required>
+                <el-col :span="11" style="width: 150px;">
+                    <el-form-item prop="date1" style="width: 150px;">
+                        <el-date-picker type="date" placeholder="选择日期" v-model="payform.date1" style="width: 150px;"></el-date-picker>
+                    </el-form-item>
+                </el-col>
+                <el-col class="line" :span="2" style="width: 20px;">-</el-col>
+                <el-col :span="11" style="width: 150px;">
+                    <el-form-item prop="date2" >
+                        <el-date-picker type="date" placeholder="选择日期" v-model="payform.date2" style="width: 150px;"></el-date-picker>
+                    </el-form-item>
+                </el-col>
+            </el-form-item>
+
+            <el-form-item label="租住时间" prop="pid">
+                <el-input v-model="payform.peroid" style="width:150px"></el-input>
+            </el-form-item>
+
+            <el-form-item>
+
+                <el-button @click="addtocontract('payform')">提交</el-button>
+            </el-form-item>
+
+
+
+
+        </el-form>
+    </div>
+    <!--生成合同-->
+    <div v-if="active==3">
+        <el-link  :href="'makezkContract?aptNum='+ruleform.aptNum+'&pid='+payform.pid+'&uid='+zkform.identification">
+            <i class="el-icon-plus" style="font-size: 400px;text-align: center;margin-left: 205px" ></i>
+        </el-link>
+    </div>
+
+
+    <el-button style="margin-top: 12px;" @click="prev" v-if="active==1||active==2||active==3">上一步</el-button>
+    <el-button style="margin-top: 12px;" @click="next" v-if="active==0||active==1||active==2">下一步</el-button>
+
+</div>
+<style>
+    .el-icon-plus{
+        width: 500px;
+        height: 500px;
+    }
+</style>
+</body>
+<script>
+    new Vue({
+        el:'#app',
+        data() {
+            return {
+                active: 0,
+                ruleform:{
+                    aptNum:'20190717164200',
+                    address:'上海市宝山区联盟新城一期8号楼一单元1101室'
+                },
+                tableData:[{}],
+                zkform:{
+                    identification:'61561554'
+                },
+                zktableData:[{}],
+                payform:{
+                    pway:'',
+                    money:'',
+                    data1:'',
+                    data2:'',
+                    pid:'',
+                    peroid:''
+                }
+            };
+        },
+
+        methods: {
+            next() {
+                if (this.active++ > 4) this.active = 0;
+            },
+            prev() {
+                --this.active;
+                if (this.active<0) this.active = 0;
+            },
+            search(formName) {
+                var vue = this;
+                alert(123);
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        axios.post('findAptById',this.ruleform)
+                            .then(function (res) {
+                                console.info(res);
+                                vue.tableData = res.data;
+                            })
+                            .catch(function (error) {
+                                console.info(error);
+                                Vue.prototype.$message.error("保存服务器产生异常，请联系管理员");
+                            });
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            },
+
+            searchfd(formName) {
+                var vue = this;
+
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        axios.post('findFd',this.zkform)
+                            .then(function (res) {
+                                console.info(res);
+                                vue.zktableData = res.data;
+
+
+                            })
+                            .catch(function (error) {
+                                console.info(error);
+                                Vue.prototype.$message.error("服务器产生异常，请联系管理员");
+                            });
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            },
+
+
+            addtocontract(formName) {
+                var vue = this;
+                alert(852);
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        axios.post('addzkcontract',this.payform)
+                            .then(function (res) {
+                                alert(123);
+                                console.info(res);
+                                if(res.data.success){
+                                    Vue.prototype.$message("成功提交");
+                                }else{
+                                    Vue.prototype.$message.error(res.data.error);
+                                }
+
+                            })
+                            .catch(function (error) {
+                                alert(456);
+                                console.info(error);
+                                Vue.prototype.$message.error("服务器产生异常，请联系管理员");
+                            });
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            }
+        }
+    })
+</script>
+</html>
