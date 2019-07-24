@@ -1,11 +1,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="aaa.project.dao.CustomerPersonalDao">
-    <select id="showAllMyApt" resultType="aaa.project.entity.Apartment">
+    <select id="showAllMyApt" resultMap="apartment">
         select * from apartmentinfo1 a1
        left join apartmentinfo2 a2 on a1.aptNum=a2.aptNum
        left join apartmentinfo3 a3 on a1.aptNum=a3.aptNum
        left join apartmentinfo4 a4 on a1.aptNum=a4.aptNum
-			 where uid = #{Id} or zid = #{Id}
+       left join admin admin on a1.aid = admin.id
+			 where (uid = #{Id} or zid = #{Id}) and a1.aid != ""
     </select>
+    <resultMap id="apartment" type="aaa.project.entity.Apartment" autoMapping="true">
+        <association property="admin" javaType="aaa.project.entity.Admin" autoMapping="true"></association>
+    </resultMap>
+
+    <select id="showJiaContract" resultMap="contract">
+        select * from owercontract oc
+        left join apartmentinfo1 a1 on a1.aptNum = oc.aptNum
+        where owerid = #{ownerId}
+    </select>
+    <resultMap id="contract" type="aaa.project.entity.OwerContract" autoMapping="true">
+        <association property="apartment" javaType="aaa.project.entity.Apartment" autoMapping="true"></association>
+    </resultMap>
 </mapper>

@@ -5,9 +5,27 @@ public class Admin {
     private String username;
     private String password ;
     private Integer r_id;
+    private String name;
+    private String telephone;
 
     public Integer getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setId(Integer id) {

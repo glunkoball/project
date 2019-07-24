@@ -10,7 +10,6 @@ public class User {
     private String password;
     private String tel;
     private String identification;
-    private String identification;
 
     public String getIdentification() {
         return identification;

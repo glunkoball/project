@@ -1,6 +1,5 @@
 package aaa.project.entity;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -21,6 +20,16 @@ public class Apartment {
 
     public User getUser() {
         return user;
+    }
+
+    private Admin admin;
+
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
     }
 
     public void setUser(User user) {

@@ -2,6 +2,7 @@ package aaa.project.controller;
 
 import aaa.project.common.Constants;
 import aaa.project.entity.Apartment;
+import aaa.project.entity.OwerContract;
 import aaa.project.entity.User;
 import aaa.project.service.CustomerPersonalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,20 @@ public class CustomerPersonalController {
         User user =(User) session.getAttribute(Constants.SESSION_USER);
         List<Apartment> allMyApt = customerPersonalService.findAllMyApt(user.getId());
         return allMyApt;
+    }
+
+    @RequestMapping("/JiaContract")
+    @ResponseBody
+    public List<OwerContract> showJiaContract(HttpSession session){
+        User user =(User) session.getAttribute(Constants.SESSION_USER);
+        List<OwerContract> JiaContract = customerPersonalService.ShowJiaContract(user.getId());
+        return JiaContract;
+    }
+
+
+    @RequestMapping("/YiContract")
+    public List<Apartment> showYiContract(){
+        return null;
     }
 
 }
