@@ -375,7 +375,7 @@
                         var vue = this;
                         this.$refs[formName].validate((valid) => {
                             if (valid) {
-                                alert('submit!');
+                                alert(this.ruleForm);
                                 axios.post('saveOrUpdate',this.ruleForm)
                                     .then(function (res) {
                                         //如果登录成功
