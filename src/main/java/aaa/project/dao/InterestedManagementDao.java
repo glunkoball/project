@@ -18,4 +18,6 @@ public interface InterestedManagementDao {
     List<Custominfo> listCustominfo(String aptNum);
 
     Integer addCustTime(String custTime, Integer customid,String aptNum);
+
+    Integer deleteCust(Integer customid, String aptNum);
 }

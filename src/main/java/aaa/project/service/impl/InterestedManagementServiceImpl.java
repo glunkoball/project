@@ -52,4 +52,21 @@ public class InterestedManagementServiceImpl implements InterestedManagementServ
         }
         return dm;
     }
+
+    @Override
+    public DefaultMsg deleteCust(Integer customid, String aptNum) {
+        DefaultMsg dm = new DefaultMsg();
+        Integer count =0;
+        if(customid != null && aptNum!=null){
+            count =interestedManagementDao.deleteCust(customid,aptNum);
+            if(count<1){
+                dm.setSuccess(0);
+                dm.setError("删除失败，请重试");
+            }
+        }else{
+            dm.setSuccess(0);
+            dm.setError("参数为空");
+        }
+        return dm;
+    }
 }

@@ -25,41 +25,18 @@
             height="450"
             :data="tableData"
             style="width: 100%">
-        <el-table-column
-                prop="customid"
-                label="用户编号"
-                width="180">
-        </el-table-column>
-        <el-table-column
-                prop="aptNum"
-                label="感兴趣房源"
-                width="180">
-        </el-table-column>
-        <el-table-column
-                prop="customname"
-                label="用户名"
-                width="180">
-        </el-table-column>
-        <el-table-column
-                prop="customphone"
-                label="电话"
-                width="180">
-        </el-table-column>
-        <el-table-column
-                prop="customemail"
-                label="邮箱"
-                width="180">
-        </el-table-column>
-        <el-table-column
-                prop="wayy"
-                label="更倾向于"
-                width="180">
-        </el-table-column>
-        <el-table-column
-                prop="customdesc"
-                label="备注"
-                width="180">
-        </el-table-column>
+        <el-table-column label="房源编号" prop="aptNum" width="180px"></el-table-column>
+        <el-table-column label="城市" prop="city"></el-table-column>
+        <el-table-column label="区" prop="district"></el-table-column>
+        <el-table-column label="小区" prop="community"></el-table-column>
+        <el-table-column label="详细地址" prop="address"></el-table-column>
+        <el-table-column label="卧室" prop="bedrooms"></el-table-column>
+        <el-table-column label="卫生间" prop="bathrooms"></el-table-column>
+        <el-table-column label="厅室" prop="livingrooms"></el-table-column>
+        <el-table-column label="房东姓名" prop="user.name"></el-table-column>
+        <el-table-column label="房东电话" prop="user.tel"></el-table-column>
+        <el-table-column label="有意看房者姓名" prop="user.tel"></el-table-column>
+        <el-table-column label="房东电话" prop="user.tel"></el-table-column>
         <el-table-column label="操作">
             <template slot-scope="scope">
                 <el-button

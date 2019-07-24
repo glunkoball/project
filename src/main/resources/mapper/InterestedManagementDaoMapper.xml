@@ -28,4 +28,7 @@
     <update id="addCustTime">
         update c_apt set custTime=#{custTime} where customid=#{customid} and aptNum=#{aptNum}
     </update>
+    <delete id="deleteCust">
+        delete from c_apt where customid=#{customid} and aptNum=#{aptNum}
+    </delete>
 </mapper>

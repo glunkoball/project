@@ -15,6 +15,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+/**
+ * peng jia bin
+ */
 @Controller
 @RequestMapping("admin/rent")
 public class InterestedManagementController {
@@ -54,6 +57,15 @@ public class InterestedManagementController {
     @ResponseBody
     public DefaultMsg addCustTime(String custTime,Integer customid,String aptNum){
         DefaultMsg dm =interestedManagementService.addCustTime(custTime,customid,aptNum);
+        return dm;
+    }
+    /**
+     * 删除有意看房者
+     */
+    @RequestMapping("deleteCust")
+    @ResponseBody
+    public DefaultMsg deleteCust(Integer customid,String aptNum){
+        DefaultMsg dm =interestedManagementService.deleteCust(customid,aptNum);
         return dm;
     }
 }

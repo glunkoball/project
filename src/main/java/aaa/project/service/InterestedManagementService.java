@@ -11,4 +11,6 @@ public interface InterestedManagementService {
     PageModel<Custominfo> listCustominfo(String aptNum);
 
     DefaultMsg addCustTime(String custTime, Integer customid,String aptNum);
+
+    DefaultMsg deleteCust(Integer customid, String aptNum);
 }

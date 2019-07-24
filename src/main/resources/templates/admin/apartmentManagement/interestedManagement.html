@@ -74,7 +74,12 @@
                     <el-button
                             size="mini"
                             @click="addTime(scope.$index, scope.row)"
-                    >预约看房时间</el-button>
+                    >预约时间</el-button>
+                    <el-button
+                            size="mini"
+                            type="danger"
+                            @click="deleteCust(scope.$index, scope.row)"
+                    >删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -140,6 +145,34 @@
         },
         //事件
         methods:{
+            //删除有意看房者
+            deleteCust:function(index,row){
+                var vue = this;
+                this.customid = row.customid;
+                this.$confirm('您确定要删除吗?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    //往后台发送ajax请求 ，校验用户名和密码
+                    axios.get('deleteCust',{params:{customid:vue.customid,aptNum:vue.aptNum}})
+                        .then(function (res) {
+                            //如果删除成功
+                            if(res.data.success){
+                                Vue.prototype.$message.success("删除成功");
+                                //刷新一下
+                                vue.loadCustData();
+                            }else{
+                                Vue.prototype.$message.error(res.data.error);
+                            }
+                        })
+                        .catch(function (error) {
+                            console.info(error);
+                            Vue.prototype.$message.error("服务器产生异常，请联系管理员");
+                        });
+                });
+
+            },
             //关闭预约时间框
             closeTime:function(){
                 this.dialogVisible2=false;
