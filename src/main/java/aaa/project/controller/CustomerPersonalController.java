@@ -60,4 +60,17 @@ public class CustomerPersonalController {
         return YiContract;
     }
 
+    /**
+     * 加载显示乙方需要支付的数据
+     * @param session
+     * @return
+     */
+    @RequestMapping("/loadToPayList")
+    @ResponseBody
+    public List<TenantContract> loadToPayList(HttpSession session){
+        User user =(User) session.getAttribute(Constants.SESSION_USER);
+        List<TenantContract> toPayList = customerPersonalService.loadToPayList(user.getId());
+        return toPayList;
+    }
+
 }

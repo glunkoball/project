@@ -31,4 +31,6 @@
         <association property="apartment" javaType="aaa.project.entity.Apartment" autoMapping="true"></association>
     </resultMap>
 
+
+
 </mapper>

@@ -5,8 +5,10 @@ import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -16,18 +18,17 @@ import java.util.Iterator;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/admin")
-public class PayFdController {
+public class AlipayController {
+
     /**
      * 跳转到支付界面
      * @return
-     */
-    @RequestMapping("toPay")
+     *//*
+    @RequestMapping("/toPay")
     public String toPay(){
-
-        return "admin/payfd/paytofd";
+        return "alipay/pay";
     }
-
+*/
 
     /**
      * 支付 跳转到支付宝支付的界面  要和支付宝对接
@@ -35,7 +36,7 @@ public class PayFdController {
      */
     @RequestMapping("/pay")
     @ResponseBody
-    public String  pay(HttpServletRequest request) throws  Exception{
+    public String  pay(HttpServletRequest request,@RequestBody String json) throws  Exception{
 //获得初始化的AlipayClient
         AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id, AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key, AlipayConfig.sign_type);
 
@@ -43,7 +44,6 @@ public class PayFdController {
         AlipayTradePagePayRequest alipayRequest = new AlipayTradePagePayRequest();
         alipayRequest.setReturnUrl(AlipayConfig.return_url);
         alipayRequest.setNotifyUrl(AlipayConfig.notify_url);
-
         //商户订单号，商户网站订单系统中唯一订单号，必填
         String out_trade_no = new String(request.getParameter("WIDout_trade_no").getBytes("ISO-8859-1"),"UTF-8");
         //付款金额，必填
@@ -117,6 +117,6 @@ public class PayFdController {
             System.out.println("验签失败");
         }
         model.addAttribute("info",info);
-        return "admin/payfd/success";
+        return "alipay/success";
     }
 }

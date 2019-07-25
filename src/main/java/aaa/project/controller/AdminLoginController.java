@@ -146,6 +146,7 @@ public class AdminLoginController {
      * 查询用户能操作的菜单
      * @return
      */
+
     @RequestMapping("/getUserMenus")
     @ResponseBody
     public List<Module> getUserMenus(HttpSession session){

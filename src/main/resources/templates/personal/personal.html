@@ -39,6 +39,12 @@
             margin-bottom: 0;
             width: 50%;
         }
+        .inputItems{
+            margin-bottom: 20px ;
+        }
+        .formContent{
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body>
@@ -272,7 +278,130 @@
                     </el-tab-pane>
                 </el-tabs>
             </el-tab-pane>
-            <el-tab-pane label="在线支付">在线支付</el-tab-pane>
+
+            <el-tab-pane label="在线支付">
+                <el-table
+                        :data="loadToPayTable"
+                        style="width: 100%">
+                    <el-table-column
+                            label="房源编号"
+                            width="180" align="center">
+                        <template slot-scope="scope">
+                            <i class="el-icon-news"></i>
+                            <span style="margin-left: 10px">{{ scope.row.aptNum }}</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                            label="社区"
+                            width="100" align="center">
+                        <template slot-scope="scope">
+                            <el-popover trigger="hover" placement="top">
+                                <p>地址: {{ scope.row.apartment.address }}</p>
+                                <p>户型: {{ scope.row.apartment.bedrooms }}室/{{ scope.row.apartment.livingrooms }}厅/{{ scope.row.apartment.bathrooms }}卫</p>
+                                <div slot="reference" class="name-wrapper">
+                                    <el-tag size="medium">{{ scope.row.apartment.community }}</el-tag>
+                                </div>
+                            </el-popover>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                            label="付款方式"
+                            width="80" align="center">
+                        <template slot-scope="scope">
+                            <el-popover trigger="hover" placement="top">
+                                <p>租期时间: {{ scope.row.peroid }}个月</p>
+                                <p>月租金: {{ scope.row.money }}元/月</p>
+                                <p>合同终止日期: {{ scope.row.date2 }}</p>
+                                <div slot="reference" class="name-wrapper">
+                                    <el-tag size="medium">{{ scope.row.pway }}</el-tag>
+                                </div>
+                            </el-popover>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                            label="上次支付时间"
+                            width="140" align="center">
+                        <template slot-scope="scope">
+                            <i class="el-icon-time"></i>
+                            <span style="margin-left: 10px">{{ scope.row.lastTime }}</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                            label="下次支付时间"
+                            width="140" align="center">
+                        <template slot-scope="scope">
+                            <i class="el-icon-time"></i>
+                            <span style="margin-left: 10px">{{ scope.row.nextTime }}</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                            label="需付金额"
+                            width="80" align="center">
+                        <template slot-scope="scope">
+                            <i class="el-icon-money"></i>
+                            <span style="margin-left: 10px">{{ scope.row.needToPay }}</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="操作" align="center">
+                        <template slot-scope="scope">
+                            <el-button
+                                    size="mini"
+                                    type="success"
+                                    @click="centerDialogVisible = true">支付租金</el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+
+
+                <!--<el-button type="primary" @click="centerDialogVisible = true">支付</el-button>-->
+                <el-dialog
+                        title="支付租金"
+                        :visible.sync="centerDialogVisible"
+                        width="40%"
+                        center>
+                    <form  action="pay" method=post  >
+                        <div class="formContent"  name="divcontent">
+                            <dl class="content">
+                                <div class="inputItems">
+                                商户订单号:
+                                    <input name="WIDout_trade_no"/>
+                                </div>
+                                <div class="inputItems">
+                                订单名称:
+                                    <input  name="WIDsubject" />
+                                </div>
+                                <div class="inputItems">
+                                付款金额:
+                                    <input  name="WIDtotal_amount" />
+                                </div>
+                                <div class="inputItems">
+                                商品描述:
+                                    <input  name="WIDbody" />
+                                </div>
+                                <input type="submit" value="提交"/>
+                            </dl>
+                        </div>
+                    </form>
+                    <!--<el-form ref="payForm" :rules="payRules" :model="payForm" label-width="90px">
+                        <el-form-item label="商户订单号:" prop="WIDout_trade_no">
+                            <el-input v-model="payForm.WIDout_trade_no"></el-input>
+                        </el-form-item>
+                        <el-form-item label="订单名称:" prop="WIDsubject">
+                            <el-input v-model="payForm.WIDsubject"></el-input>
+                        </el-form-item>
+                        <el-form-item label="付款金额:" prop="WIDtotal_amount">
+                        <el-input v-model="payForm.WIDtotal_amount"></el-input>
+                    </el-form-item>
+                        <el-form-item label="商品描述:" prop="WIDbody">
+                            <el-input v-model="payForm.WIDbody"></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" @click="payRent('payForm')" style="width:100px;">SUBMIT</el-button>
+                        </el-form-item>
+                    </el-form>-->
+                </el-dialog>
+
+            </el-tab-pane>
             <el-tab-pane label="交易记录">交易记录</el-tab-pane>
         </el-tabs>
     </div>
@@ -292,6 +421,7 @@
                    }],
                 JiaContract:[{}],
                 YiContract:[{}],
+                centerDialogVisible: false,
                 changePasswordForm:{
                     oldPassword:'',
                     newPassword:'',
@@ -311,13 +441,25 @@
                     ]
                 },updatePersonalInfoRules:{
 
-                }
+                },
+                loadToPayTable:[{}]
+                /*
+                payForm:{
+                    WIDout_trade_no:'1231684564653',
+                    WIDsubject:'支付房租',
+                    WIDtotal_amount:'',
+                    WIDbody:'支付房租'
+                },
+                payRules:{
+
+                }*/
             }
         },
         mounted(){
             this.showMyApt();
             this.showJiaContract();
             this.showYiContract();
+            this.loadToPayList();
         },
         methods:{
 
@@ -372,6 +514,23 @@
                     .then(function(res){
                         console.info(this.data);
                         vue.YiContract = res.data;
+                    })
+            }/*,
+            payRent:function(forName){
+                this.$refs[forName].validate((valid)=>{
+                    if (valid) {
+                        axios.post('pay',this.payForm)
+                            .then(function (res) {
+                            })
+                    }
+                });
+            }*/,
+            loadToPayList(){
+                var vue = this;
+                axios.post('loadToPayList')
+                    .then(function(res){
+                        console.info(this.data);
+                        vue.loadToPayTable = res.data;
                     })
             }
         }

@@ -32,4 +32,9 @@ public class CustomerPersonalServiceImpl implements CustomerPersonalService {
     public List<TenantContract> ShowYiContract(Integer tenantId) {
         return customerPersonalDao.showYiContract(tenantId);
     }
+
+    @Override
+    public List<TenantContract> loadToPayList(Integer tenantId) {
+        return customerPersonalDao.showYiContract(tenantId);
+    }
 }

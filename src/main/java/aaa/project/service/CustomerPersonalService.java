@@ -14,4 +14,6 @@ public interface CustomerPersonalService {
 
     public List<TenantContract> ShowYiContract(Integer tenantId);
 
+    public List<TenantContract> loadToPayList(Integer tenantId);
+
 }

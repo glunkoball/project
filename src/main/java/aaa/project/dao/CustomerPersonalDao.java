@@ -20,4 +20,6 @@ public interface CustomerPersonalDao {
 
     public List<TenantContract> showYiContract(@RequestBody Integer tenantId);
 
+//    public List<TenantContract> loadToPayList(@RequestBody Integer tenantId);
+
 }
