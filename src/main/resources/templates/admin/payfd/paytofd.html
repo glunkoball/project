@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>支付</title>
+</head>
+<body>
+
+<form  action="pay" method=post  >
+    <div id="body1"  name="divcontent">
+        <dl class="content">
+            <dt>商户订单号 ：</dt>
+            <dd>
+                <input name="WIDout_trade_no" />
+            </dd>
+            <dt>订单名称 ：</dt>
+            <dd>
+                <input  name="WIDsubject" />
+            </dd>
+
+            <dt>付款金额 ：</dt>
+            <dd>
+                <input  name="WIDtotal_amount" />
+            </dd>
+
+            <dt>商品描述：</dt>
+            <dd>
+                <input  name="WIDbody" />
+            </dd>
+            <hr class="one_line">
+            <dt></dt>
+            <dd id="btn-dd">
+                <input type="submit" value="提交">
+            </dd>
+        </dl>
+    </div>
+</form>
+</body>
+</html>

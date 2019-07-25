@@ -10,12 +10,39 @@ public class OwerContract {
     private String owerPhone;
     private String owerInden;
     private String pway;
-    private String money;
+    private Double money;
     private String date1;
     private String date2;
     private Integer pid;
     private Apartment apartment;
     private Integer peroid;
+    private String lastTime;
+    private String nextTime;
+    private Double needToPay;
+
+    public String getLastTime() {
+        return lastTime;
+    }
+
+    public void setLastTime(String lastTime) {
+        this.lastTime = lastTime;
+    }
+
+    public String getNextTime() {
+        return nextTime;
+    }
+
+    public void setNextTime(String nextTime) {
+        this.nextTime = nextTime;
+    }
+
+    public Double getNeedToPay() {
+        return needToPay;
+    }
+
+    public void setNeedToPay(Double needToPay) {
+        this.needToPay = needToPay;
+    }
 
     public Integer getPeroid() {
         return peroid;
@@ -113,11 +140,11 @@ public class OwerContract {
         this.pway = pway;
     }
 
-    public String getMoney() {
+    public Double getMoney() {
         return money;
     }
 
-    public void setMoney(String money) {
+    public void setMoney(Double money) {
         this.money = money;
     }
 

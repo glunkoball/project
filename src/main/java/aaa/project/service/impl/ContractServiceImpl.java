@@ -39,7 +39,7 @@ public class ContractServiceImpl implements ContractService {
     }
 
     /**
-     * 将详细地址 加入到了apartment中
+     * 将付款方式的数据加入到了apartment中
      * @param aptNum
      */
     @Override
@@ -47,9 +47,29 @@ public class ContractServiceImpl implements ContractService {
         contractDao.saveaddress(aptNum,address);
     }
 
+    /**
+     * 将付款方式的数据加入到房东合同表
+     * @param owerContract
+     * @return
+     */
     @Override
     public boolean addtocontract(OwerContract owerContract) {
-        if(contractDao.addtocontract(owerContract)){
+        Double money = owerContract.getMoney();
+        String pway = owerContract.getPway();
+        Double needToPay=null;
+        if(pway.equals("月付")){
+             needToPay=money;
+        }
+        if(pway.equals("季付")){
+             needToPay=money*3;
+        }
+        if(pway.equals("半年付")){
+             needToPay=money*6;
+        }
+        if(pway.equals("年付")){
+             needToPay=money*12;
+        }
+        if(contractDao.addtocontract(owerContract,needToPay)){
             return  true;
         }
         return false;
@@ -76,7 +96,22 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public boolean addzkcontract(TenantContract tenantContract) {
-        if(contractDao.addzkcontract(tenantContract)){
+        Double money = tenantContract.getMoney();
+        String pway = tenantContract.getPway();
+        Double need=null;
+        if(pway.equals("月付")){
+            need=money;
+        }
+        if(pway.equals("季付")){
+            need=money*3;
+        }
+        if(pway.equals("半年付")){
+            need=money*6;
+        }
+        if(pway.equals("年付")){
+            need=money*12;
+        }
+        if(contractDao.addzkcontract(tenantContract,need)){
             return  true;
         }
         return false;
@@ -98,5 +133,13 @@ public class ContractServiceImpl implements ContractService {
 
         contractDao.savezkcontract(aptNum,tenantid,pid);
 
+    }
+
+    @Override
+    public void updateAptState(String aptNum) {
+        contractDao.updateAptState(aptNum);
+    }
+    public void updateAptStatezk(String aptNum) {
+        contractDao.updateAptState(aptNum);
     }
 }

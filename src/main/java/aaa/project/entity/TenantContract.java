@@ -15,6 +15,33 @@ public class TenantContract {
     private String date2;
     private Integer pid;
     private Apartment apartment;
+    private String lastTime;
+    private String nextTime;
+    private Double needToPay;
+
+    public String getLastTime() {
+        return lastTime;
+    }
+
+    public void setLastTime(String lastTime) {
+        this.lastTime = lastTime;
+    }
+
+    public String getNextTime() {
+        return nextTime;
+    }
+
+    public void setNextTime(String nextTime) {
+        this.nextTime = nextTime;
+    }
+
+    public Double getNeedToPay() {
+        return needToPay;
+    }
+
+    public void setNeedToPay(Double needToPay) {
+        this.needToPay = needToPay;
+    }
 
     public Integer getPid() {
         return pid;

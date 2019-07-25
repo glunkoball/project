@@ -11,17 +11,17 @@
         update apartmentinfo1  set address=#{address}  where aptNum=#{aptNum}
     </insert>
     <insert id="addtocontract">
-        insert into owerContract(pid,pway,money,date1,date2) VALUES(#{pid},#{pway},#{money},#{date1},#{date2})
+        insert into owerContract(pid,pway,money,date1,date2,peroid,nextTime,needToPay) VALUES(#{t.pid},#{t.pway},#{t.money},#{t.date1},#{t.date2},#{t.peroid},#{t.date1},#{needToPay})
     </insert>
-    <insert id="savecontract">
+    <update id="savecontract">
         update owerContract set aptNum=#{aptNum},owerid=#{owerid} where pid=#{pid}
-    </insert>
+    </update>
     <select id="findcontract" resultType="aaa.project.entity.OwerContract">
         SELECT * from owerContract where pid=#{pid}
     </select>
 
     <insert id="addzkcontract">
-        insert into tenant_contract(pid,pway,money,date1,date2,peroid) VALUES(#{pid},#{pway},#{money},#{date1},#{date2},#{peroid})
+        insert into tenant_contract(pid,pway,money,date1,date2,peroid,needToPay) VALUES(#{tc.pid},#{tc.pway},#{tc.money},#{tc.date1},#{tc.date2},#{tc.peroid},#{need})
     </insert>
     <select id="findzkcontract" resultType="aaa.project.entity.OwerContract">
         SELECT * from tenant_contract where pid=#{pid}
@@ -29,4 +29,11 @@
     <insert id="savezkcontract">
         update tenant_contract set aptNum=#{aptNum},tenantid=#{tenantid} where pid=#{pid}
     </insert>
+
+    <update id="updateAptState">
+        update apartmentinfo1 set state=4 where aptNum=#{aptNum}
+    </update>
+    <update id="updateAptStatezk">
+        update apartmentinfo1 set state=3 where aptNum=#{aptNum}
+    </update>
 </mapper>

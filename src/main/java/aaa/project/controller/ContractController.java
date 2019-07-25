@@ -100,6 +100,8 @@ public class ContractController {
         List<OwerContract> pay = contractService.findcontract(pid);
         model.addAttribute("pay",pay);
 
+
+        contractService.updateAptStatezk(aptNum);
         return "admin/contract/makecontract";
     }
     @RequestMapping("contract/findZk")
@@ -142,7 +144,8 @@ public class ContractController {
         model.addAttribute("aptt",apt);
         List<TenantContract> pay = contractService.findzkcontract(pid);
         model.addAttribute("payy",pay);
-
+        //签完合同需要更改方源现在的状态
+        contractService.updateAptState(aptNum);
         return "admin/contract/makezkcontract";
     }
 

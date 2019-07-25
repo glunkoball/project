@@ -1,0 +1,12 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="aaa.project.dao.AdminPayToFdDao">
+    <resultMap id="contractMap" type="aaa.project.entity.OwerContract" autoMapping="true">
+        <id column="cid" property="cid">
+        </id>
+        <association property="apartment" javaType="Apartment" autoMapping="true"></association>
+    </resultMap>
+    <select id="findowercontract" resultMap="contractMap">
+        SELECT * from owercontract o LEFT  JOIN  apartmentinfo1 a on o.aptNum=a.aptNum
+    </select>
+</mapper>

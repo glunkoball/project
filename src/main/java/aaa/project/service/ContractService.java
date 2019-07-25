@@ -17,4 +17,6 @@ public interface ContractService {
     public boolean addzkcontract(TenantContract tenantContract);
     public List<TenantContract> findzkcontract(Integer pid);
     public void savezkcontract(String aptNum,Integer pid,String  uid);
+    public void updateAptState(String aptNum);
+    public void updateAptStatezk(String aptNum);
 }

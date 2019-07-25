@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>需要支付的合同</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" th:href="@{/plugin/element-ui/index.css}">
+    <!--引入vue-->
+    <script th:src="@{/plugin/element-ui/vue.js}"></script>
+    <!-- 引入组件库 -->
+    <script th:src="@{/plugin/element-ui/index.js}"></script>
+    <script th:src="@{/plugin/element-ui/axios.js}"></script>
+    <style>
+        .demo-table-expand {
+            font-size: 0;
+        }
+        .demo-table-expand label {
+            width: 90px;
+            color: #99a9bf;
+        }
+        .demo-table-expand .el-form-item {
+            margin-right: 0;
+            margin-bottom: 0;
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <el-table
+            :data="tableData"
+            style="width: 100%">
+        <el-table-column label="合同编号" prop="cid" width="180px"></el-table-column>
+        <el-table-column label="房源编号" prop="aptNum">
+            <template slot-scope="scope">
+                <el-popover trigger="hover" placement="top">
+                    <p>房源住址: {{ scope.row.apartment.address }}</p>
+                    <p>租期时间: {{ scope.row.peroid }}</p>
+                    <div slot="reference" class="name-wrapper">
+                        <el-tag size="medium">{{ scope.row.aptNum }}</el-tag>
+                    </div>
+                </el-popover>
+            </template>
+        </el-table-column>
+      <!--  <el-table-column label="房源地址" prop="district"></el-table-column>-->
+        <el-table-column label="房东姓名" prop=""></el-table-column>
+      <!--  <el-table-column label="房东电话" prop="bedrooms"></el-table-column>-->
+        <el-table-column label="付款方式" prop="bathrooms"></el-table-column>
+       <!-- <el-table-column label="租期时间" prop="livingrooms"></el-table-column>-->
+        <el-table-column label="上次交易时间" prop="facing"></el-table-column>
+        <el-table-column label="下次交易时间" prop="price"></el-table-column>
+        <el-table-column label="租金" prop="status.statusname"></el-table-column>
+        <el-table-column label="合同终止时间" prop="area"></el-table-column>
+        <el-table-column label="操作">
+            <template slot-scope="scope">
+                <el-button
+                        size="mini"
+                        @click="handleEdit(scope.$index, scope.row)"
+                        style="background-color: red"
+                >支付租金</el-button>
+
+            </template>
+        </el-table-column>
+    </el-table>
+</div>
+</body>
+<script>
+    new Vue({
+        el:'#app',
+        data:function(){
+            return{
+                tableData: [{}]
+            }
+        },
+        mounted:function(){
+            var vue = this;
+            axios.post('findowercontract')
+                .then(function(res){
+                    console.info(res.data);
+                    vue.tableData = res.data;
+                })
+                .catch(function(error){
+                    console.info(error);
+                    Vue.prototype.$message.error('服务器产生异常');
+                });
+        },
+        methods:{
+
+        }
+    })
+</script>
+</html>
