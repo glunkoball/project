@@ -93,11 +93,16 @@ public class Apartment {
     private Integer pet;//宠物
     private Integer smoking;//吸烟
     //房源照片最多四张
-/*  private String url1;
-    private String url2;
-    private String url3;
-    private String url4;
-*/
+    private String imgUrl;
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
     //需要审核的有效证件
  /*   private String url5;//房产证明
     private String url6;//身份证
