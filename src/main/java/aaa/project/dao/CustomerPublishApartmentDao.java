@@ -11,4 +11,6 @@ public interface CustomerPublishApartmentDao {
     Integer publishApt2(Apartment apartment);
 
     Integer publishApt3(Apartment apartment);
+
+    Integer publishApt4(Apartment apartment);
 }

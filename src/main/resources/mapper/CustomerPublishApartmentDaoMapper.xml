@@ -14,4 +14,8 @@
         insert into apartmentinfo3(  AptNum,   allCharged,   together,   split,   decoration,   price,   moveinDate,   waterFee,   electricityFee,   gasFee,   InternetFee,   communityFee,   wireFee,   parkingFee,   pet,   smoking,   isKey,   checkAptTime,   description)
                            values (#{AptNum},#{allCharged},#{together},#{split},#{decoration},#{price},#{moveinDate},#{waterFee},#{electricityFee},#{gasFee},#{InternetFee},#{communityFee},#{wireFee},#{parkingFee},#{pet},#{smoking},#{isKey},#{checkAptTime},#{description})
     </insert>
+    <insert id="publishApt4">
+        insert into apartmentinfo4( AptNum, url1)
+                           values (#{AptNum},#{imgUrl})
+    </insert>
 </mapper>

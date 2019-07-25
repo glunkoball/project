@@ -25,7 +25,7 @@ import java.util.UUID;
 public class CustomerPublishApartmentController {
     @Autowired
     private CustomerPublishApartmentService customerPublishApartmentService;
-
+    private static String url ="";
     /**
      * 发布房源
      * @param apartment
@@ -34,6 +34,8 @@ public class CustomerPublishApartmentController {
     @RequestMapping("/publishApt")
     @ResponseBody
     public DefaultMsg publishApt(@RequestBody Apartment apartment){
+        apartment.setImgUrl(url);
+        System.out.println(url);
         DefaultMsg dm =customerPublishApartmentService.publishApt(apartment);
         return dm;
     }
@@ -59,9 +61,7 @@ public class CustomerPublishApartmentController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String url ="/img/"+imgPath;
-        Apartment apartment = new Apartment();
-
+        url ="/img/"+imgPath;
         return null;
     }
 }
