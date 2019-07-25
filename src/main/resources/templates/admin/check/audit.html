@@ -14,38 +14,32 @@
 </head>
 <body>
 <div id="app">
-    <el-table stripe border height="450" :data="tableData" style="width: 100%">
-        <el-table-column width="140px" prop="aptNum" label="房源编号"  align="center"></el-table-column>
-        <!--<el-table-column width="100px" prop="bedrooms" label="卧室"  align="center"></el-table-column>-->
-        <!--<el-table-column width="100px" prop="bathrooms" label="卫生间"  align="center"></el-table-column>-->
-        <!--<el-table-column width="100px" prop="livingrooms" label="厅"  align="center"></el-table-column>-->
-        <el-table-column width="100px" prop="city" label="城市"  align="center"></el-table-column>
-        <el-table-column width="100px" prop="district" label="区"  align="center"></el-table-column>
-        <el-table-column width="120px" prop="community" label="小区"  align="center"></el-table-column>
-        <el-table-column width="100px" prop="facing" label="朝向"  align="center"></el-table-column>
-        <el-table-column width="100px" prop="area" label="面积"  align="center"></el-table-column>
-        <!--<el-table-column width="100px" prop="whichfloor" label="楼层"  align="center"></el-table-column>-->
-        <!--<el-table-column width="100px" prop="totalfloor" label="总楼层"  align="center"></el-table-column>-->
-        <el-table-column width="100px" prop="name" label="房东姓名" align="center"></el-table-column>
-        <el-table-column width="140px" prop="tel" label="房东联系方式" align="center"></el-table-column>
-        <el-table-column width="100px" prop="statusname" label="审核状态" align="center"></el-table-column>
-        <el-table-column width="100px" prop="aid" label="经纪人ID" align="center"></el-table-column>
-        <el-table-column width="100px" label="操作" align="center">
+    <el-table  :data="tableData" style="width: 100%;height:1000px;">
+        <el-table-column  prop="aptNum" label="房源编号"  align="center"></el-table-column>
+        <el-table-column  prop="city" label="城市"  align="center"></el-table-column>
+        <el-table-column  prop="district" label="区"  align="center"></el-table-column>
+        <el-table-column  prop="community" label="小区"  align="center"></el-table-column>
+        <el-table-column  prop="facing" label="朝向"  align="center"></el-table-column>
+        <el-table-column  prop="area" label="面积"  align="center"></el-table-column>
+        <el-table-column  prop="name" label="房东姓名" align="center"></el-table-column>
+        <el-table-column  prop="tel" label="房东联系方式" align="center"></el-table-column>
+        <el-table-column  prop="statusname" label="审核状态" align="center"></el-table-column>
+        <el-table-column  prop="aid" label="经纪人ID" align="center"></el-table-column>
+        <el-table-column width="300px" label="操作" align="center">
             <template slot-scope="scope">
-                <el-button size="mini" @click="query(scope.$index,scope.row)">查看详细信息</el-button>
+                <!--<el-button size="mini" @click="query(scope.$index,scope.row)">查看详细信息</el-button>-->
                 <el-button size="mini" @click="pass(scope.$index,scope.row)">审核通过</el-button>
                 <el-button size="mini" @click="bindingbutton(scope.$index,scope.row)">绑定经纪人</el-button>
             </template>
         </el-table-column>
     </el-table>
-      <!--编辑用户的对话框 :before-close="handleClose"
-      ref="form" :rules="rules" :model="form"-->
-    <el-dialog title="绑定经纪人" :visible.sync="dialogVisible" width="30%">
+      <!--绑定经纪人的对话框-->
+    <el-dialog title="绑定经纪人" :visible.sync="dialogVisible" width="29%">
         <el-table  stripe border height="450" :data="table" style="width: 100%">
             <el-table-column width="100px" prop="id" label="经纪人编号"  align="center"></el-table-column>
             <el-table-column width="100px" prop="name" label="经纪人姓名"  align="center"></el-table-column>
             <el-table-column width="160px" prop="telephone" label="经纪人联系方式"  align="center"></el-table-column>
-                <el-table-column width="100px" label="操作" align="center">
+                <el-table-column width="140px" label="操作" align="center">
                     <template slot-scope="scope">
                         <el-button size="mini" @click="binding(scope.$index,scope.row)">绑定经纪人</el-button>
                     </template>
@@ -70,6 +64,10 @@
     <!--</el-dialog>-->
 </div>
 <style>
+    #app{
+        width: 100%;
+        height: 100%;
+    }
 </style>
 </body>
 <script>
@@ -82,6 +80,7 @@
             dialogVisible:false,
            // form:[]
         },
+        //页面显示
         mounted:function () {
             var vue = this;
             axios.post("auditlistAll")
@@ -93,6 +92,7 @@
                     Vue.prototype.$message.error("服务器产生异常，请联系管理员");
                 });
         },
+        //弹窗绑定页面
         methods:{
             bindingbutton:function(index,row) {
                 var vue = this;
@@ -111,20 +111,8 @@
                         Vue.prototype.$message.error("服务器产生异常，请联系管理员");
                     });
             },
+            //绑定经纪人
             binding:function(index,row){
-                  this.form;
-                  row.id;
-                //var apt = {aptNum,id};
-                // alert(apt);
-                // console.info(apt);
-                // alert(aptNum){params:{aptNum:this.form,id:row.id}}
-                /*
-                /,{
-                    headers:{
-                        'Content-Type':'application/json;charset=UTF-8'
-                    }
-                }
-                 */
                 // console.info(aptNum);
                 //  var params = new URLSearchParams();
                 //  params.append('aptNum',this.form);
@@ -140,6 +128,7 @@
                         Vue.prototype.$message.error("服务器产生异常，请联系管理员");
                     });
             },
+            //审核通过
             pass:function(index,row) {
                 var vue = this;
                 alert(row.aptNum)
@@ -150,22 +139,22 @@
                     .catch(function (error) {
                         Vue.prototype.$message.error("服务器产生异常，请联系管理员");
                     });
-            },
-            query(index, row){
-                var vue = this;
-                this.dialogVisible=true;
-                alert(row.aptNum);
-                axios.post('query',row.aptNum)
-                    .then(function (res) {
-                        console.info(this.data);
-                        vue.form=res.data;
-                    })
-                    .catch(function (error) {
-                        Vue.prototype.$message.error("服务器产生异常，请联系管理员");
-                    });
+            }
+            // query(index, row){
+            //     var vue = this;
+            //     this.dialogVisible=true;
+            //     alert(row.aptNum);
+            //     axios.post('query',row.aptNum)
+            //         .then(function (res) {
+            //             console.info(this.data);
+            //             vue.form=res.data;
+            //         })
+            //         .catch(function (error) {
+            //             Vue.prototype.$message.error("服务器产生异常，请联系管理员");
+            //         });
                 //this.title='编辑用户';
                 //this.form=row;
-            },
+           // },
         }
     });
 </script>
