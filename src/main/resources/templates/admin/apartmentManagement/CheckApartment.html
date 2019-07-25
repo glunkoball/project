@@ -13,64 +13,25 @@
 </head>
 <body>
 <div id="app">
-    <div style="margin-bottom:10px;">
-        <el-button type="primary" @click="showEditWin">添加感兴趣用户</el-button>
-        <el-input style="width:300px;" v-model="keyword"></el-input>
-        <el-button type="success" @click="search" icon="el-icon-search">搜索</el-button>
-    </div>
-
     <el-table
             v-loading="vloading"
             stripe border
             height="450"
             :data="tableData"
             style="width: 100%">
-        <el-table-column
-                prop="customid"
-                label="用户编号"
-                width="180">
-        </el-table-column>
-        <el-table-column
-                prop="aptNum"
-                label="感兴趣房源"
-                width="180">
-        </el-table-column>
-        <el-table-column
-                prop="customname"
-                label="用户名"
-                width="180">
-        </el-table-column>
-        <el-table-column
-                prop="customphone"
-                label="电话"
-                width="180">
-        </el-table-column>
-        <el-table-column
-                prop="customemail"
-                label="邮箱"
-                width="180">
-        </el-table-column>
-        <el-table-column
-                prop="wayy"
-                label="更倾向于"
-                width="180">
-        </el-table-column>
-        <el-table-column
-                prop="customdesc"
-                label="备注"
-                width="180">
-        </el-table-column>
+        <el-table-column label="房源编号" prop="aptNum" width="160px"></el-table-column>
+        <el-table-column label="区" prop="apartment.district"></el-table-column>
+        <el-table-column label="小区" prop="apartment.community"></el-table-column>
+        <el-table-column label="详细地址" prop="apartment.address"></el-table-column>
+        <el-table-column label="有意看房者姓名" prop="custominfo.customname"></el-table-column>
+        <el-table-column label="有意看房者电话" prop="custominfo.customphone"></el-table-column>
+        <el-table-column label="预约的时间" prop="custTime"></el-table-column>
         <el-table-column label="操作">
             <template slot-scope="scope">
                 <el-button
                         size="mini"
-                        @click="handleEdit(scope.$index, scope.row)"
-                >编辑
-                </el-button>
-                <el-button
-                        size="mini"
                         type="danger"
-                        @click="handleDelete(scope.$index, scope.row)"
+                        @click="deleteCapt(scope.$index, scope.row)"
                 >删除
                 </el-button>
             </template>
@@ -85,47 +46,7 @@
             @current-change="changePage"
     >
     </el-pagination>
-    <!--编辑用户的对话框-->
-    <el-dialog
-            :title="title"
-            :visible.sync="dialogVisible"
-            width="30%"
-    >
 
-        <el-form ref="form" :rules="rules" :model="form" label-width="80px">
-            <el-form-item label="用户名:" prop="username">
-                <input type="hidden" v-model="form.id">
-                <el-input v-model="form.username" suffix-icon="el-icon-date"></el-input>
-            </el-form-item>
-            <el-form-item label="密码:" prop="password">
-                <el-input v-model="form.password" type="password"></el-input>
-            </el-form-item>
-            <el-form-item label="地址:" prop="address">
-                <el-input v-model="form.address"></el-input>
-            </el-form-item>
-            <el-form-item label="角色:" prop="roles">
-                <el-select multiple v-model="form.roles" value-key="id" placeholder="请选择">
-                    <!--
-                    [{id:1,'name':'普通用户'},{id:2,'name':'管理员'}]
-                    -->
-                    <el-option
-                            v-for="item in roles"
-                            :key="item.id"
-                            :label="item.name"
-                            :value="item">
-                    </el-option>
-                </el-select>
-
-            </el-form-item>
-
-        </el-form>
-
-
-        <span slot="footer" class="dialog-footer">
-                        <el-button @click="resetForm('form')">取 消</el-button>
-                        <el-button type="primary" @click="onSubmit('form')">确 定</el-button>
-                   </span>
-    </el-dialog>
 </div>
 <script>
     axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -134,60 +55,50 @@
         el:'#app',
         data:{
             tableData:[],
-            //控制对话框现实与否的属性
-            dialogVisible:false,
-            title:'新增用户',
-            form:{
-                id:null,
-                username:'',
-                password:'',
-                address:'',
-                roles:[]
-            },
-            //声明校验规则
-            rules:{
-                username:[
-                    { required: true, message: '请输入用户名', trigger: 'blur' },
-                    { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
-                ],
-                password:[
-                    { required: true, message: '请输入密码', trigger: 'blur' }
-                ]
-            },
-            keyword:'',
             //控制是否显示加载中
             vloading:false,
             //当前页的变量
             currentPage:1,
             total:0,
-            roles:[],
-            roleValue:'1'
         },
         //当vue组件加载完成之后会自动调用这个函数
         mounted:function(){
-
             //加载表格数据
             this.loadTableData();
-            var vue = this;
-            //加载角色数据
-            axios.get('listAllRoles')
-                .then(function (res) {
-                    console.info(res);
-                    vue.roles=res.data;
-                })
-                .catch(function (error) {
-                    vue.vloading=false;
-                    Vue.prototype.$message.error("服务器产生异常，请联系管理员");
-                });
         },
         //事件
         methods:{
-
+            //删除
+            deleteCapt:function(index, row){
+                var vue = this;
+                this.$confirm('您确定要删除吗?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    //往后台发送ajax请求 ，校验用户名和密码
+                    axios.get('deleteCapt',{params:{aptNum:row.aptNum,customid:row.customid}})
+                        .then(function (res) {
+                            //如果删除成功
+                            if(res.data.success){
+                                //刷新界面
+                                vue.loadTableData();
+                                Vue.prototype.$message.success("删除成功");
+                            }else{
+                                Vue.prototype.$message.error(res.data.error);
+                            }
+                        })
+                        .catch(function (error) {
+                            console.info(error);
+                            Vue.prototype.$message.error("服务器产生异常，请联系管理员");
+                        });
+                });
+            },
             //声明加载表格数据的方法
             loadTableData:function(){
                 this.vloading=true;
                 var vue = this;
-                    axios.get('admin/listCustomInfo',{params:{keyword:this.keyword,currentPage:this.currentPage}})
+                    axios.get('listCapt',{params:{currentPage:this.currentPage}})
                     .then(function (res) {
                         vue.vloading=false;
                         //赋值总条数
@@ -201,90 +112,10 @@
                         Vue.prototype.$message.error("服务器产生异常，请联系管理员");
                     });
             },
-            showEditWin:function(){
-                this.title='新增用户';
-                //显示编辑用户的窗口
-                this.dialogVisible=true;
-
-            },
-            //提交的事件
-            onSubmit:function(formName){
-                var vue = this;
-                this.$refs[formName].validate((valid) => {
-                    if (valid) {
-                        //往后台发送ajax请求 ，校验用户名和密码
-                        axios.post('saveOrUpdate',this.form)
-                            .then(function (res) {
-                                //如果登录成功
-                                if(res.data.success){
-                                    //刷新界面
-                                    vue.loadTableData();
-                                    //关闭窗口
-                                    vue.dialogVisible=false;
-
-                                }else{
-                                    Vue.prototype.$message.error(res.data.error);
-                                }
-                            })
-                            .catch(function (error) {
-                                console.info(error);
-                                Vue.prototype.$message.error("保存服务器产生异常，请联系管理员");
-                            });
-                    } else {
-                        console.log('error submit!!');
-                        return false;
-                    }
-                });
-            },
-            //重置的事件
-            resetForm:function(formName){
-                this.$refs[formName].resetFields();
-            },
-            //修改用户操作
-            handleEdit:function(index, row) {
-                //显示编辑窗口
-                this.dialogVisible=true;
-                this.title='编辑用户';
-                console.info(row);
-                this.form=row;
-                console.log(row);
-            },
-            //删除用户操作
-            handleDelete:function(index, row) {
-                var vue = this;
-                this.$confirm('您确定要删除员工吗?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
-                    //往后台发送ajax请求 ，校验用户名和密码
-                    axios.post('delete',{id:row.id})
-                        .then(function (res) {
-                            //如果删除成功
-                            if(res.data.success){
-                                //刷新界面
-                                vue.loadTableData();
-                            }else{
-                                Vue.prototype.$message.error(res.data.error);
-                            }
-                        })
-                        .catch(function (error) {
-                            console.info(error);
-                            Vue.prototype.$message.error("保存服务器产生异常，请联系管理员");
-                        });
-                });
-
-
-            },
-            //搜索
-            search:function(){
-                //获取用户的输入
-                this.loadTableData();
-            },
             //点击分页数字时触发的事件
             changePage:function(changePage){
                 this.currentPage=changePage;
-                this.loadTableData();
+                //this.loadTableData();
             }
 
         }

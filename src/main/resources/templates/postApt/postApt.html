@@ -212,7 +212,9 @@
                         <el-input v-model="ruleForm.price" style="width: 100px;"><span slot="prefix">￥</span><span slot="suffix">/月</span></el-input>
                     </el-form-item>
                     <el-form-item label="最早入住" required prop="moveinDate">
-                        <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.moveinDate" style="width: 200px;"></el-date-picker>
+                        <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.moveinDate" style="width: 200px;"  format="yyyy 年 MM 月 dd 日"
+                                        value-format="yyyy-MM-dd">
+                        </el-date-picker>
                     </el-form-item>
                     <el-form-item label="租金包含" prop="includedService">
                         <el-checkbox-group v-model="ruleForm.includedService">
@@ -263,25 +265,23 @@
                         <el-input type="textarea" v-model="ruleForm.description"></el-input>
                     </el-form-item>
                 </div>
-
             </div>
             <!--上传图片-->
             <el-upload
                     class="upload-demo"
-                    action="https://jsonplaceholder.typicode.com/posts/"
+                    action="imgUpload"
                     :on-preview="handlePreview"
                     :on-remove="handleRemove"
                     :file-list="fileList"
-                    list-type="picture"
-                    :before-upload="beforeAvatarUpload">
+                    :limit="1"
+                    list-type="picture">
                 <el-button size="small" type="primary">点击上传</el-button>
-                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                <div slot="tip" class="el-upload__tip">只能上传一张图片</div>
             </el-upload>
             <el-form-item>
                 <el-button type="primary" @click="onSubmit('ruleForm')">提交</el-button>
             </el-form-item>
         </el-card>
-
         <!--<el-button style="margin-top: 12px;" @click="before">上一步</el-button>-->
         <el-button round id="bNext" v-bind:class="butNext" style="margin-top: 12px; width:220px; float: right; margin-right: 99px ; " @click="next('ruleForm')">下一步<i class="el-icon-right"></i></el-button>
         <el-button round  id="bReturn" v-bind:class="butReturn" style="margin-top: 12px; width:220px; float:left; margin-right: 99px" @click="before"><i class="el-icon-back"></i>上一步</el-button>
@@ -293,6 +293,7 @@
         el:'#app',
         data() {
             return {
+                fileList:[],
                 butNext:{
                     btNext:false
                 },
@@ -312,7 +313,6 @@
                 house4:{
                     div4:true
                 },
-                fileList:[],
                 active: 0,
                 ruleForm:{
                     city:'上海',
@@ -359,24 +359,16 @@
         },
         //事件
         methods: {
-            beforeAvatarUpload(file) {
-                const isJPG = file.type === 'image/jpeg';
-                const isLt2M = file.size / 1024 / 1024 < 2;
-
-                if (!isJPG) {
-                    this.$message.error('上传头像图片只能是 JPG 格式!');
-                }
-                if (!isLt2M) {
-                    this.$message.error('上传头像图片大小不能超过 2MB!');
-                }
-                return isJPG && isLt2M;
-            },
-            handleRemove(file, fileList) {
-                console.log(file, fileList);
-            },
+            //点击文件列表中已上传的文件时的钩子
             handlePreview(file) {
                 console.log(file);
             },
+
+            //文件列表移除文件时的钩子
+            handleRemove(file, fileList) {
+                console.log(file, fileList);
+            },
+
             before:function(){
                 if(this.active==1){
                     this.active--;
@@ -449,8 +441,6 @@
                             .catch(function (error) {
                                 Vue.prototype.$message.error("服务区异常，请联系管理员");
                             })
-                    }else {
-                        Vue.prototype.$message.error("请检查表单信息是否完整");
                     }
                 });
             },

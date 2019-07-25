@@ -1,5 +1,8 @@
 package aaa.project.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Admin {
     private Integer id;
     private String username;
@@ -7,25 +10,19 @@ public class Admin {
     private Integer r_id;
     private String name;
     private String telephone;
+    private String address;
+    private String rolename;
+
+    public String getRolename() {
+        return rolename;
+    }
+
+    public void setRolename(String rolename) {
+        this.rolename = rolename;
+    }
 
     public Integer getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void setId(Integer id) {
@@ -56,13 +53,29 @@ public class Admin {
         this.r_id = r_id;
     }
 
-    @Override
-    public String toString() {
-        return "Admin{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", r_id=" + r_id +
-                '}';
+    public String getName() {
+        return name;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
 }

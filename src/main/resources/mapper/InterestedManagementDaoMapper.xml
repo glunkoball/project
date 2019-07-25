@@ -9,7 +9,7 @@
         SELECT * from apartmentinfo1 ap
                       left join  user u on ap.uid=u.id
                       <where>
-                          ap.aid=#{id}  order by  ap.aptNum  desc
+                          ap.aid=#{id} and ap.state=3  order by  ap.aptNum  desc
                           <if test="start!= null and pageSize!=null">
                               limit #{start},#{pageSize}
                           </if>
@@ -20,4 +20,15 @@
                       left join  user u on ap.uid=u.id
                       where ap.aid=#{id}
     </select>
+    <select id="listCustominfo" resultType="aaa.project.entity.Custominfo">
+        select c.* from c_apt ca left join custominfo c on ca.customid =c.customid
+                        where ca.aptNum=#{aptNum} and ca.custTime is null
+
+    </select>
+    <update id="addCustTime">
+        update c_apt set custTime=#{custTime} where customid=#{customid} and aptNum=#{aptNum}
+    </update>
+    <delete id="deleteCust">
+        delete from c_apt where customid=#{customid} and aptNum=#{aptNum}
+    </delete>
 </mapper>

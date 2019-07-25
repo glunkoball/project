@@ -95,6 +95,7 @@ public class CustomerPublishApartmentServiceImpl implements CustomerPublishApart
         apartment.setCheckAptTime(str);
 
         count =customerPublishApartmentDao.publishApt3(apartment);
+        count =customerPublishApartmentDao.publishApt4(apartment);
         if(count<1){
             dm.setSuccess(0);
             dm.setError("发布房源失败，请刷新重试");

@@ -9,6 +9,15 @@ public class Custominfo {
     private String customemail;
     private String wayy;
     private String customdesc;
+    private String custTime;//预约看房时间
+
+    public String getCustTime() {
+        return custTime;
+    }
+
+    public void setCustTime(String custTime) {
+        this.custTime = custTime;
+    }
 
     //房源一对多
     private List<Apartment> apartments;
