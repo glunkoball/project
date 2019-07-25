@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/project/plugin/element-ui/index.css">
     <!-- 先引入 Vue -->
     <script src="/project/plugin/element-ui/vue.js"></script>
-    <!-- 引入组件库 -->
+    <!-- 引入组件库 margin-top: 10px-->
     <script src="/project/plugin/element-ui/index.js"></script>
 
     <script src="/project/plugin/element-ui/axios.js"></script>
@@ -17,17 +17,21 @@
     <div style="margin-bottom:10px;">
         <el-button  type="primary" @click="showEditWin">添加用户</el-button>
     </div>
-    <el-table stripe border height="450" :data="tableData" style="width: 100%;margin-top: 10px">
-        <el-table-column width="140px" prop="aptNum" label="房源编号"  align="center">
+    <div>
+    <el-table :data="tableData" style="width: 100%;height:535px;">
+        <el-table-column  prop="aptNum" label="房源编号"  align="center">
         </el-table-column>
-        <el-table-column width="160px" prop="address" label="地址"  align="center">
+        <el-table-column  prop="address" label="地址"  align="center">
         </el-table-column>
-        <el-table-column width="100px" prop="aid" label="经纪人ID"  align="center">
+        <el-table-column  prop="name" label="经纪人姓名"  align="center">
         </el-table-column>
-        <el-table-column width="120px" prop="contact" label="经纪人联系方式"  align="center">
+        <el-table-column prop="contact" label="经纪人联系方式"  align="center">
         </el-table-column>
-        <el-table-column label="钥匙状态" width="100" prop="keystate" align="center">
-            <!--<template slot-scope="scope" th:if="scope.row.keystate == 1"><span>正在使用</span>-->
+        <el-table-column label="钥匙状态"  prop="keystate" align="center">
+
+            <!--th:if="${keystate}"<span th:case="0">在库</span>-->
+            <!--<span th:case="1">借出</span>-->
+            <!--<template slot-scope="scope" th:switch="${keystate}"><span>正在使用</span>-->
                 <!--<el-tag>-->
                         <!--&lt;!&ndash;:type="scope.row.tag === '家' ? 'primary' : 'success'"-->
                         <!--filter-placement="bottom-end"-->
@@ -38,46 +42,41 @@
                         <!--</el-tag>-->
             <!--</template>-->
         </el-table-column>
-        <!--<el-table-column width="100px" prop="keystate" label="钥匙状态"  align="center">-->
-        <!--</el-table-column>-->
-        <el-table-column width="170px" prop="date" label="上次借出时间"  align="center">
+        <el-table-column  prop="date" label="上次借出时间"  align="center">
         </el-table-column>
-        <el-table-column width="160px" label="操作" align="center">
+        <el-table-column  label="操作" align="center">
             <template slot-scope="scope">
                 <el-button size="mini" @click="borrow(scope.$index,scope.row)">借出</el-button>
                 <el-button size="mini" @click="repay(scope.$index,scope.row)">归还</el-button>
             </template>
         </el-table-column>
     </el-table>
-    <!--添加框-->
-    <el-dialog  :visible.sync="dialogVisible" width="30%">
-        <el-form ref="form" :model="form" label-width="80px">
+    <!--添加框 -->
+    <el-dialog  :visible.sync="dialogVisible" width="23%">
+        <el-form ref="form" :model="form" label-width="80px" style="margin: auto">
             <el-form-item label="房源编号:" prop="aptNum">
-                <el-input v-model="form.aptNum"></el-input>
+                <el-input style="width: 200px" v-model="form.aptNum"></el-input>
             </el-form-item>
             <el-form-item label="地址:" prop="address">
-                <el-input v-model="form.address" ></el-input>
+                <el-input style="width: 200px" v-model="form.address" ></el-input>
             </el-form-item>
             <el-form-item label="经纪人ID:" prop="aid">
-                <el-input v-model="form.aid" ></el-input>
+                <el-input style="width: 200px" v-model="form.aid" ></el-input>
             </el-form-item>
             <el-form-item label="经纪人联系方式:" prop="contact">
-                <el-input v-model="form.contact" ></el-input>
+                <el-input style="width: 200px" v-model="form.contact" ></el-input>
             </el-form-item>
             <el-form-item label="钥匙状态:" prop="keystate">
-                <el-input v-model="form.keystate">
-                    <!--<el-option label="已在" value="1"></el-option>-->
-                    <!--<el-option label="" value="1"></el-option>-->
+                <el-input style="width: 200px" v-model="form.keystate">
                 </el-input>
             </el-form-item>
-            <!--<el-form-item label="借出时间:" prop="date">-->
-            <!--</el-form-item>-->
         </el-form>
         <span slot="footer" class="dialog-footer">
             <el-button @click="resetForm('form')">取 消</el-button>
             <el-button type="primary" @click="onSubmit('form')">确 定</el-button>
         </span>
     </el-dialog>
+</div>
 </div>
 </body>
 <script>

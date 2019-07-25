@@ -114,11 +114,30 @@ public class Apartment {
     private String description;//描述
     //钥匙
     private String address;//房屋地址
+    private String name;//经纪人项目
     private String contact;//经纪人联系方式
     private Integer keystate;//钥匙状态
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date date;//上次借出时间
     private Status status;
+    private String tel;
+
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Status getStatus() {
         return status;
