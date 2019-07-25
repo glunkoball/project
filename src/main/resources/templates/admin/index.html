@@ -14,10 +14,9 @@
     <title>后台界面</title>
 </head>
 <body>
-<div id="app">
+<div id="app" >
 <el-container style="height: 100%">
     <el-header>
-
         BZLD房屋租赁中介公司
         <el-dropdown trigger="click" style="position: absolute; top: 20px; right: 100px;">
   <span class="el-dropdown-link">
@@ -27,7 +26,6 @@
   </span>
             <el-dropdown-menu slot="dropdown" style="width: 60px;">
                 <el-link  href="aback" style="padding-left: 13px">退出</el-link>
-
             </el-dropdown-menu>
         </el-dropdown>
 
@@ -45,10 +43,10 @@
 
 
         <el-main>
-            <el-tabs v-model="activeName" type="border-card"  style="height:600px;"  @tab-remove="removeTab" >
+            <el-tabs v-model="activeName" type="border-card"  style="height:1000px;"  @tab-remove="removeTab" >
                 <el-tab-pane v-for="(item,index) in tabsData " :label="item.name" :name="item.name" :key="item.name" :closable="item.closable" >
 
-                    <iframe :src="item.url" width="100%" height="550" frameborder=0></iframe>
+                    <iframe :src="item.url" width="100%" height="900px" frameborder=0></iframe>
 
                 </el-tab-pane>
 
@@ -58,10 +56,14 @@
 </el-container>
 </div>
 <style>
+
     #app,.el-container {
         margin:0px;
         padding:0px;
         height:100%;
+    }
+    #app{
+        height:1000px;
     }
     .el-header, .el-footer {
         background-color: #c8c9cc;
@@ -72,7 +74,7 @@
     .el-aside {
         background-color: #494953;
         color: #333;
-
+        height:100%
     }
 
     .el-main {
@@ -91,6 +93,7 @@
         color: #8c939d;
         background-color: #494953;
     }
+
 
 
 
