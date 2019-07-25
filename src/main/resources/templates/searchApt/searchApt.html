@@ -139,7 +139,8 @@
         <div v-for="item in testData" class="everyContent">
             <div class="aptPics" >
                 <a :href="'details?aptNum='+item.aptNum">
-                    <img src="image/slides1.jpg" width="100%" height="100%">
+                    <template slot-scope="scope"></template>
+                    <img  :src="'http://192.168.1.81:7001/'+item.imgUrl"  width="100%" height="100%" >
                 </a>
             </div>
             <div class="aptContent">
