@@ -15,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -25,7 +27,7 @@ import java.util.UUID;
 public class CustomerPublishApartmentController {
     @Autowired
     private CustomerPublishApartmentService customerPublishApartmentService;
-    private static String url ="";
+    private static List<String> url =new ArrayList<String>();
     /**
      * 发布房源
      * @param apartment
@@ -34,9 +36,8 @@ public class CustomerPublishApartmentController {
     @RequestMapping("/publishApt")
     @ResponseBody
     public DefaultMsg publishApt(@RequestBody Apartment apartment){
-        apartment.setImgUrl(url);
-        System.out.println(url);
-        DefaultMsg dm =customerPublishApartmentService.publishApt(apartment);
+        DefaultMsg dm =customerPublishApartmentService.publishApt(apartment,url);
+        url.clear();
         return dm;
     }
 
@@ -61,7 +62,10 @@ public class CustomerPublishApartmentController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        url ="/img/"+imgPath;
+        String trueImgUrl="/img/"+imgPath;
+        System.out.println(trueImgUrl);
+        url.add(trueImgUrl);
+        System.out.println(url);
         return null;
     }
 }

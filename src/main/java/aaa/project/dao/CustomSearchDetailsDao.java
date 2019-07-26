@@ -2,6 +2,7 @@ package aaa.project.dao;
 
 import aaa.project.entity.Apartment;
 import aaa.project.entity.InterestedCustom;
+import aaa.project.entity.OwerContract;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -18,4 +19,5 @@ public interface CustomSearchDetailsDao {
     public Apartment findOneHome(@Param("aptNum") String aptNum);
     public Integer save(InterestedCustom custom);
 
+    List<OwerContract> listOwercontract(String aptNum);
 }

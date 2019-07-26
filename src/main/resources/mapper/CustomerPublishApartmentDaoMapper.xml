@@ -15,7 +15,7 @@
                            values (#{AptNum},#{allCharged},#{together},#{split},#{decoration},#{price},#{moveinDate},#{waterFee},#{electricityFee},#{gasFee},#{InternetFee},#{communityFee},#{wireFee},#{parkingFee},#{pet},#{smoking},#{isKey},#{checkAptTime},#{description})
     </insert>
     <insert id="publishApt4">
-        insert into apartmentinfo4( AptNum, imgUrl)
-                           values (#{AptNum},#{imgUrl})
+        insert into apartmentinfo4(aptNum,imgUrl)
+                           values (#{apartment.AptNum},#{imgUrl})
     </insert>
 </mapper>

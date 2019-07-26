@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Apartment {
     //状态名
@@ -93,14 +94,14 @@ public class Apartment {
     private Integer pet;//宠物
     private Integer smoking;//吸烟
     //房源照片最多四张
-    private String imgUrl;
+    private List<Picture> pictureList;
 
-    public String getImgUrl() {
-        return imgUrl;
+    public List<Picture> getPictureList() {
+        return pictureList;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setPictureList(List<Picture> pictureList) {
+        this.pictureList = pictureList;
     }
 
     //需要审核的有效证件

@@ -1,9 +1,11 @@
 package aaa.project.service.impl;
 
 import aaa.project.common.DefaultMsg;
+import aaa.project.common.PageModel;
 import aaa.project.dao.CustomSearchDetailsDao;
 import aaa.project.entity.Apartment;
 import aaa.project.entity.InterestedCustom;
+import aaa.project.entity.OwerContract;
 import aaa.project.service.CustomSearchDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,15 @@ public class CustomSearchDetailsServiceImpl  implements CustomSearchDetailsServi
         }
 
         return dm;
+    }
+
+    @Override
+    public PageModel<OwerContract> listOwercontract(String aptNum) {
+        PageModel<OwerContract> pm = new PageModel<OwerContract>();
+        if(aptNum !=null){
+            pm.setRows(customSearchDetailsDao.listOwercontract(aptNum));
+        }
+        return pm;
     }
 
 

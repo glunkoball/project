@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Transactional
@@ -19,7 +20,7 @@ public class CustomerPublishApartmentServiceImpl implements CustomerPublishApart
     @Autowired
     private CustomerPublishApartmentDao customerPublishApartmentDao;
     @Override
-    public DefaultMsg publishApt(Apartment apartment) {
+    public DefaultMsg publishApt(Apartment apartment, List<String> url) {
         Integer count =0;
         DefaultMsg dm = new DefaultMsg();
         Date date = new Date();
@@ -95,7 +96,16 @@ public class CustomerPublishApartmentServiceImpl implements CustomerPublishApart
         apartment.setCheckAptTime(str);
 
         count =customerPublishApartmentDao.publishApt3(apartment);
-        count =customerPublishApartmentDao.publishApt4(apartment);
+        if(url.size()<1){
+            dm.setSuccess(0);
+            dm.setError("图片上传失败，请刷新重试");
+            return dm;
+        }else{
+            for (String imgUrl:url
+            ) {
+                count =customerPublishApartmentDao.publishApt4(apartment,imgUrl);
+            }
+        }
         if(count<1){
             dm.setSuccess(0);
             dm.setError("发布房源失败，请刷新重试");

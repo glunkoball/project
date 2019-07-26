@@ -18,7 +18,6 @@
     <el-container style="height:700px;" >
 
         <el-header style="height: 40px">
-            sssss
         </el-header>
         <el-container style="width: 1000px;margin: 0 auto">
 
@@ -105,12 +104,12 @@
                                     border
                                     style="width: 100%">
                                 <el-table-column
-                                        prop="payWay"
+                                        prop="pway"
                                         label="付款方式"
                                         width="180">
                                 </el-table-column>
                                 <el-table-column
-                                        prop="rentMoney"
+                                        prop="money"
                                         label="租金"
                                         width="180">
                                 </el-table-column>
@@ -138,7 +137,6 @@
                             title="计划内容"
                             :visible.sync="dialogVisible"
                              width="30%"
-                            :before-close="handleClose"
                             style="height: 500px"
                     >
                         <span>具体计划内容</span>
@@ -285,7 +283,8 @@
 </style>
 </body>
 <script>
-
+    axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+    Vue.prototype.$axios = axios;
     new Vue({
         el:'#app',
         data(){
@@ -310,31 +309,12 @@
                 }, 100)
             };
             return {
+                aptNum:[[${oneHome.aptNum}]],
                 imagesbox: [
                     {src: "image/f1.jpg"},
                     {src: "image/f2.jpg"},
                     {src: "image/f3.jpg"}],
-                tableData: [{
-                    payWay: '月付',
-                    rentMoney: '￥2200',
-                    coverFee: '￥2200',
-                    cashPledge: '￥2200'
-                }, {
-                    payWay: '季付',
-                    rentMoney: '￥2200',
-                    coverFee: '￥2200',
-                    cashPledge: '￥2200'
-                }, {
-                    payWay: '年付',
-                    rentMoney: '￥2200',
-                    coverFee: '￥2200',
-                    cashPledge: '￥2200'
-                }, {
-                    payWay: '分期付款',
-                    rentMoney: '￥2200',
-                    coverFee: '￥2200',
-                    cashPledge: '￥2200'
-                }],
+                tableData: [],
                 dialogVisible: false,
                 dialogTableVisible: false,
                 dialogFormVisible: false,
@@ -365,7 +345,9 @@
 
                 }}
             },
-
+        mounted(){
+            this.loadTable();
+        },
             methods: {
                     submitForm(formName) {
                         var vue = this;
@@ -398,7 +380,22 @@
                 resetForm(formName){
                     this.$refs[formName].resetFields();
                 },
+                loadTable(){
+                        alert(this.aptNum);
+                        var vue =this;
+                    axios.get('listOwercontract',{params:{aptNum:vue.aptNum}})
+                        .then(function (res) {
+                            console.info(res.data.rows);
+                            vue.tableData=res.data.rows;
+                        })
+                        .catch(function (error) {
+                            console.info(error);
+                            Vue.prototype.$message.error("服务器产生异常，请联系管理员");
+                        });
                 }
+
+            }
+
 
     });
 

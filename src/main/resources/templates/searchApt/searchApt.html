@@ -137,10 +137,9 @@
 
     <div class="searchContent">
         <div v-for="item in testData" class="everyContent">
-            <div class="aptPics" >
+            <div class="aptPics">
                 <a :href="'details?aptNum='+item.aptNum">
-                    <template slot-scope="scope"></template>
-                    <img  :src="'http://192.168.1.81:7001/'+item.imgUrl"  width="100%" height="100%" >
+                    <img  :src="'http://192.168.1.81:7001/'+item.pictureList[0].imgUrl"  width="100%" height="100%" >
                 </a>
             </div>
             <div class="aptContent">
@@ -168,6 +167,8 @@
 </div>
 </body>
 <script>
+    axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+    Vue.prototype.$axios = axios;
     new Vue({
         el:"#criteria",
         data(){
@@ -178,7 +179,7 @@
                 checkboxBedrooms:['不限'],
                 checkboxFacing:['不限'],
                 ruleForm: {},
-                testData:[{}]
+                testData:[]
             }
         },
 
@@ -190,6 +191,7 @@
                         //ajax请求后返回的res为json数据
                         //res.data通过vue语法赋值给声明的testData
                         _this.testData = res.data;
+                        console.info(_this.testData);
                     })
         },
 

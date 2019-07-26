@@ -1,7 +1,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="aaa.project.dao.CustomerFindAptByCriteriaDao">
-    <select id="CustomerFindAptByCriteria" resultType="aaa.project.entity.Apartment">
+    <resultMap id="aptMap" type="aaa.project.entity.Apartment" autoMapping="true">
+        <id column="aptNum" property="AptNum"></id>
+        <collection property="pictureList" ofType="aaa.project.entity.Picture" autoMapping="true"></collection>
+    </resultMap>
+    <select id="CustomerFindAptByCriteria" resultMap="aptMap">
         select * from apartmentinfo1 ai1
         left join apartmentinfo2 ai2 on ai1.aptNum=ai2.aptNum
         left join apartmentinfo3 ai3 on ai1.aptNum= ai3.aptNum
