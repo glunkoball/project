@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="aaa.project.dao.QueryContractDao">
+    <select id="listContract" resultType="aaa.project.entity.OwerContract">
+        select * from owercontract
+        <if test=" keyword =='' ">
+             ORDER BY aptNum desc limit #{start},#{pageSize}
+        </if>
+        <if test=" keyword !='' ">
+            <where>
+                    aptNum=#{keyword} ORDER BY aptNum desc
+                <if test="start!= null and pageSize!=null">
+                    limit #{start},#{pageSize}
+                </if>
+            </where>
+        </if>
+    </select>
+    <select id="countContract" resultType="java.lang.Integer">
+          select count(*) from owercontract
+          <where>
+              <if test=" keyword !='' ">
+                  aptNum=#{keyword}
+              </if>
+          </where>
+    </select>
+</mapper>
