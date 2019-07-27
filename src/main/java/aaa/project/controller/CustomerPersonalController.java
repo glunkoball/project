@@ -1,10 +1,7 @@
 package aaa.project.controller;
 
 import aaa.project.common.Constants;
-import aaa.project.entity.Apartment;
-import aaa.project.entity.OwerContract;
-import aaa.project.entity.TenantContract;
-import aaa.project.entity.User;
+import aaa.project.entity.*;
 import aaa.project.service.CustomerPersonalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -73,4 +70,11 @@ public class CustomerPersonalController {
         return toPayList;
     }
 
+    @RequestMapping("/loadTransactionRecord")
+    @ResponseBody
+    public List<TransactionRecord> loadTransactionRecord(HttpSession session){
+        User user =(User) session.getAttribute(Constants.SESSION_USER);
+        List<TransactionRecord> transactionRecords = customerPersonalService.loadTransactionRecord(user.getId());
+        return transactionRecords;
+    }
 }

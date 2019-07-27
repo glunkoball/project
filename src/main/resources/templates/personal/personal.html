@@ -97,7 +97,7 @@
             </el-tab-pane>
             <el-tab-pane label="我的房子" >
                 <el-tabs :tab-position="myAptTab">
-                    <el-tab-pane label="我的房源" >
+                    <el-tab-pane label="我的房子" >
                         <el-table
                                 :data="myApt1"
                                 style="width: 100%">
@@ -280,6 +280,8 @@
             </el-tab-pane>
 
             <el-tab-pane label="在线支付">
+                <el-tabs :tab-position="onlinePayment" style="height: 200px;">
+                    <el-tab-pane label="在线支付">
                 <el-table
                         :data="loadToPayTable"
                         style="width: 100%">
@@ -306,7 +308,7 @@
                     </el-table-column>
                     <el-table-column
                             label="付款方式"
-                            width="80" align="center">
+                            width="100" align="center">
                         <template slot-scope="scope">
                             <el-popover trigger="hover" placement="top">
                                 <p>租期时间: {{ scope.row.peroid }}个月</p>
@@ -336,10 +338,10 @@
                     </el-table-column>
                     <el-table-column
                             label="需付金额"
-                            width="80" align="center">
+                            width="140" align="center">
                         <template slot-scope="scope">
                             <i class="el-icon-money"></i>
-                            <span style="margin-left: 10px">{{ scope.row.needToPay }}</span>
+                            <span style="margin-left: 10px">{{ scope.row.needToPay }}元/月</span>
                         </template>
                     </el-table-column>
                     <el-table-column label="操作" align="center">
@@ -347,13 +349,10 @@
                             <el-button
                                     size="mini"
                                     type="success"
-                                    @click="centerDialogVisible = true">支付租金</el-button>
+                                    @click="toPayDialog(scope.$index,scope.row)">支付租金</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
-
-
-                <!--<el-button type="primary" @click="centerDialogVisible = true">支付</el-button>-->
                 <el-dialog
                         title="支付租金"
                         :visible.sync="centerDialogVisible"
@@ -364,15 +363,15 @@
                             <dl class="content">
                                 <div class="inputItems">
                                 商户订单号:
-                                    <input name="WIDout_trade_no"/>
+                                    <input name="WIDout_trade_no" :value="aptNumRecord" readonly="readonly" width="350px"/>
                                 </div>
                                 <div class="inputItems">
                                 订单名称:
-                                    <input  name="WIDsubject" />
+                                    <input  name="WIDsubject"  value="支付租金至不租拉到有限公司"/>
                                 </div>
                                 <div class="inputItems">
                                 付款金额:
-                                    <input  name="WIDtotal_amount" />
+                                    <input  name="WIDtotal_amount" :value="needToPay" readonly="readonly"/>
                                 </div>
                                 <div class="inputItems">
                                 商品描述:
@@ -400,9 +399,58 @@
                         </el-form-item>
                     </el-form>-->
                 </el-dialog>
-
+                    </el-tab-pane>
+                </el-tabs>
             </el-tab-pane>
-            <el-tab-pane label="交易记录">交易记录</el-tab-pane>
+            <el-tab-pane label="交易记录">
+                <el-tabs :tab-position="transactionRecord" style="height: 200px;">
+                    <el-tab-pane label="交易记录">
+                        <el-table
+                                :data="transactionRecordTable"
+                                style="width: 100%">
+                            <el-table-column
+                                    label="交易号"
+                                    width="250" align="center">
+                                <template slot-scope="scope">
+                                    <el-popover trigger="hover" placement="top">
+                                        <p>商户订单号: {{ scope.row.orderNum }}</p>
+                                        <p>房屋编号: {{ scope.row.aptNum }}</p>
+                                        <div slot="reference" class="name-wrapper">
+                                            <el-tag size="medium">{{ scope.row.tradeNum }}</el-tag>
+                                        </div>
+                                    </el-popover>
+                                </template>
+                            </el-table-column>
+
+                            <el-table-column
+                                    label="交易金额"
+                                    width="180" align="center">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-money"></i>
+                                    <span style="margin-left: 10px">CNY  {{ scope.row.amount }}</span>
+                                </template>
+                            </el-table-column>
+
+                            <el-table-column
+                                    label="交易日期"
+                                    width="180" align="center">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-date"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.transactionDate }}</span>
+                                </template>
+                            </el-table-column>
+
+                            <el-table-column label="支出/收入" align="center">
+                                <template slot-scope="scope" >
+                                    <el-button v-if="scope.row.tenantId == null"  size="mini" type="success">收入</el-button>
+                                    <el-button v-if="scope.row.tenantId != null"  size="mini"
+                                            type="danger">支出</el-button>
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                    </el-tab-pane>
+                </el-tabs>
+            </el-tab-pane>
         </el-tabs>
     </div>
 </div>
@@ -413,10 +461,15 @@
         data(){
             return {
                 myId:[[${session.session_user.id}]],
+                aptNumRecord:'',
+                needToPay:'',
                 personalTab:'left',
                 accountTab:'top',
                 myAptTab:'top',
+                transactionRecord:'top',
                 myContractTab:'top',
+                onlinePayment:'',
+                transactionRecordTable:[{}],
                 myApt1:[{
                    }],
                 JiaContract:[{}],
@@ -460,6 +513,7 @@
             this.showJiaContract();
             this.showYiContract();
             this.loadToPayList();
+            this.loadTransactionRecord();
         },
         methods:{
 
@@ -531,6 +585,19 @@
                     .then(function(res){
                         console.info(this.data);
                         vue.loadToPayTable = res.data;
+                    })
+            },
+            toPayDialog:function(index,row){
+                this.centerDialogVisible = true;
+                this.aptNumRecord = `${row.aptNum}1${row.nextTime}`;
+                this.needToPay = `${row.needToPay}`;
+            },
+            loadTransactionRecord(){
+                var vue = this;
+                axios.post('loadTransactionRecord')
+                    .then(function(res){
+                        console.info(res.data);
+                        vue.transactionRecordTable = res.data;
                     })
             }
         }

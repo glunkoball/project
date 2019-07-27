@@ -1,11 +1,15 @@
 package aaa.project.controller;
 
 import aaa.project.alipay.AlipayConfig;
+import aaa.project.common.Constants;
+import aaa.project.entity.TransactionRecord;
+import aaa.project.entity.User;
+import aaa.project.service.CustomerPersonalService;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,12 +17,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 @Controller
 public class AlipayController {
+
+    @Autowired
+    private CustomerPersonalService customerPersonalService;
 
     /**
      * 跳转到支付界面
@@ -81,7 +91,7 @@ public class AlipayController {
      * @return
      */
     @RequestMapping("/paySuccess")
-    public String  paySuccess(HttpServletRequest request, Model model) throws  Exception{
+    public String  paySuccess(HttpServletRequest request, Model model, HttpSession session) throws  Exception{
         Map<String,String> params = new HashMap<String,String>();
         Map<String,String[]> requestParams = request.getParameterMap();
         for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext();) {
@@ -102,6 +112,11 @@ public class AlipayController {
         //——请在这里编写您的程序（以下代码仅作参考）——
         String info="";
         if(signVerified) {
+
+            //获取租房者编号
+            User user =(User) session.getAttribute(Constants.SESSION_USER);
+            Integer tenantId = user.getId();
+
             //商户订单号
             String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
 
@@ -110,13 +125,35 @@ public class AlipayController {
 
             //付款金额
             String total_amount = new String(request.getParameter("total_amount").getBytes("ISO-8859-1"),"UTF-8");
-            info="trade_no:"+trade_no+"<br/>out_trade_no:"+out_trade_no+"<br/>total_amount:"+total_amount;
+
+            TransactionRecord transactionRecord = new TransactionRecord();
+            //设置支付宝交易号
+            transactionRecord.setTradeNum(trade_no);
+            //设置租客编号
+            transactionRecord.setTenantId(tenantId);
+            //设置付款金额
+            transactionRecord.setAmount(total_amount);
+            //设置商户订单号
+            transactionRecord.setSubject(out_trade_no);
+            //设置房源编号
+            transactionRecord.setAptNum(out_trade_no.substring(0,14));
+            //设置交易时间
+            Date rightnow = new Date();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            String transactionDate = formatter.format(rightnow);
+            transactionRecord.setTransactionDate(transactionDate);
+
+
+            int i = customerPersonalService.setIntoRecord(transactionRecord);
+
+            info="trade_no:"+trade_no+"<br/>out_trade_no:"+out_trade_no+"<br/>total_amount:"+total_amount+"<br/>total_amount:";
             System.out.println(info);
         }else {
             info ="验签失败" ;
             System.out.println("验签失败");
         }
         model.addAttribute("info",info);
-        return "alipay/success";
+        System.out.println(info);
+        return "redirect:personal";
     }
 }
