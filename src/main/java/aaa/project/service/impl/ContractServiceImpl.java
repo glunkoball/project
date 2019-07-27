@@ -1,10 +1,7 @@
 package aaa.project.service.impl;
 
 import aaa.project.dao.ContractDao;
-import aaa.project.entity.Apartment;
-import aaa.project.entity.OwerContract;
-import aaa.project.entity.TenantContract;
-import aaa.project.entity.User;
+import aaa.project.entity.*;
 import aaa.project.service.ContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -141,5 +138,26 @@ public class ContractServiceImpl implements ContractService {
     }
     public void updateAptStatezk(String aptNum) {
         contractDao.updateAptState(aptNum);
+    }
+//根据房源编号查合同
+    @Override
+    public List<OwerContract> findcontractbyapt(String aptNum) {
+        return contractDao.findcontractbyapt(aptNum);
+    }
+
+    @Override
+    public void updateContractTime(String date1, String datenew,String aptNum) {
+        contractDao.updateContractTime(date1,datenew,aptNum);
+    }
+
+    @Override
+    public void addtotransaction(Tranction tranction) {
+
+        contractDao.addtotransaction(tranction);
+    }
+
+    @Override
+    public List<Tranction> findtransaction() {
+        return contractDao.findtransaction();
     }
 }

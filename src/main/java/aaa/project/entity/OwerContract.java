@@ -19,6 +19,15 @@ public class OwerContract {
     private String lastTime;
     private String nextTime;
     private Double needToPay;
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public String getLastTime() {
         return lastTime;

@@ -5,5 +5,5 @@ import aaa.project.entity.OwerContract;
 import java.util.List;
 
 public interface AdminPayToFdService {
-    public List<OwerContract> findowercontract();
+    public List<OwerContract> findowercontract(String keyword);
 }

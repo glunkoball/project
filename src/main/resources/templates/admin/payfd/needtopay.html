@@ -27,6 +27,10 @@
 </head>
 <body>
 <div id="app">
+        查看需要付款的单子
+        <el-date-picker type="date" placeholder="选择日期" v-model="keyword" style="width: 150px;" value-format="yyyy-MM-dd" ></el-date-picker>
+
+    <el-button type="success" @click="search"  icon="el-icon-search">搜索</el-button>
     <el-table
             :data="tableData"
             style="width: 100%">
@@ -43,25 +47,63 @@
             </template>
         </el-table-column>
       <!--  <el-table-column label="房源地址" prop="district"></el-table-column>-->
-        <el-table-column label="房东姓名" prop=""></el-table-column>
+        <el-table-column label="房东姓名" prop="user.name"></el-table-column>
       <!--  <el-table-column label="房东电话" prop="bedrooms"></el-table-column>-->
-        <el-table-column label="付款方式" prop="bathrooms"></el-table-column>
+        <el-table-column label="付款方式" prop="pway"></el-table-column>
        <!-- <el-table-column label="租期时间" prop="livingrooms"></el-table-column>-->
-        <el-table-column label="上次交易时间" prop="facing"></el-table-column>
-        <el-table-column label="下次交易时间" prop="price"></el-table-column>
-        <el-table-column label="租金" prop="status.statusname"></el-table-column>
-        <el-table-column label="合同终止时间" prop="area"></el-table-column>
+        <el-table-column label="上次交易时间" prop="lastTime"></el-table-column>
+        <el-table-column label="下次交易时间" prop="nextTime"></el-table-column>
+        <el-table-column label="租金" prop="needToPay"></el-table-column>
+        <el-table-column label="合同终止时间" prop="date2"></el-table-column>
         <el-table-column label="操作">
             <template slot-scope="scope">
                 <el-button
                         size="mini"
-                        @click="handleEdit(scope.$index, scope.row)"
-                        style="background-color: red"
-                >支付租金</el-button>
+                        type="success"
+                        @click="handleEdit(scope.index, scope.row)"
+                        style="background-color: red">
+                支付租金</el-button>
 
             </template>
         </el-table-column>
     </el-table>
+
+    <!--编辑用户的对话框-->
+    <el-dialog
+            :title="title"
+            :visible.sync="DialogVisible"
+            width="30%"
+>
+        <form  action="pay" method=post  >
+            <div id="body1"  name="divcontent">
+                <dl class="content">
+                    <dt>支付订单号 ：</dt>
+                    <dd>
+                        <input name="WIDout_trade_no" :value="aptOrder"/>
+                    </dd>
+                    <dt>订单名称 ：</dt>
+                    <dd>
+                        <input  name="WIDsubject" />
+                    </dd>
+
+                    <dt>付款金额 ：</dt>
+                    <dd>
+                        <input  name="WIDtotal_amount" :value="ordermoney" />
+                    </dd>
+
+                    <dt>商品描述：</dt>
+                    <dd>
+                        <input  name="WIDbody" />
+                    </dd>
+                    <hr class="one_line">
+                    <dt></dt>
+                    <dd id="btn-dd">
+                        <input type="submit" value="提交">
+                    </dd>
+                </dl>
+            </div>
+        </form>
+    </el-dialog>
 </div>
 </body>
 <script>
@@ -69,24 +111,51 @@
         el:'#app',
         data:function(){
             return{
-                tableData: [{}]
+                tableData: [{}],
+                DialogVisible: false,
+                keyword:'',
+                aptOrder:'',
+                ordermoney:''
+
             }
         },
         mounted:function(){
-            var vue = this;
-            axios.post('findowercontract')
-                .then(function(res){
-                    console.info(res.data);
-                    vue.tableData = res.data;
-                })
-                .catch(function(error){
-                    console.info(error);
-                    Vue.prototype.$message.error('服务器产生异常');
-                });
+              this.loadTableData();
         },
-        methods:{
+        methods: {
+            handleEdit(index, row){
+                this.DialogVisible=true;
+                this.loadTableData();
+               /* var a=row.aptNum;
+                alert(a);*/
+                /*a.append(row.aptNum);*/
+                // console.info(aptNum);
+                //  var params = new URLSearchParams();
+                //  params.append('aptNum',this.form);
+                //  params.append('id',row.id);
+                // alert(params);
 
-        }
+                this.aptOrder=`${row.aptNum}${row.nextTime}`;
+
+                this.ordermoney=row.needToPay;
+
+    },
+            loadTableData(){
+                var vue = this;
+                axios.get('findowercontract',{params:{keyword:this.keyword}})
+                    .then(function(res){
+                        console.info(res.data);
+                        vue.tableData = res.data;
+                    })
+                    .catch(function(error){
+                         console.info(error);
+                         Vue.prototype.$message.error('服务器产生异常');
+                    });
+            },
+             search(){
+                 this.loadTableData();
+             }
+         }
     })
 </script>
 </html>

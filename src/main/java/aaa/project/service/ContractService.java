@@ -1,9 +1,6 @@
 package aaa.project.service;
 
-import aaa.project.entity.Apartment;
-import aaa.project.entity.OwerContract;
-import aaa.project.entity.TenantContract;
-import aaa.project.entity.User;
+import aaa.project.entity.*;
 
 import java.util.List;
 
@@ -19,4 +16,11 @@ public interface ContractService {
     public void savezkcontract(String aptNum,Integer pid,String  uid);
     public void updateAptState(String aptNum);
     public void updateAptStatezk(String aptNum);
+    public List<OwerContract> findcontractbyapt(String aptNum);
+    public void  updateContractTime(String date1,String datenew,String aptNum);
+
+    //插入数据到交易记录表中
+    public void addtotransaction(Tranction tranction);
+
+    public List<Tranction>  findtransaction();
 }

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>需要支付的合同</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" th:href="@{/plugin/element-ui/index.css}">
+    <!--引入vue-->
+    <script th:src="@{/plugin/element-ui/vue.js}"></script>
+    <!-- 引入组件库 -->
+    <script th:src="@{/plugin/element-ui/index.js}"></script>
+    <script th:src="@{/plugin/element-ui/axios.js}"></script>
+</head>
+<body>
+   <div id="app">
+       <el-table
+               :data="transactionRecordTable"
+               style="width: 100%">
+           <el-table-column
+                   label="交易号"
+                   width="250"
+                   prop="tradeNum">
+               <template slot-scope="scope">
+                   <el-popover trigger="hover" placement="top">
+                       <p>商户订单号: {{scope.row.orderNum }}</p >
+                       <p>房屋编号: {{scope.row.aptNum }}</p >
+                       <div slot="reference" class="name-wrapper">
+                           <el-tag size="medium">{{ scope.row.tradeNum }}</el-tag>
+                       </div>
+                   </el-popover>
+               </template>
+           </el-table-column>
+
+           <el-table-column
+                   label="交易金额"
+                    width="180"
+                    prop="amount">
+           </el-table-column>
+
+           <el-table-column
+                   label="交易日期"
+                   width="180">
+               <template slot-scope="scope">
+                   <i class="el-icon-date"></i>
+                   <span style="margin-left: 10px">{{scope.row.transactionDate }}</span>
+               </template>
+           </el-table-column>
+
+           <el-table-column label="操作">
+               <template slot-scope="scope" >
+                   <el-button v-if="scope.row.ownerId == null"  size="mini" type="success">收入</el-button>
+                   <el-button v-if="scope.row.ownerId != null"  size="mini"
+                              type="danger">支出</el-button>
+               </template>
+           </el-table-column>
+       </el-table>
+   </div>
+<script>
+    new Vue({
+        el:'#app',
+        data(){
+            return{
+                transactionRecordTable:[{}]
+            }
+        },
+        mounted:function () {
+                this.load()
+
+        },
+        methods:{
+            load(){
+                var vue = this;
+                axios.post('findtransaction')
+                    .then(function(res){
+                        console.info(res.data);
+                        this.transactionRecordTable = res.data;
+                        alert(res.data[0].amount);
+                    })}
+
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,9 +1,6 @@
 package aaa.project.dao;
 
-import aaa.project.entity.Apartment;
-import aaa.project.entity.OwerContract;
-import aaa.project.entity.TenantContract;
-import aaa.project.entity.User;
+import aaa.project.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -25,4 +22,10 @@ public interface ContractDao {
     public void savezkcontract(@Param("aptNum")String  aptNum,@Param("tenantid") Integer tenantid,@Param("pid")Integer pid);
     public void updateAptState(String aptNum);
     public void updateAptStatezk(String aptNum);
+    public List<OwerContract> findcontractbyapt(String aptNum);
+    public void updateContractTime(@Param("date1") String date1,@Param("datenew") String datenew,@Param("aptNum") String aptNum);
+    //插入数据到交易记录表中
+    public void addtotransaction(@Param("t") Tranction tranction);
+
+    public List<Tranction>  findtransaction();
 }

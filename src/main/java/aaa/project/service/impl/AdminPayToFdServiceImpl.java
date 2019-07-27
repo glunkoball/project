@@ -15,7 +15,7 @@ public class AdminPayToFdServiceImpl implements AdminPayToFdService {
    @Autowired
    private AdminPayToFdDao adminPayToFdDao;
     @Override
-    public List<OwerContract> findowercontract() {
-        return adminPayToFdDao.findowercontract();
+    public List<OwerContract> findowercontract(String keyword) {
+        return adminPayToFdDao.findowercontract(keyword);
     }
 }

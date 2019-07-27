@@ -21,7 +21,7 @@
     </select>
 
     <insert id="addzkcontract">
-        insert into tenant_contract(pid,pway,money,date1,date2,peroid) VALUES(#{pid},#{pway},#{money},#{date1},#{date2},#{peroid})
+        insert into tenant_contract(pid,pway,money,date1,date2,peroid,nextTime,needToPay) VALUES(#{tc.pid},#{tc.pway},#{tc.money},#{tc.date1},#{tc.date2},#{tc.peroid},#{tc.date1},#{need})
     </insert>
     <select id="findzkcontract" resultType="aaa.project.entity.OwerContract">
         SELECT * from tenant_contract where pid=#{pid}
@@ -29,4 +29,24 @@
     <insert id="savezkcontract">
         update tenant_contract set aptNum=#{aptNum},tenantid=#{tenantid} where pid=#{pid}
     </insert>
+    <update id="updateAptState">
+         update apartmentinfo1 set state=3 where aptNum=#{aptNum}
+    </update>
+    <update id="updateAptStatezk">
+        update apartmentinfo1 set state=4 where aptNum=#{aptNum}
+    </update>
+    <select id="findcontractbyapt" resultType="aaa.project.entity.OwerContract">
+        SELECT * from owercontract where aptNum=#{aptNum}
+    </select>
+    <update id="updateContractTime">
+        update owercontract set nextTime=#{datenew},lastTime=#{date1} where aptNum=#{aptNum}
+    </update>
+    
+    <insert id="addtotransaction">
+        insert into transactionrecord(tradeNum,ownerId,amount,orderNum,transactionDate,aptNum) VALUES (#{t.tradeNum},#{t.ownerId},#{t.amount},#{t.orderNum},#{t.transactionDate},#{t.aptNum})
+    </insert>
+    
+    <select id="findtransaction" resultType="aaa.project.entity.Tranction">
+        SELECT * from transactionrecord
+    </select>
 </mapper>
