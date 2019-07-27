@@ -28,6 +28,10 @@ public class ContractController {
     public String createContractB(){
         return "admin/contract/zkcontract";
     }
+    @RequestMapping("contract/selectContract")
+    public String selectContract(){
+        return "admin/contract/queryContract";
+    }
 
     /**
      * 根据编号查找房源信息

@@ -31,6 +31,20 @@
         <association property="apartment" javaType="aaa.project.entity.Apartment" autoMapping="true"></association>
     </resultMap>
 
+    <insert id="setIntoRecord">
+        insert into transactionrecord (tradeNum,tenantId,amount, orderNum,transactionDate,aptNum) values(#{tradeNum},#{tenantId},#{amount},#{subject},#{transactionDate},#{AptNum})
+    </insert>
 
 
+    <select id="showNextTime" resultType="aaa.project.entity.TenantContract">
+        SELECT *  FROM tenant_contract where aptNum = #{aptNum}
+    </select>
+
+    <update id="changeTransactionTime">
+        update tenant_contract set lastTime = #{nextTime}, nextTime = #{nextRealTime} where aptNum =#{aptNum}
+    </update>
+
+    <select id="loadTransactionRecord" resultType="aaa.project.entity.TransactionRecord">
+        select * from transactionrecord where tenantId = #{tenantId} or ownerId = #{tenantId}
+    </select>
 </mapper>

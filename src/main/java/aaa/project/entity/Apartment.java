@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Apartment {
     //状态名
@@ -93,14 +94,14 @@ public class Apartment {
     private Integer pet;//宠物
     private Integer smoking;//吸烟
     //房源照片最多四张
-    private String imgUrl;
+    private List<Picture> pictureList;
 
-    public String getImgUrl() {
-        return imgUrl;
+    public List<Picture> getPictureList() {
+        return pictureList;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setPictureList(List<Picture> pictureList) {
+        this.pictureList = pictureList;
     }
 
     //需要审核的有效证件
@@ -114,11 +115,30 @@ public class Apartment {
     private String description;//描述
     //钥匙
     private String address;//房屋地址
+    private String name;//经纪人项目
     private String contact;//经纪人联系方式
     private Integer keystate;//钥匙状态
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date date;//上次借出时间
     private Status status;
+    private String tel;
+
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Status getStatus() {
         return status;

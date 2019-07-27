@@ -1,8 +1,10 @@
 package aaa.project.controller;
 
 import aaa.project.common.DefaultMsg;
+import aaa.project.common.PageModel;
 import aaa.project.entity.Apartment;
 import aaa.project.entity.InterestedCustom;
+import aaa.project.entity.OwerContract;
 import aaa.project.service.CustomSearchDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,6 +38,7 @@ public class CustomSearchDetailsController {
         model.addAttribute("oneHome",oneHome);
         return "details";
     }
+
     @RequestMapping("/saveOrUpdate")
     @ResponseBody
     public DefaultMsg saveOrUpdate(@RequestBody InterestedCustom custom){
@@ -43,6 +46,12 @@ public class CustomSearchDetailsController {
         DefaultMsg de = customSearchDetailsService.save(custom);
         return de;
 
+    }
+    @RequestMapping("listOwercontract")
+    @ResponseBody
+    public PageModel<OwerContract> listOwercontract(String aptNum){
+        PageModel<OwerContract> pm =customSearchDetailsService.listOwercontract(aptNum);
+        return pm;
     }
 
 }

@@ -11,7 +11,9 @@
     <insert id="save">
         insert into custominfo(customname,customphone,customemail,wayy,customdesc) values(#{customname},#{customphone},#{customemail},#{wayy},#{customdesc})
     </insert>
-
+    <select id="listOwercontract" resultType="aaa.project.entity.OwerContract">
+        select * from owercontract where aptNum=#{aptNum}
+    </select>
 
 
 </mapper>

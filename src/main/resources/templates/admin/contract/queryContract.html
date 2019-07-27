@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>查询合同</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" th:href="@{/plugin/element-ui/index.css}">
+    <!--引入vue-->
+    <script th:src="@{/plugin/element-ui/vue.js}"></script>
+    <!-- 引入组件库 -->
+    <script th:src="@{/plugin/element-ui/index.js}"></script>
+    <script th:src="@{/plugin/element-ui/axios.js}"></script>
+</head>
+<body>
+<div id="app">
+
+    <div style="margin-bottom:10px;">
+        <el-input style="width:300px;" v-model="keyword" placeholder="请输入合同编号"></el-input>
+        <el-button type="success" @click="search"  icon="el-icon-search">搜索</el-button>
+    </div>
+
+    <el-table
+            v-loading="vloading"
+            stripe border
+            height="450"
+            :data="tableData"
+            style="width: 100%">
+        <el-table-column
+                prop="aptNum"
+                label="合同编号"
+                width="180">
+        </el-table-column>
+        <el-table-column
+                prop="pway"
+                label="付款方式"
+                width="180">
+        </el-table-column>
+        <el-table-column
+                prop="money"
+                label="应付金额">
+        </el-table-column>
+        <el-table-column
+                prop="date1"
+                label="合同生效日期">
+        </el-table-column>
+        <el-table-column
+                prop="date2"
+                label="合同到期日期">
+        </el-table-column>
+    </el-table>
+    <!-- 分页工具栏-->
+    <el-pagination
+            background
+            layout="prev, pager, next"
+            :total="total"
+            :page-size="pageSize"
+            @current-change="changePage"
+    >
+    </el-pagination>
+</div>
+
+<script>
+    axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+    Vue.prototype.$axios = axios;0
+    new Vue({
+        el:'#app',
+        data:{
+            tableData:[],
+            keyword:'',
+            //控制是否显示加载中
+            vloading:false,
+            //当前页的变量
+            currentPage:1,
+            //一页10条
+            pageSize:10,
+            total:0,
+        },
+        //当vue组件加载完成之后会自动调用这个函数
+        mounted:function(){
+            //加载表格数据
+            this.loadTableData();
+        },
+        //事件
+        methods:{
+            //声明加载表格数据的方法
+            loadTableData:function(){
+                //显示加载中图标
+                this.vloading=true;
+                var vue = this;
+                axios.get('listContract',{params:{keyword:this.keyword,currentPage:this.currentPage,pageSize:this.pageSize}})
+                    .then(function (res) {
+                        vue.vloading=false;
+                        //赋值总条数
+                        vue.total=res.data.total;
+                        console.info(res);
+                        //赋值分页数据
+                        vue.tableData=res.data.rows;
+                    })
+                    .catch(function (error) {
+                        vue.vloading=false;
+                        Vue.prototype.$message.error("服务器产生异常，请联系管理员");
+                    });
+            },
+            //搜索
+            search:function(){
+                //获取用户的输入
+                this.loadTableData();
+            },
+            //点击分页数字时触发的事件
+            changePage:function(changePage){
+                this.currentPage=changePage;
+                this.loadTableData();
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
