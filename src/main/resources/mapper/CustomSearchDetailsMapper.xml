@@ -14,5 +14,8 @@
         select * from owercontract where aptNum=#{aptNum}
     </select>
 
+    <select id="loadPictures" resultType="aaa.project.entity.Apartment">
+        select imgUrl from apartmentinfo4 where aptNum = #{aptNum}
+    </select>
 
 </mapper>

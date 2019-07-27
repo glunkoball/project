@@ -29,6 +29,7 @@ public class CustomSearchDetailsServiceImpl  implements CustomSearchDetailsServi
         Integer count=0;
         if(custom.getCustomid()==null){
             count=customSearchDetailsDao.save(custom);
+//            customSearchDetailsDao.insertCusWithApart(custom,apartNum);
         }
         DefaultMsg dm = new DefaultMsg();
         if(count==0){
@@ -46,6 +47,11 @@ public class CustomSearchDetailsServiceImpl  implements CustomSearchDetailsServi
             pm.setRows(customSearchDetailsDao.listOwercontract(aptNum));
         }
         return pm;
+    }
+
+    @Override
+    public List<Apartment> loadPictures(String aptNum) {
+        return customSearchDetailsDao.loadPictures(aptNum);
     }
 
 

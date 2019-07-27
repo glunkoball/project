@@ -13,4 +13,6 @@ public interface CustomSearchDetailsService {
     public DefaultMsg save(InterestedCustom custom);
 
     PageModel<OwerContract> listOwercontract(String aptNum);
+
+    public List<Apartment> loadPictures(String aptNum);
 }

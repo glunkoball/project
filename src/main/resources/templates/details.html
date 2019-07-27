@@ -177,6 +177,9 @@
 
                 <el-dialog title="填写信息" :visible.sync="dialogFormVisible">
                     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+                        <el-form-item label="房源编号" prop="aptNum">
+                            <el-input v-model="ruleForm.aptNum" value="123" style="width:150px"></el-input>
+                        </el-form-item>
                         <el-form-item label="姓名" prop="customname">
                             <el-input v-model="ruleForm.customname" style="width:150px"></el-input>
                         </el-form-item>
@@ -310,10 +313,8 @@
             };
             return {
                 aptNum:[[${oneHome.aptNum}]],
-                imagesbox: [
-                    {src: "image/f1.jpg"},
-                    {src: "image/f2.jpg"},
-                    {src: "image/f3.jpg"}],
+                pictureData:[{}],
+                imagesbox: [{},{},{}],
                 tableData: [],
                 dialogVisible: false,
                 dialogTableVisible: false,
@@ -347,6 +348,7 @@
             },
         mounted(){
             this.loadTable();
+            this.loadPictures();
         },
             methods: {
                     submitForm(formName) {
@@ -390,6 +392,19 @@
                             console.info(error);
                             Vue.prototype.$message.error("服务器产生异常，请联系管理员");
                         });
+                },
+                loadPictures(){
+                    var vue =this;
+                    axios.get('loadPictures',{params:{aptNum:vue.aptNum}})
+                        .then(function (res) {
+                            console.info(res.data.rows);
+                            vue.pictureData=res.data;
+                            vue.imagesbox=[
+                                {src:"http://192.168.1.81:7001/"+vue.pictureData[0].imgUrl},
+                                {src:"http://192.168.1.81:7001/"+vue.pictureData[1].imgUrl},
+                                {src:"http://192.168.1.81:7001/"+vue.pictureData[2].imgUrl}
+                            ];
+                        })
                 }
 
             }
