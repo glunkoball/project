@@ -20,4 +20,5 @@ public interface CustomSearchDetailsDao {
     public Integer save(InterestedCustom custom);
 
     List<OwerContract> listOwercontract(String aptNum);
+    public List<Apartment> loadPictures(String aptNum);
 }

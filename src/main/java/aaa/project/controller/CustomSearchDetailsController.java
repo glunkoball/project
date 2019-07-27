@@ -54,4 +54,10 @@ public class CustomSearchDetailsController {
         return pm;
     }
 
+    @RequestMapping("/loadPictures")
+    @ResponseBody
+    public List<Apartment> loadPictures(String aptNum){
+        return customSearchDetailsService.loadPictures(aptNum);
+    }
+
 }

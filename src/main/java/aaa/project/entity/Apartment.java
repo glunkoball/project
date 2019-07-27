@@ -95,6 +95,15 @@ public class Apartment {
     private Integer smoking;//吸烟
     //房源照片最多四张
     private List<Picture> pictureList;
+    private String imgUrl;
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
 
     public List<Picture> getPictureList() {
         return pictureList;

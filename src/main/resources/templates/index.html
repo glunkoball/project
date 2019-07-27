@@ -5,12 +5,13 @@
     <meta charset="UTF-8">
     <title>Home</title>
     <!-- 引入样式 -->
-    <link rel="stylesheet" href="plugin/element-ui/index.css">
+    <link rel="stylesheet" th:href="@{/plugin/element-ui/index.css}">
     <!--引入vue-->
-    <script src="plugin/element-ui/vue.js"></script>
+    <script th:src="@{/plugin/element-ui/vue.js}"></script>
     <!-- 引入组件库 -->
-    <script src="plugin/element-ui/index.js"></script>
-    <script src="plugin/element-ui/axios.js"></script>
+    <script th:src="@{/plugin/element-ui/index.js}"></script>
+    <script th:src="@{/plugin/element-ui/axios.js}"></script>
+
     <style>
         .el-carousel__item h3 {
             color: #475669;

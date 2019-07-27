@@ -11,6 +11,7 @@
         left join apartmentinfo3 ai3 on ai1.aptNum= ai3.aptNum
         left join apartmentinfo4 ai4 on ai1.aptNum=ai4.aptNum
         <where>
+        state = 3
             <if test="bedrooms != null">and bedrooms = #{bedrooms}</if>
             <if test="facing != null"> and facing like '%${facing}%'</if>
             <if test="district != null">and district like '%${district}%'</if>

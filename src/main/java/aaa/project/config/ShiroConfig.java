@@ -30,12 +30,12 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setUnauthorizedUrl("/admin/toError");
         Map<String, String> filterChainDefinitionMap = shiroFilterFactoryBean.getFilterChainDefinitionMap();
 //配置不能拦截的请求
-        filterChainDefinitionMap.put("/admin/login","anon");
+     /*   filterChainDefinitionMap.put("/admin/login","anon");
         filterChainDefinitionMap.put("/admin/checkUser","anon");
         filterChainDefinitionMap.put("/admin/toError","anon");
        // filterChainDefinitionMap.put("/static/*","anon");
 //所有其他请求都要经过登录校验
-       filterChainDefinitionMap.put("/admin/**","authc");
+       filterChainDefinitionMap.put("/admin/**","authc");*/
         return shiroFilterFactoryBean;
     }
 
