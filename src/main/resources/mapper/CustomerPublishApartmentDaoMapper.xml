@@ -3,8 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="aaa.project.dao.CustomerPublishApartmentDao">
     <insert id="publishApt1">
-        insert into apartmentinfo1 (AptNum,   bedrooms,   bathrooms,   livingrooms,   area,   facing,   city,   district,   community,   whichfloor,   totalfloor)
-                          values (#{AptNum},#{bedrooms},#{bathrooms},#{livingrooms},#{area},#{facing},#{city},#{district},#{community},#{whichfloor},#{totalfloor})
+        insert into apartmentinfo1 (AptNum,   bedrooms,   bathrooms,   livingrooms,   area,   facing,   city,   district,   community,   whichfloor,   totalfloor,   uid,   state)
+                          values (#{AptNum},#{bedrooms},#{bathrooms},#{livingrooms},#{area},#{facing},#{city},#{district},#{community},#{whichfloor},#{totalfloor},#{uid},#{state})
     </insert>
     <insert id="publishApt2">
         insert into apartmentinfo2 (  AptNum,   elevator,   parking,   internet,   bed,   sofa,   chair,   TV,   AC,   refrigerator,   washer,   gas,   colony)

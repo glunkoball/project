@@ -1,14 +1,20 @@
 package aaa.project.service.impl;
 
+import aaa.project.common.Constants;
 import aaa.project.common.DefaultMsg;
 import aaa.project.dao.CustomerPublishApartmentDao;
 import aaa.project.entity.Apartment;
+import aaa.project.entity.User;
 import aaa.project.service.CustomerPublishApartmentService;
+import org.apache.ibatis.annotations.Param;
 import org.apache.tomcat.util.buf.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,7 +26,11 @@ public class CustomerPublishApartmentServiceImpl implements CustomerPublishApart
     @Autowired
     private CustomerPublishApartmentDao customerPublishApartmentDao;
     @Override
-    public DefaultMsg publishApt(Apartment apartment, List<String> url) {
+    public DefaultMsg publishApt(HttpSession session, Apartment apartment, List<String> url) {
+        //获取租房者编号
+        User user =(User) session.getAttribute(Constants.SESSION_USER);
+        Integer tenantId = user.getId();
+        apartment.setUid(tenantId);
         Integer count =0;
         DefaultMsg dm = new DefaultMsg();
         Date date = new Date();
