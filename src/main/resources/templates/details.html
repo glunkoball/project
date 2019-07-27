@@ -353,7 +353,6 @@
                         var vue = this;
                         this.$refs[formName].validate((valid) => {
                             if (valid) {
-                                alert('submit!');
                                 axios.post('saveOrUpdate',this.ruleForm)
                                     .then(function (res) {
                                         //如果登录成功
@@ -381,7 +380,6 @@
                     this.$refs[formName].resetFields();
                 },
                 loadTable(){
-                        alert(this.aptNum);
                         var vue =this;
                     axios.get('listOwercontract',{params:{aptNum:vue.aptNum}})
                         .then(function (res) {

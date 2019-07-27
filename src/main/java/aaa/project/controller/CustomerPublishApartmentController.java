@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -35,8 +36,8 @@ public class CustomerPublishApartmentController {
      */
     @RequestMapping("/publishApt")
     @ResponseBody
-    public DefaultMsg publishApt(@RequestBody Apartment apartment){
-        DefaultMsg dm =customerPublishApartmentService.publishApt(apartment,url);
+    public DefaultMsg publishApt( HttpSession session,@RequestBody Apartment apartment){
+        DefaultMsg dm =customerPublishApartmentService.publishApt(session,apartment,url);
         url.clear();
         return dm;
     }
