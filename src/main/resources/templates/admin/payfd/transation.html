@@ -60,7 +60,7 @@
         el:'#app',
         data(){
             return{
-                transactionRecordTable:[{}]
+                transactionRecordTable:[{amount:2}]
             }
         },
         mounted:function () {
@@ -73,7 +73,7 @@
                 axios.post('findtransaction')
                     .then(function(res){
                         console.info(res.data);
-                        this.transactionRecordTable = res.data;
+                        vue.transactionRecordTable = res.data;
                         alert(res.data[0].amount);
                     })}
 
