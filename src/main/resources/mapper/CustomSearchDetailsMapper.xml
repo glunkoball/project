@@ -25,4 +25,8 @@
     <insert id="bindca">
         INSERT into c_apt(aptNum,customid) VALUES (#{aptNum},#{customid})
     </insert>
+
+    <select id="findBroker" resultType="aaa.project.entity.Admin">
+        SELECT * from admin where id=#{aid}
+    </select>
 </mapper>

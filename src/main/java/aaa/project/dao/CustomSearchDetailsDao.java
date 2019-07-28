@@ -1,5 +1,6 @@
 package aaa.project.dao;
 
+import aaa.project.entity.Admin;
 import aaa.project.entity.Apartment;
 import aaa.project.entity.InterestedCustom;
 import aaa.project.entity.OwerContract;
@@ -24,5 +25,6 @@ public interface CustomSearchDetailsDao {
     List<OwerContract> listOwercontract(String aptNum);
     public List<Apartment> loadPictures(String aptNum);
     public void bindca(@Param("aptNum") String aptNum,@Param("customid") Integer  customid);
+    public Admin findBroker(Integer aid);
 
 }

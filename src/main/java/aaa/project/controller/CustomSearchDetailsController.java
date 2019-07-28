@@ -2,6 +2,7 @@ package aaa.project.controller;
 
 import aaa.project.common.DefaultMsg;
 import aaa.project.common.PageModel;
+import aaa.project.entity.Admin;
 import aaa.project.entity.Apartment;
 import aaa.project.entity.InterestedCustom;
 import aaa.project.entity.OwerContract;
@@ -35,6 +36,9 @@ public class CustomSearchDetailsController {
     public String findHome(Model model,String aptNum ){
         Apartment oneHome = customSearchDetailsService.findOneHome(aptNum);
         System.out.println(oneHome);
+        Integer aid = oneHome.getAid();
+        Admin broker = customSearchDetailsService.findBroker(aid);
+        model.addAttribute("broker",broker);
         model.addAttribute("oneHome",oneHome);
         return "details";
     }

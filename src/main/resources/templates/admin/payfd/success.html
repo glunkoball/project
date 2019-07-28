@@ -3,11 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>支付成功</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" th:href="@{/plugin/element-ui/index.css}">
+    <!--引入vue-->
+    <script th:src="@{/plugin/element-ui/vue.js}"></script>
+    <!-- 引入组件库 -->
+    <script th:src="@{/plugin/element-ui/index.js}"></script>
+    <script th:src="@{/plugin/element-ui/axios.js}"></script>
 </head>
 <body>
-
-<div th:text="${info}">
-
+<div id="app">
+    <el-button  th:text="${info}"  type="success" round>成功按钮</el-button>
 </div>
+
+<!--<div style="background-color: #5daf34;color: white;width:50px;height:20px;margin: 0 auto" >-->
 </body>
+<script>
+    new Vue({
+        data(){
+            return{
+                el:'#app',
+            }
+        }
+    })
+</script>
 </html>

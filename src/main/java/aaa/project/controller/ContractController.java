@@ -140,6 +140,9 @@ public class ContractController {
         System.out.println(pid);
         contractService.savezkcontract(aptNum,pid,uid);
         List<User> fd = contractService.findFd(uid);
+        Integer zid = fd.get(0).getId();
+        //绑定房源和租客id
+        contractService.bindzandapt(aptNum,zid);
         model.addAttribute("fz",fd);
         List<Apartment> apt = contractService.findAptById(aptNum);
         model.addAttribute("aptt",apt);

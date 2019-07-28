@@ -25,7 +25,7 @@
             height="450"
             :data="tableData"
             style="width: 100%"
-            v-for="(table,index) in tableData">
+           >
         <el-table-column
                 prop="aptNum"
                 label="合同编号"
@@ -49,7 +49,7 @@
                 label="合同到期日期">
         </el-table-column>
         <el-table-column label="操作" >
-            <template slot-scope="scope" >
+            <template slot-scope="scope"  v-for="(table,index) in tableData">
                 <el-link  :href="'makeContract?aptNum='+table.aptNum+'&pid='+table.pid+'&uid='+table.user.identification">
                     查看合同
                 </el-link>

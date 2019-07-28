@@ -28,4 +28,7 @@ public interface ContractDao {
     public void addtotransaction(@Param("t") Tranction tranction);
 
     public List<Tranction>  findtransaction();
+//绑定租客id到房源信息
+    public void bindzandapt(@Param("aptNum") String aptNum,@Param("zid") Integer zid);
+
 }

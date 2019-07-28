@@ -170,9 +170,11 @@
                 <el-card class="box-card"  style="height: 250px;width:260px;background-color:rgb(242,238,232);margin-top: 20px">
                      <span>经纪人信息</span>
                     <el-divider></el-divider>
-                      yanglin
+                    <span class="gray">经纪人姓名</span><span class="bla" th:text="${broker.name}" >12</span>
+
                       <br>
-                      158693966
+                    <span class="gray">经纪人姓名</span><span class="bla" th:text="${broker.telephone}" >12</span>
+
                 </el-card>
                 <el-button type="text" @click="dialogFormVisible = true" style="margin-left: 85px">REQUEST HOLD</el-button>
 

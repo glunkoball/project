@@ -58,13 +58,13 @@ public class ContractServiceImpl implements ContractService {
              needToPay=money;
         }
         if(pway.equals("季付")){
-             needToPay=money*3;
+             needToPay=money*3*0.03;
         }
         if(pway.equals("半年付")){
-             needToPay=money*6;
+             needToPay=money*6*0.06;
         }
         if(pway.equals("年付")){
-             needToPay=money*12;
+             needToPay=money*12*0.12;
         }
         if(contractDao.addtocontract(owerContract,needToPay)){
             return  true;
@@ -159,5 +159,10 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public List<Tranction> findtransaction() {
         return contractDao.findtransaction();
+    }
+
+    @Override
+    public void bindzandapt(String aptNum, Integer zid) {
+        contractDao.bindzandapt(aptNum,zid);
     }
 }

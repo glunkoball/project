@@ -28,7 +28,7 @@ public class AdminApartmentManagementServiceImpl implements AdminApartmentManage
 
 
     @Override
-    public List<Apartment> findMyApt() {
-        return adminApartmentManagementDao.findMyApt();
+    public List<Apartment> findMyApt(Integer id) {
+        return adminApartmentManagementDao.findMyApt(id);
     }
 }

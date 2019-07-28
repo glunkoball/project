@@ -3,6 +3,7 @@ package aaa.project.service.impl;
 import aaa.project.common.DefaultMsg;
 import aaa.project.common.PageModel;
 import aaa.project.dao.CustomSearchDetailsDao;
+import aaa.project.entity.Admin;
 import aaa.project.entity.Apartment;
 import aaa.project.entity.InterestedCustom;
 import aaa.project.entity.OwerContract;
@@ -59,6 +60,11 @@ public class CustomSearchDetailsServiceImpl  implements CustomSearchDetailsServi
     @Override
     public void bindca(Integer customid, String aptNum) {
         customSearchDetailsDao.bindca(aptNum,customid);
+    }
+
+    @Override
+    public Admin findBroker(Integer aid) {
+        return customSearchDetailsDao.findBroker(aid);
     }
 
 

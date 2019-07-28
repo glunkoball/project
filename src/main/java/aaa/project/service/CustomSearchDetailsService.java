@@ -2,6 +2,7 @@ package aaa.project.service;
 
 import aaa.project.common.DefaultMsg;
 import aaa.project.common.PageModel;
+import aaa.project.entity.Admin;
 import aaa.project.entity.Apartment;
 import aaa.project.entity.InterestedCustom;
 import aaa.project.entity.OwerContract;
@@ -16,4 +17,6 @@ public interface CustomSearchDetailsService {
 
     public List<Apartment> loadPictures(String aptNum);
     public void bindca(Integer customid,String aptNum);
+
+    public Admin findBroker(Integer aid);
 }

@@ -1,5 +1,6 @@
 package aaa.project.controller;
 
+import aaa.project.common.Constants;
 import aaa.project.common.DefaultMsg;
 import aaa.project.entity.Admin;
 import aaa.project.entity.Module;
@@ -112,6 +113,7 @@ public class AdminLoginController {
         DefaultMsg dm=new DefaultMsg();
         UsernamePasswordToken u = upt;
         System.out.println("dieci"+u);
+       // session.setAttribute(Constants.SESSION_ADMIN,upt);
         try{
             subject.login(upt);
         }

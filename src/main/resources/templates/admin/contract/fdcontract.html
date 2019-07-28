@@ -44,6 +44,7 @@
             <el-table-column label="区" prop="district"></el-table-column>
             <el-table-column label="小区" prop="community"></el-table-column>
             <el-table-column label="地址" prop="address"></el-table-column>
+            <el-table-column label="房东身份证号" prop="user.identification"></el-table-column>
             <el-table-column label="卧室" prop="bedrooms"></el-table-column>
             <el-table-column label="卫生间" prop="bathrooms"></el-table-column>
             <el-table-column label="厅室" prop="livingrooms"></el-table-column>
@@ -179,7 +180,7 @@
             },
             search(formName) {
                 var vue = this;
-                alert(123);
+
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         axios.post('findAptById',this.ruleform)
@@ -224,12 +225,11 @@
 
         addtocontract(formName) {
         var vue = this;
-       alert(852);
         this.$refs[formName].validate((valid) => {
             if (valid) {
                 axios.post('addtocontract',this.payform)
                     .then(function (res) {
-                        alert(123);
+
                         console.info(res);
                         if(res.data.success){
                             Vue.prototype.$message("成功提交");

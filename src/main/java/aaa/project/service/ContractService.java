@@ -23,4 +23,6 @@ public interface ContractService {
     public void addtotransaction(Tranction tranction);
 
     public List<Tranction>  findtransaction();
+   //绑定zukeid到房源中去
+    public void bindzandapt(String aptNum,Integer zid);
 }
