@@ -74,7 +74,7 @@ public class CustomerPersonalServiceImpl implements CustomerPersonalService {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        int m = customerPersonalDao.changeTransactionTime(transactionRecord.getSubject(),nextTime,nextRealTime);
+        int m = customerPersonalDao.changeTransactionTime(aptNum,nextTime,nextRealTime);
         return i;
     }
 

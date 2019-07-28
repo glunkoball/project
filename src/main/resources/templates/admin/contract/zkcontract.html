@@ -27,9 +27,9 @@
             <el-form-item label="房源编号" style="width: 300px">
                 <el-input v-model="ruleform.aptNum" placeholder="请输入房源编号" style="width: 200px"></el-input>
             </el-form-item>
-           <!-- <el-form-item label="详细地址" style="width: 300px">
+           <el-form-item label="详细地址" style="width: 300px">
                 <el-input v-model="ruleform.address"  style="width: 300px"></el-input>
-            </el-form-item>-->
+            </el-form-item>
             <el-form-item style="width: 150px;">
 
                 <el-button @click="search('ruleform')" >提交</el-button>
@@ -153,7 +153,7 @@
                 active: 0,
                 ruleform:{
                     aptNum:'20190717164200',
-                    address:'上海市宝山区联盟新城一期8号楼一单元1101室'
+                    address:''
                 },
                 tableData:[{}],
                 zkform:{
