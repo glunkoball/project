@@ -11,4 +11,9 @@ public interface AdminAuditService {
     public Integer pass(String newAptNum);
     public List<Admin> bindingbutton(String AptNum);
     public Integer binding(Params params);
+    public List<Apartment> publishlistAll();
+
+    public Integer updateState(String newAptNum);
+    public boolean  updateprice(String aptNum,Double price);
+
 }

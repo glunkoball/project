@@ -30,7 +30,7 @@
         update tenant_contract set aptNum=#{aptNum},tenantid=#{tenantid} where pid=#{pid}
     </insert>
     <update id="updateAptState">
-         update apartmentinfo1 set state=3 where aptNum=#{aptNum}
+         update apartmentinfo1 set state=5 where aptNum=#{aptNum}
     </update>
     <update id="updateAptStatezk">
         update apartmentinfo1 set state=4 where aptNum=#{aptNum}

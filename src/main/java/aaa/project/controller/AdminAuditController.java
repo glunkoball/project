@@ -1,5 +1,6 @@
 package aaa.project.controller;
 
+import aaa.project.common.DefaultMsg;
 import aaa.project.entity.Admin;
 import aaa.project.entity.Apartment;
 import aaa.project.entity.Params;
@@ -53,4 +54,61 @@ public class AdminAuditController {
         Integer binding = adminAuditService.binding(params);
         return binding;
     }
+
+    /**
+     * 跳转到发布房源的界面
+     * @return
+     */
+    @RequestMapping("/publishApt")
+    public String publishApt(){
+
+        return "admin/publishApt";
+    }
+
+    /**
+     * 展示已经签完合同需要发布房源的房源信息
+     * @return
+     */
+    @RequestMapping("/publishlistAll")
+    @ResponseBody
+    public List<Apartment> publishlistAll(){
+        List<Apartment> mess = adminAuditService.publishlistAll();
+        return mess;
+    }
+
+    /**
+     * 修改房源的状态，变成待出租的状态，发布房源
+     * @param AptNum
+     * @return
+     */
+    @RequestMapping("/updateState")
+    @ResponseBody
+    public Integer updateState(@RequestBody String AptNum){
+        String newAptNum = AptNum.substring(0,AptNum.length()-1);
+
+        Integer pass = adminAuditService.updateState(newAptNum);
+        return pass;
+    }
+
+    /**
+     * 修改租金
+     * @param apartment
+     * @return
+     */
+    @RequestMapping("/updateprice")
+    @ResponseBody
+    public DefaultMsg updateprice(@RequestBody Apartment apartment){
+        String aptNum = apartment.getAptNum();
+        Double price = apartment.getPrice();
+        DefaultMsg dm = new DefaultMsg();
+        if(adminAuditService.updateprice(aptNum,price))
+        {
+
+        }
+        else{
+            dm.setSuccess(0);
+        }
+        return dm;
+    }
+
 }

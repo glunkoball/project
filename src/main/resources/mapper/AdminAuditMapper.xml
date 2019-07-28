@@ -20,4 +20,25 @@
     <update id="binding">
       update apartmentinfo1 set aid=#{id} where aptNum=#{AptNum}
     </update>
+
+    <select id="publishlistAll" resultType="aaa.project.entity.Apartment">
+        SELECT * FROM apartmentinfo1 a1
+        LEFT JOIN
+        apt_status aps on a1.state=aps.statusid
+        LEFT JOIN
+        user u on a1.uid=u.id
+         LEFT JOIN
+apartmentinfo3 a3 on a1.aptNum=a3.aptNum
+        WHERE
+        a1.state=5
+    </select>
+
+
+    <update id="updateState">
+        update apartmentinfo1 set state=3 where aptNum=#{newAptNum}
+    </update>
+
+    <update id="updateprice">
+        update apartmentinfo3 set price=#{price} where aptNum=#{aptNum}
+    </update>
 </mapper>

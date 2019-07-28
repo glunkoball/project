@@ -35,5 +35,27 @@ public class AdminAuditServiceImpl implements AdminAuditService {
         return adminAuditDao.binding(params);
     }
 
+    /**
+     * 展示已经签完合同需要发布房源的房源信息
+     * @return
+     */
+    @Override
+    public List<Apartment> publishlistAll() {
+        return adminAuditDao.publishlistAll();
+    }
+
+    @Override
+    public Integer updateState(String newAptNum) {
+        return adminAuditDao.updateState(newAptNum);
+    }
+
+    @Override
+    public boolean updateprice(String aptNum, Double price) {
+        if(adminAuditDao.updateprice(aptNum,price)){
+            return true;
+        }
+        return false;
+    }
+
 
 }

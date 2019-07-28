@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="/project/plugin/element-ui/index.css">
+    <!-- 先引入 Vue -->
+    <script src="/project/plugin/element-ui/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script src="/project/plugin/element-ui/index.js"></script>
+
+    <script src="/project/plugin/element-ui/axios.js"></script>
+    <title>发布房源</title>
+</head>
+<body>
+<div id="app">
+    <el-table  :data="tableData" style="width: 100%;height:1000px;">
+        <el-table-column  prop="aptNum" label="房源编号"  align="center"></el-table-column>
+        <el-table-column  prop="city" label="城市"  align="center"></el-table-column>
+        <el-table-column  prop="district" label="区"  align="center"></el-table-column>
+        <el-table-column  prop="community" label="小区"  align="center"></el-table-column>
+        <el-table-column  prop="price" label="租金"  align="center"></el-table-column>
+
+        <el-table-column  prop="facing" label="朝向"  align="center"></el-table-column>
+        <el-table-column  prop="area" label="面积"  align="center"></el-table-column>
+        <el-table-column  prop="name" label="房东姓名" align="center"></el-table-column>
+        <el-table-column  prop="tel" label="房东联系方式" align="center"></el-table-column>
+        <el-table-column  prop="statusname" label="审核状态" align="center"></el-table-column>
+        <el-table-column width="300px" label="操作" align="center">
+            <template slot-scope="scope">
+                <!--<el-button size="mini" @click="query(scope.$index,scope.row)">查看详细信息</el-button>-->
+                <el-button size="mini" type="success" @click="update(scope.$index,scope.row)">修改</el-button>
+                <el-button size="mini" type="warning" @click="publish(scope.$index,scope.row)">发布房源</el-button>
+            </template>
+        </el-table-column>
+    </el-table>
+    <el-dialog
+            :title="title"
+            :visible.sync="dialogVisible"
+            width="30%"
+    >
+
+        <el-form ref="form" :rules="rules" :model="form" label-width="80px">
+            <el-form-item label="房源编号" prop="aptNum">
+                <el-input v-model="form.aptNum"  style="width:150px":value="aptNum"></el-input>
+            </el-form-item>
+            <el-form-item label="租金:" prop="price">
+                <el-input v-model="form.price" ></el-input>
+            </el-form-item>
+
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+                        <el-button @click="resetForm('form')">取 消</el-button>
+                        <el-button type="primary" @click="onSubmit('form')">确 定</el-button>
+                   </span>
+    </el-dialog>
+</div>
+<style>
+    #app{
+        width: 100%;
+        height: 100%;
+    }
+</style>
+</body>
+<script>
+    new Vue({
+        el:'#app',
+        data:{
+            tableData: [],
+            table:[],
+            //对话框
+            dialogVisible:false,
+            form:
+                {
+                    price:'',
+                    aptNum:''
+                }
+
+
+        },
+        //页面显示
+        mounted:function () {
+             this.load();
+        },
+        //弹窗绑定页面
+        methods:{
+            load(){
+                var vue = this;
+                axios.post("publishlistAll")
+                    .then(function (res) {
+                        console.info(this.data);
+                        vue.tableData=res.data;
+                    })
+                    .catch(function (error) {
+                        Vue.prototype.$message.error("服务器产生异常，请联系管理员");
+                    });
+            },
+            update:function(index,row) {
+                var vue = this;
+                this.dialogVisible=true;
+                this.title='修改佣金';
+                console.info(row);
+                this.form=row;
+                console.log(row);
+            },
+            //提交
+            //提交的事件
+            onSubmit:function(formName){
+                var vue = this;
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        //往后台发送ajax请求 ，校验用户名和密码
+                        axios.post('updateprice',this.form)
+                            .then(function (res) {
+                                //如果登录成功
+                                if(res.data.success){
+                                    //刷新界面
+                                    vue.load();
+                                    //关闭窗口
+                                    vue.dialogVisible=false;
+
+                                }else{
+                                    Vue.prototype.$message.error(res.data.error);
+                                }
+                            })
+                            .catch(function (error) {
+                                console.info(error);
+                                Vue.prototype.$message.error("保存服务器产生异常，请联系管理员");
+                            });
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            },
+            //重置的事件
+            resetForm:function(formName){
+                this.$refs[formName].resetFields();
+            },
+
+            //审核通过
+            publish:function(index,row) {
+                var vue = this;
+                alert(row.aptNum)
+                axios.post("updateState",row.aptNum)
+                    .then(function (res) {
+                        vue.load();
+                    })
+                    .catch(function (error) {
+                        Vue.prototype.$message.error("服务器产生异常，请联系管理员");
+                    });
+            }
+
+        }
+    });
+</script>
+</html>
