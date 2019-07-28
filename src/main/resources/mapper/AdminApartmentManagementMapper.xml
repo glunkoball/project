@@ -5,13 +5,11 @@
         select * from apartmentinfo1 a1
        left join apartmentinfo2 a2 on a1.aptNum=a2.aptNum
        left join apartmentinfo3 a3 on a1.aptNum=a3.aptNum
-       left join apartmentinfo4 a4 on a1.aptNum=a4.aptNum
     </select>
     <select id="findAvailableApt" resultType="aaa.project.entity.Apartment">
         select * from apartmentinfo1 ai1
         left join apartmentinfo2 ai2 on ai1.aptNum=ai2.aptNum
         left join apartmentinfo3 ai3 on ai1.aptNum= ai3.aptNum
-        left join apartmentinfo4 ai4 on ai1.aptNum=ai4.aptNum
         <where>
             <if test="bedrooms != null">and bedrooms = #{bedrooms}</if>
             <if test="district != null">and district like '%${district}%'</if>
@@ -29,7 +27,6 @@
          select * from apartmentinfo1 a1
        left join apartmentinfo2 a2 on a1.aptNum=a2.aptNum
        left join apartmentinfo3 a3 on a1.aptNum=a3.aptNum
-       left join apartmentinfo4 a4 on a1.aptNum=a4.aptNum
        left join apt_status ass on ass.statusid=a1.state
        where a1.state in (2,3) and a1.aid=3
     </select>

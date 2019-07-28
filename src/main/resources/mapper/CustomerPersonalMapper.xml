@@ -5,7 +5,6 @@
         select * from apartmentinfo1 a1
        left join apartmentinfo2 a2 on a1.aptNum=a2.aptNum
        left join apartmentinfo3 a3 on a1.aptNum=a3.aptNum
-       left join apartmentinfo4 a4 on a1.aptNum=a4.aptNum
        left join admin admin on a1.aid = admin.id
 			 where (uid = #{Id} or zid = #{Id}) and a1.aid != ""
     </select>

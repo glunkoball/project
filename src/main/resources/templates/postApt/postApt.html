@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>发布房源</title>
@@ -63,13 +63,15 @@
     </style>
 </head>
 <body>
+<div th:include="header.html"></div>
 <div id="app">
 
+
     <el-steps :active="active" finish-status="success" simple style="margin-top: 20px; width:656px ; padding: 13px 74px">
-        <el-step title="步骤 1" ></el-step>
-        <el-step title="步骤 2" ></el-step>
-        <el-step title="步骤 3" ></el-step>
-        <el-step title="步骤 4" ></el-step>
+        <el-step title="基本信息" ></el-step>
+        <el-step title="房屋配置" ></el-step>
+        <el-step title="租房细节" ></el-step>
+        <el-step title="其他信息" ></el-step>
     </el-steps>
 
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm"  label-width="100px" class="demo-ruleForm">
@@ -203,9 +205,11 @@
                         </el-checkbox-group>
                     </el-form-item>
                     <el-collapse v-model="activeNames" @change="handleChange">
-                        <el-collapse-item title="一致性 Consistency" name="1">
-                            <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
-                            <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
+                        <el-collapse-item title="出租方式说明" name="1">
+                            <div><a href="#">托管</a>是指签订合同当天不租拉倒中介向您支付租金，所有事宜由本公司负责</div>
+                            <div><a href="#">整租</a>是指在与租客签合同之后向房东支付租金</div>
+                            <div>*<a href="#">合租</a>业务暂时无法提供</div>
+                            <div>*<a href="#">装修</a>出租是指本公司负责为您的住所进行装修改造，最后以合租的方式出租</div>
                         </el-collapse-item>
                     </el-collapse>
                     <el-form-item prop="price" label="月租金">
@@ -344,7 +348,7 @@
                     fileList:[],
                     city:'上海',
                     district:'',
-                    community:'暖元小区',
+                    community:'',
                     bedrooms:'',
                     bathrooms:'',
                     livingrooms:'',
@@ -364,7 +368,7 @@
                 elevator:[{value:1,label:'有电梯'},{value:0,label:'无电梯'}],value:'',
                 parking:[{value:1,label:'有车位'},{value:0,label:'无车位'}],value:'',
                 rules:{
-                    fileList:[{required:true,message:'请上传几张图片',trigger:'blur'}],
+                    // fileList:[{required:true,message:'请上传几张图片',trigger:'blur'}],
                     city:[{required:true,message:'请填写房屋所在市',trigger:'blur'}],
                     district:[{required:true,message:'请填写房屋所在区',trigger:'blur'}],
                     community:[{required:true,message:'请填写房屋所在小区名',trigger:'blur'}],
