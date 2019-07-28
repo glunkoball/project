@@ -45,10 +45,13 @@
         .formContent{
             margin: 0 auto;
         }
+        #app{
+            margin-top: 50px;
+        }
     </style>
 </head>
 <body>
-个人中心
+<div th:include="header.html"></div>
 <div id="app">
     <div class="content">
         <el-tabs :tab-position="personalTab" style="height: 400px;">

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div id="navigation" th:fragment="header">
+    <el-menu
+            :default-active="activeIndex2"
+            class="el-menu-demo"
+            mode="horizontal"
+            @select="handleSelect"
+            background-color="#545c64"
+            text-color="#fff"
+            active-text-color="#ffd04b">
+        <el-menu-item index="1" style="float: left; margin-left: 20px;">
+            <a href="index" style="text-decoration: none;">主页</a>
+        </el-menu-item>
+
+        <template th:if="${session.session_user!= null}" >
+            <el-menu-item index="1" style="float: right; margin-right: 20px" @click="logout()">
+                <a href="logout" style="text-decoration: none;">退出</a>
+            </el-menu-item>
+            <el-menu-item index="1" style="float: right; margin-right: 20px; color: white;">
+                <a href="personal" style="text-decoration: none">个人中心</a>
+            </el-menu-item>
+            <el-menu-item index="1" style="float: right; margin-right: 20px">
+                <span th:text="${'你好，'+session.session_user.name}" style="color: white;"></span>
+            </el-menu-item>
+        </template>
+
+        <template th:if="${session.session_user== null}"  >
+            <el-menu-item index="1" style="float: right; margin-right: 20px" @click="centerDialogVisible = true">
+                登陆/注册
+            </el-menu-item>
+        </template>
+    </el-menu>
+    <el-dialog
+            title="登陆"
+            :visible.sync="centerDialogVisible"
+            width="25%"
+            center>
+        <el-form ref="form" :rules="rules" :model="form" label-width="90px">
+            <el-form-item label="邮箱/账号:" prop="username">
+                <el-input v-model="form.username"></el-input>
+            </el-form-item>
+            <el-form-item label="密码:" prop="password">
+                <el-input v-model="form.password" type="password"></el-input>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="onSubmit('form')" style="width:100px;">SUBMIT</el-button>
+                <el-button type="primary" style="width:100px;"><a href="signin" style="text-decoration: none;color: white;">SIGN IN</a></el-button>
+            </el-form-item>
+        </el-form>
+    </el-dialog>
+</div>
+<script>
+    new Vue({
+        el:'#navigation',
+        data:{
+            activeIndex: '1',
+            activeIndex2: '1',
+            centerDialogVisible: false,
+            form:{username:'',password:''},
+            rules:{
+                username:[{required:true,message:'请输入用户名',trigger:'blur'}],
+                password:[{required:true,message:'请输入密码',trigger:'blur'}]
+            }
+        },
+        methods: {
+            handleSelect(key, keyPath) {
+                console.log(key, keyPath);
+            },
+            //提交form表单事件
+            onSubmit:function(forName){
+                this.$refs[forName].validate((valid)=>{
+                    if (valid) {
+                        //往后台发送ajax请求 ，校验用户名和密码
+                        axios.post('checkUser',this.form)
+                            .then(function (res) {
+                                //如果登录成功
+                                if(res.data.success){
+                                    //跳转到主界面
+                                    window.location.href="index";
+                                }
+                                //如果登陆失败，弹出错误提醒的提示
+                                else{
+                                    Vue.prototype.$message.error(res.data.error);
+                                }
+                            })
+                            .catch(function (error) {
+                                Vue.prototype.$message.error("服务器产生异常，请联系管理员");
+                            });
+                    }
+                });
+            }
+        }
+    })
+</script>
+
+</html>
