@@ -7,9 +7,14 @@
        left join apartmentinfo3 a3 on a1.aptNum=a3.aptNum
        where a1.aptNum=#{aptNum}
     </select>
-    <insert id="save">
+    <insert id="save"  useGeneratedKeys="true"   keyProperty="customid"  parameterType="aaa.project.entity.InterestedCustom">
+
         insert into custominfo(customname,customphone,customemail,wayy,customdesc) values(#{customname},#{customphone},#{customemail},#{wayy},#{customdesc})
+
     </insert>
+   <select id="ff" resultType="java.lang.Integer">
+
+   </select>
     <select id="listOwercontract" resultType="aaa.project.entity.OwerContract">
         select * from owercontract where aptNum=#{aptNum}
     </select>
@@ -17,5 +22,7 @@
     <select id="loadPictures" resultType="aaa.project.entity.Apartment">
         select imgUrl from apartmentinfo4 where aptNum = #{aptNum}
     </select>
-
+    <insert id="bindca">
+        INSERT into c_apt(aptNum,customid) VALUES (#{aptNum},#{customid})
+    </insert>
 </mapper>

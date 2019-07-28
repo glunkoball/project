@@ -2,8 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="aaa.project.dao.QueryContractDao">
-    <select id="listContract" resultType="aaa.project.entity.OwerContract">
-        select * from owercontract
+    <resultMap id="owerMap" type="aaa.project.entity.OwerContract" autoMapping="true">
+        <association property="user" autoMapping="true" javaType="aaa.project.entity.User">
+        </association>
+    </resultMap>
+
+    <select id="listContract" resultMap="owerMap">
+        select * from owercontract o LEFT JOIN user u on u.id=o.owerid
         <if test=" keyword =='' ">
              ORDER BY aptNum desc limit #{start},#{pageSize}
         </if>

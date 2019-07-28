@@ -7,6 +7,15 @@ public class InterestedCustom {
     private String customemail;
     private String wayy;
     private String customdesc;
+    private String aptNum;
+
+    public String getAptNum() {
+        return aptNum;
+    }
+
+    public void setAptNum(String aptNum) {
+        this.aptNum = aptNum;
+    }
 
     public String getCustomdesc() {
         return customdesc;

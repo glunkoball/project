@@ -177,8 +177,9 @@
 
                 <el-dialog title="填写信息" :visible.sync="dialogFormVisible">
                     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+
                         <el-form-item label="房源编号" prop="aptNum">
-                            <el-input v-model="ruleForm.aptNum" value="123" style="width:150px"></el-input>
+                            <el-input v-model="ruleForm.aptNum"  style="width:150px":value="aptNum"></el-input>
                         </el-form-item>
                         <el-form-item label="姓名" prop="customname">
                             <el-input v-model="ruleForm.customname" style="width:150px"></el-input>
@@ -313,6 +314,7 @@
             };
             return {
                 aptNum:[[${oneHome.aptNum}]],
+
                 pictureData:[{}],
                 imagesbox: [{},{},{}],
                 tableData: [],
@@ -320,6 +322,7 @@
                 dialogTableVisible: false,
                 dialogFormVisible: false,
                 ruleForm: {
+                    aptNum:[[${oneHome.aptNum}]],
                     customname: '',
                     customphone: '',
                     customemail: '',

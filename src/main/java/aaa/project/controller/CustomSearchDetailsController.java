@@ -44,6 +44,9 @@ public class CustomSearchDetailsController {
     public DefaultMsg saveOrUpdate(@RequestBody InterestedCustom custom){
 
         DefaultMsg de = customSearchDetailsService.save(custom);
+        Integer customid = custom.getCustomid();
+        String aptNum = custom.getAptNum();
+        customSearchDetailsService.bindca(customid,aptNum);
         return de;
 
     }

@@ -15,4 +15,5 @@ public interface CustomSearchDetailsService {
     PageModel<OwerContract> listOwercontract(String aptNum);
 
     public List<Apartment> loadPictures(String aptNum);
+    public void bindca(Integer customid,String aptNum);
 }

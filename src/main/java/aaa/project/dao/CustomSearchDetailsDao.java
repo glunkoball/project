@@ -17,8 +17,12 @@ public interface CustomSearchDetailsDao {
      * @return
      */
     public Apartment findOneHome(@Param("aptNum") String aptNum);
+
+
     public Integer save(InterestedCustom custom);
 
     List<OwerContract> listOwercontract(String aptNum);
     public List<Apartment> loadPictures(String aptNum);
+    public void bindca(@Param("aptNum") String aptNum,@Param("customid") Integer  customid);
+
 }

@@ -28,8 +28,10 @@ public class CustomSearchDetailsServiceImpl  implements CustomSearchDetailsServi
     public DefaultMsg save(InterestedCustom custom) {
         Integer count=0;
         if(custom.getCustomid()==null){
-            count=customSearchDetailsDao.save(custom);
+
+            count= customSearchDetailsDao.save(custom);
 //            customSearchDetailsDao.insertCusWithApart(custom,apartNum);
+            System.out.println("adqqs"+custom.getCustomid());
         }
         DefaultMsg dm = new DefaultMsg();
         if(count==0){
@@ -52,6 +54,11 @@ public class CustomSearchDetailsServiceImpl  implements CustomSearchDetailsServi
     @Override
     public List<Apartment> loadPictures(String aptNum) {
         return customSearchDetailsDao.loadPictures(aptNum);
+    }
+
+    @Override
+    public void bindca(Integer customid, String aptNum) {
+        customSearchDetailsDao.bindca(aptNum,customid);
     }
 
 
