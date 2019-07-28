@@ -19,8 +19,8 @@
         <el-table-column  prop="city" label="城市"  align="center"></el-table-column>
         <el-table-column  prop="district" label="区"  align="center"></el-table-column>
         <el-table-column  prop="community" label="小区"  align="center"></el-table-column>
-        <el-table-column  prop="price" label="租金"  align="center"></el-table-column>
-
+        <el-table-column  prop="owerContract.money" label="合同租金"  align="center"></el-table-column>
+        <el-table-column  prop="price" label="出租租金"  align="center"></el-table-column>
         <el-table-column  prop="facing" label="朝向"  align="center"></el-table-column>
         <el-table-column  prop="area" label="面积"  align="center"></el-table-column>
         <el-table-column  prop="name" label="房东姓名" align="center"></el-table-column>
@@ -44,8 +44,8 @@
             <el-form-item label="房源编号" prop="aptNum">
                 <el-input v-model="form.aptNum"  style="width:150px":value="aptNum"></el-input>
             </el-form-item>
-            <el-form-item label="租金:" prop="price">
-                <el-input v-model="form.price" ></el-input>
+            <el-form-item label="租金:" prop="money">
+                <el-input v-model="form.money" ></el-input>
             </el-form-item>
 
         </el-form>
@@ -72,7 +72,7 @@
             dialogVisible:false,
             form:
                 {
-                    price:'',
+                    money:'',
                     aptNum:''
                 }
 

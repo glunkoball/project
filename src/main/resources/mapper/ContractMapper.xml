@@ -52,7 +52,7 @@
     <insert id="addtotransaction">
         insert into transactionrecord(tradeNum,ownerId,amount,orderNum,transactionDate,aptNum) VALUES (#{t.tradeNum},#{t.ownerId},#{t.amount},#{t.orderNum},#{t.transactionDate},#{t.aptNum})
     </insert>
-    
+
     <select id="findtransaction" resultType="aaa.project.entity.Tranction">
         SELECT * from transactionrecord
     </select>

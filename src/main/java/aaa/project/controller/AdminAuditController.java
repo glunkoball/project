@@ -3,6 +3,7 @@ package aaa.project.controller;
 import aaa.project.common.DefaultMsg;
 import aaa.project.entity.Admin;
 import aaa.project.entity.Apartment;
+import aaa.project.entity.OwerContract;
 import aaa.project.entity.Params;
 import aaa.project.service.AdminAuditService;
 import org.apache.tomcat.util.buf.StringUtils;
@@ -97,9 +98,9 @@ public class AdminAuditController {
      */
     @RequestMapping("/updateprice")
     @ResponseBody
-    public DefaultMsg updateprice(@RequestBody Apartment apartment){
-        String aptNum = apartment.getAptNum();
-        Double price = apartment.getPrice();
+    public DefaultMsg updateprice(@RequestBody OwerContract owerContract){
+        String aptNum = owerContract.getAptNum();
+        Double price = owerContract.getMoney();
         DefaultMsg dm = new DefaultMsg();
         if(adminAuditService.updateprice(aptNum,price))
         {

@@ -20,15 +20,21 @@
     <update id="binding">
       update apartmentinfo1 set aid=#{id} where aptNum=#{AptNum}
     </update>
-
-    <select id="publishlistAll" resultType="aaa.project.entity.Apartment">
+   <resultMap id="aptMap" type="aaa.project.entity.Apartment" autoMapping="true">
+   <association property="owerContract" javaType="aaa.project.entity.OwerContract" autoMapping="true">
+   <id column="cid" property="cid"></id>
+   </association>
+   </resultMap>
+    <select id="publishlistAll" resultMap="aptMap">
         SELECT * FROM apartmentinfo1 a1
         LEFT JOIN
         apt_status aps on a1.state=aps.statusid
         LEFT JOIN
         user u on a1.uid=u.id
          LEFT JOIN
-apartmentinfo3 a3 on a1.aptNum=a3.aptNum
+        apartmentinfo3 a3 on a1.aptNum=a3.aptNum
+        LEFT JOIN
+        owercontract o on o.aptNum=a1.aptNum
         WHERE
         a1.state=5
     </select>

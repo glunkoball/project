@@ -55,7 +55,7 @@ public class PayFdController {
                 "\"out_biz_no\":\""+ out_trade_no+"\","+
                 "\"payee_type\":\"ALIPAY_LOGONID\"," +
                 "\"payee_account\":\"nfydmm2165@sandbox.com\"," +
-                "\"amount\":\"100\"," +
+                "\"amount\":\""+total_amount+"\"," +
                 "\"payer_show_name\":\"sdd\"," +
                 "\"payee_real_name\":\"沙箱环境\"," +
                 "\"remark\":\"ddsdd\"" +

@@ -131,7 +131,15 @@ public class Apartment {
     private Date date;//上次借出时间
     private Status status;
     private String tel;
+    private  OwerContract owerContract;
 
+    public OwerContract getOwerContract() {
+        return owerContract;
+    }
+
+    public void setOwerContract(OwerContract owerContract) {
+        this.owerContract = owerContract;
+    }
 
     public String getTel() {
         return tel;
