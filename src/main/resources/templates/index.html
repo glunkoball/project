@@ -13,6 +13,9 @@
     <script th:src="@{/plugin/element-ui/axios.js}"></script>
 
     <style>
+        body{
+            margin: 0;
+        }
         .el-carousel__item h3 {
             color: #475669;
             font-size: 18px;
@@ -52,10 +55,11 @@
         .box-card {
             width: 400px;
         }
+
     </style>
 </head>
 <body>
-    <div th:include="header.html"></div>
+    <div style="margin-bottom: 50px" th:include="header.html"></div>
 
 <div id="slides" style="width: 70%; margin: auto;">
     <el-carousel indicator-position="outside" height="600px">

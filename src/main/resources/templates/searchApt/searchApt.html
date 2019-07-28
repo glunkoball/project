@@ -52,6 +52,12 @@
             size: 20px;
             font-weight: bold;
         }
+        #criteria{
+            margin-top: 50px;
+        }
+        body{
+            margin: 0;
+        }
     </style>
 </head>
 <body>
@@ -59,7 +65,7 @@
 <div id="criteria">
 
     <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-    <el-card class="box-card">
+    <el-card class="box-card" shadow="hover">
         <div slot="header" class="clearfix">
             <span>查询条件</span>
             <i style="float: right;" class="el-icon-search"></i>
