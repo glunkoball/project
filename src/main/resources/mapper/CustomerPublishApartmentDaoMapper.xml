@@ -4,7 +4,7 @@
 <mapper namespace="aaa.project.dao.CustomerPublishApartmentDao">
     <insert id="publishApt1">
         insert into apartmentinfo1 (AptNum,   bedrooms,   bathrooms,   livingrooms,   area,   facing,   city,   district,   community,   whichfloor,   totalfloor,   uid,   state)
-                          values (#{AptNum},#{bedrooms},#{bathrooms},#{livingrooms},#{area},#{facing},#{city},#{district},#{community},#{whichfloor},#{totalfloor},#{uid},#{state})
+                          values (#{AptNum},#{bedrooms},#{bathrooms},#{livingrooms},#{area},#{facing},#{city},#{district},#{community},#{whichfloor},#{totalfloor},#{uid},1)
     </insert>
     <insert id="publishApt2">
         insert into apartmentinfo2 (  AptNum,   elevator,   parking,   internet,   bed,   sofa,   chair,   TV,   AC,   refrigerator,   washer,   gas,   colony)
