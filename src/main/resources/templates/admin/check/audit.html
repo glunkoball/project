@@ -131,7 +131,7 @@
             //审核通过
             pass:function(index,row) {
                 var vue = this;
-                alert(row.aptNum)
+               // alert(row.aptNum)
                 axios.post("pass",row.aptNum)
                     .then(function (res) {
                         location.reload()

@@ -58,13 +58,13 @@ public class ContractServiceImpl implements ContractService {
              needToPay=money;
         }
         if(pway.equals("季付")){
-             needToPay=money*3*0.03;
+             needToPay=money*3*0.97;
         }
         if(pway.equals("半年付")){
-             needToPay=money*6*0.06;
+             needToPay=money*6*0.90;
         }
         if(pway.equals("年付")){
-             needToPay=money*12*0.12;
+             needToPay=money*12*0.85;
         }
         if(contractDao.addtocontract(owerContract,needToPay)){
             return  true;
@@ -100,13 +100,13 @@ public class ContractServiceImpl implements ContractService {
             need=money;
         }
         if(pway.equals("季付")){
-            need=money*3;
+            need=money*3*0.97;
         }
         if(pway.equals("半年付")){
-            need=money*6;
+            need=money*6*0.90;
         }
         if(pway.equals("年付")){
-            need=money*12;
+            need=money*12*0.85;
         }
         if(contractDao.addzkcontract(tenantContract,need)){
             return  true;

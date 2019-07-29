@@ -136,7 +136,7 @@
             //钥匙借出
             borrow:function(index,row) {
                 var vue = this;
-                alert(row.aptNum)
+               // alert(row.aptNum)
                 axios.post("recordborrow",row.aptNum)
                     .then(function (res) {
                         location.reload()
@@ -148,7 +148,7 @@
             //归还
             repay:function(index,row) {
                 var vue = this;
-                alert(row.aptNum)
+               // alert(row.aptNum)
                 axios.post("recordrepay",row.aptNum)
                     .then(function (res) {
                         location.reload()

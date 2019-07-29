@@ -152,12 +152,12 @@
             return {
                 active: 0,
                 ruleform:{
-                    aptNum:'20190717164200',
+                    aptNum:'',
                     address:''
                 },
                 tableData:[{}],
                 zkform:{
-                    identification:'61561554'
+                    identification:''
                 },
                 zktableData:[{}],
                 payform:{
@@ -181,7 +181,7 @@
             },
             search(formName) {
                 var vue = this;
-                alert(123);
+                //alert(123);
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         axios.post('findAptById',this.ruleform)
@@ -226,12 +226,12 @@
 
             addtocontract(formName) {
                 var vue = this;
-                alert(852);
+                //alert(852);
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         axios.post('addzkcontract',this.payform)
                             .then(function (res) {
-                                alert(123);
+                               // alert(123);
                                 console.info(res);
                                 if(res.data.success){
                                     Vue.prototype.$message("成功提交");
@@ -241,7 +241,7 @@
 
                             })
                             .catch(function (error) {
-                                alert(456);
+                                //alert(456);
                                 console.info(error);
                                 Vue.prototype.$message.error("服务器产生异常，请联系管理员");
                             });

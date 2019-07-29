@@ -98,7 +98,7 @@
             update:function(index,row) {
                 var vue = this;
                 this.dialogVisible=true;
-                this.title='修改佣金';
+                this.title='修改租金';
                 console.info(row);
                 this.form=row;
                 console.log(row);
@@ -141,7 +141,7 @@
             //审核通过
             publish:function(index,row) {
                 var vue = this;
-                alert(row.aptNum)
+                //alert(row.aptNum)
                 axios.post("updateState",row.aptNum)
                     .then(function (res) {
                         vue.load();

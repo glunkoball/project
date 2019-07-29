@@ -152,8 +152,8 @@
             return {
                 active: 0,
                 ruleform:{
-                    aptNum:'20190717164200',
-                    address:'上海市宝山区联盟新城一期8号楼一单元1101室'
+                    aptNum:'',
+                    address:''
                 },
                 tableData:[{}],
                 fdform:{
@@ -239,7 +239,7 @@
 
                     })
                     .catch(function (error) {
-                        alert(456);
+                      // alert(456);
                         console.info(error);
                         Vue.prototype.$message.error("服务器产生异常，请联系管理员");
                     });

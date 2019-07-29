@@ -523,7 +523,7 @@
             updatePassword(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        alert('submit!');
+                        //alert('submit!');
                     } else {
                         console.log('error submit!!');
                         return false;
@@ -533,11 +533,11 @@
             updateTel(formName){
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        alert('submit!');
+                        //alert('submit!');
                         axios.post('updateTel',this.updatePersonalInfoForm)
                             .then(function (res) {
                                 if(res.data.success){
-                                    alert(11);
+                                   // alert(11);
                                 }
                                 else{
                                     Vue.prototype.$message.error(res.data.error);
