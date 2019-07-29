@@ -112,4 +112,9 @@ public class AdminAuditController {
         return dm;
     }
 
+    @RequestMapping("/keyManagement")
+    public String keyManagement(){
+        return "admin/check/record";
+    }
+
 }

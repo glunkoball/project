@@ -15,7 +15,7 @@
 <body>
 <div id="app">
     <div style="margin-bottom:10px;">
-        <el-button  type="primary" @click="showEditWin">添加用户</el-button>
+        <el-button  type="primary" @click="showEditWin">添加钥匙</el-button>
     </div>
     <div>
     <el-table :data="tableData" style="width: 100%;height:535px;">
@@ -25,10 +25,14 @@
         </el-table-column>
         <el-table-column  prop="name" label="经纪人姓名"  align="center">
         </el-table-column>
-        <el-table-column prop="contact" label="经纪人联系方式"  align="center">
-        </el-table-column>
-        <el-table-column label="钥匙状态"  prop="keystate" align="center">
-
+        <!--<el-table-column prop="telephone" label="经纪人联系方式"  align="center">
+        </el-table-column>-->
+        <el-table-column label="钥匙状态"  align="center">
+            <template slot-scope="scope" >
+                <el-button v-if="scope.row.keystate == 0"  size="mini" type="success">在店内</el-button>
+                <el-button v-if="scope.row.keystate ==1"  size="mini"
+                           type="danger">已借出</el-button>
+            </template>
             <!--th:if="${keystate}"<span th:case="0">在库</span>-->
             <!--<span th:case="1">借出</span>-->
             <!--<template slot-scope="scope" th:switch="${keystate}"><span>正在使用</span>-->
@@ -42,33 +46,33 @@
                         <!--</el-tag>-->
             <!--</template>-->
         </el-table-column>
-        <el-table-column  prop="date" label="上次借出时间"  align="center">
+        <el-table-column  prop="date" label="调度时间"  align="center">
         </el-table-column>
         <el-table-column  label="操作" align="center">
             <template slot-scope="scope">
-                <el-button size="mini" @click="borrow(scope.$index,scope.row)">借出</el-button>
-                <el-button size="mini" @click="repay(scope.$index,scope.row)">归还</el-button>
+                <el-button size="mini" type="warning" @click="borrow(scope.$index,scope.row)">借出</el-button>
+                <el-button size="mini" type="success" @click="repay(scope.$index,scope.row)">归还</el-button>
             </template>
         </el-table-column>
     </el-table>
     <!--添加框 -->
-    <el-dialog  :visible.sync="dialogVisible" width="23%">
+    <el-dialog  :visible.sync="dialogVisible" width="35%">
         <el-form ref="form" :model="form" label-width="80px" style="margin: auto">
             <el-form-item label="房源编号:" prop="aptNum">
                 <el-input style="width: 200px" v-model="form.aptNum"></el-input>
             </el-form-item>
-            <el-form-item label="地址:" prop="address">
+           <!-- <el-form-item label="地址:" prop="address">
                 <el-input style="width: 200px" v-model="form.address" ></el-input>
-            </el-form-item>
+            </el-form-item>-->
             <el-form-item label="经纪人ID:" prop="aid">
                 <el-input style="width: 200px" v-model="form.aid" ></el-input>
             </el-form-item>
-            <el-form-item label="经纪人联系方式:" prop="contact">
+            <!--<el-form-item label="经纪人联系方式:" prop="contact">
                 <el-input style="width: 200px" v-model="form.contact" ></el-input>
-            </el-form-item>
-            <el-form-item label="钥匙状态:" prop="keystate">
+            </el-form-item>-->
+            <!--<el-form-item label="钥匙状态:" prop="keystate">
                 <el-input style="width: 200px" v-model="form.keystate">
-                </el-input>
+                </el-input>-->
             </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
@@ -120,7 +124,7 @@
             //添加新的钥匙信息
             onSubmit:function(){
                 var vue = this;
-                alert(this.form)
+                // alert(this.form)
                 axios.post("addrecord",this.form)
                     .then(function (res) {
                         location.reload()

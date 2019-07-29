@@ -6,6 +6,6 @@
         select count(*) from user where username=#{username}
     </select>
     <insert id="signinUser">
-        insert into user (username,name,password,tel) values(#{username},#{name},#{password},#{tel})
+        insert into user (username,name,password,tel,identification) values(#{username},#{name},#{password},#{tel},#{identification})
     </insert>
 </mapper>

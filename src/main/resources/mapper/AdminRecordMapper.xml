@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="aaa.project.dao.AdminRecordDao">
     <select id="recordlistAll" resultType="aaa.project.entity.Apartment">
-        SELECT r1.aptNum,ap1.address,ad.name,r1.contact,r1.keystate,r1.date FROM record r1
+        SELECT r1.aptNum,ap1.address,ad.name,ad.telephone,r1.keystate,r1.date FROM record r1
         LEFT JOIN
         apartmentinfo1 ap1 on r1.aptNum=ap1.aptNum
         LEFT JOIN
@@ -16,6 +16,6 @@
         UPDATE record set  keystate = 0  where aptNum = #{newAptNum}
     </update>
     <insert id="addrecord">
-         insert  into record values(#{AptNum},#{address},#{aid},#{contact},#{keystate},#{date})
+         insert  into record values(#{AptNum},#{address},#{aid},#{contact},0,#{date})
     </insert>
 </mapper>
